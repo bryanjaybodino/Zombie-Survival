@@ -17,14 +17,15 @@ namespace Zombie_Survival
             IsMouseVisible = true;
 
 
-
+            _graphics.PreferredBackBufferWidth = 1280;
+            _graphics.PreferredBackBufferHeight = 800;
 
 
             // Set fullscreen mode
             //_graphics.IsFullScreen = true;
             //_graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             //_graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
-            //_graphics.ApplyChanges();
+            _graphics.ApplyChanges();
 
 
         }
@@ -58,10 +59,10 @@ namespace Zombie_Survival
 
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Camera.Transform); // para soft lang yung lakad ng character pag sunod sa camera
-
-
             Maps.Sprite.Draw();
             Characters.Sprite.Draw();
+
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
