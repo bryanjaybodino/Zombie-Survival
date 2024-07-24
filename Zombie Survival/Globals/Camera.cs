@@ -30,25 +30,17 @@ namespace Zombie_Survival.Globals
 {
     public class Camera
     {
-        private static Rectangle _gameArea;
-
+      
         public static Matrix Transform { get; private set; }
-
-        // Initialize game area boundaries
-        public static void Initialize(Rectangle gameArea)
-        {
-            _gameArea = gameArea;
-        }
-
-        public static void Update(Vector2 targetPosition, Viewport viewport)
+        public static void Update(Rectangle gameArea, Vector2 targetPosition, Viewport viewport)
         {
             // Calculate the camera's center position
             Vector2 halfViewport = new Vector2(viewport.Width / 2, viewport.Height / 2);
             Vector2 cameraPosition = targetPosition - halfViewport;
 
             // Clamp the camera position to the game area
-            cameraPosition.X = MathHelper.Clamp(cameraPosition.X, _gameArea.Left, _gameArea.Right - viewport.Width);
-            cameraPosition.Y = MathHelper.Clamp(cameraPosition.Y, _gameArea.Top, _gameArea.Bottom - viewport.Height);
+            cameraPosition.X = MathHelper.Clamp(cameraPosition.X, gameArea.Left, gameArea.Right - viewport.Width);
+            cameraPosition.Y = MathHelper.Clamp(cameraPosition.Y, gameArea.Top, gameArea.Bottom - viewport.Height);
 
             // Create the transform matrix
             Transform = Matrix.CreateTranslation(-cameraPosition.X, -cameraPosition.Y, 0);

@@ -62,7 +62,6 @@ namespace Zombie_Survival
 
             Maps.Sprite.Draw();
             Characters.Sprite.Draw();
-
             _spriteBatch.End();
 
             base.Draw(gameTime);
