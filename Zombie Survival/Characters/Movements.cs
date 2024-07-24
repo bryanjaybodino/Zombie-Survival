@@ -61,7 +61,7 @@ namespace Zombie_Survival.Characters
 
 
             Rectangle moveArea = new Rectangle(150, 150, Maps.Sprite._frames[0].Width, Maps.Sprite._frames[0].Height);
-            Position.X = MathHelper.Clamp(Position.X, moveArea.Left, moveArea.Right - (texture.Width+100));
+            Position.X = MathHelper.Clamp(Position.X, moveArea.Left, moveArea.Right - (texture.Width+50));
             Position.Y = MathHelper.Clamp(Position.Y, moveArea.Top, moveArea.Bottom - texture.Height-100);
 
 

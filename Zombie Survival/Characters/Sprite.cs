@@ -12,23 +12,23 @@ namespace Zombie_Survival.Characters
     {
 
         //PISTOL
-        static Textures.pistol pistol = new Textures.pistol();
-        static Textures.pistol_attack pistol_attack = new Textures.pistol_attack();
-        static Textures.pistol_reload pistol_reload = new Textures.pistol_reload();
+        static Textures.Pistol pistol = new Textures.Pistol();
+        static Textures.PistolAttack pistol_attack = new Textures.PistolAttack();
+        static Textures.PistolReload pistol_reload = new Textures.PistolReload();
 
         //RIFLE
-        static Textures.rifle rifle = new Textures.rifle();
-        static Textures.rifle_reload rifle_reload = new Textures.rifle_reload();
-        static Textures.rifle_attack rifle_attack = new Textures.rifle_attack();
+        static Textures.Rifle rifle = new Textures.Rifle();
+        static Textures.RifleReload rifle_reload = new Textures.RifleReload();
+        static Textures.RifleAttack rifle_attack = new Textures.RifleAttack();
 
         //KNIFE
-        static Textures.knife knife = new Textures.knife();
-        static Textures.knife_attack knife_attack = new Textures.knife_attack();
+        static Textures.Knife knife = new Textures.Knife();
+        static Textures.KnifeAttack knife_attack = new Textures.KnifeAttack();
 
         //SHOTGUN
-        static Textures.shotgun shotgun = new Textures.shotgun();
-        static Textures.shotgun_reload shotgun_reload = new Textures.shotgun_reload();
-        static Textures.shotgun_attack shotgun_attack = new Textures.shotgun_attack();
+        static Textures.Shotgun shotgun = new Textures.Shotgun();
+        static Textures.ShotgunReload shotgun_reload = new Textures.ShotgunReload();
+        static Textures.ShotgunAttack shotgun_attack = new Textures.ShotgunAttack();
 
 
 
@@ -39,6 +39,7 @@ namespace Zombie_Survival.Characters
         private static SpriteBatch _spriteBatch;
         private static Viewport _viewport;
         static string currentWeapone = "pistol";
+        private static Texture2D _size;
         static bool isMoving = false; private enum Weapon
         {
             pistol,
@@ -73,6 +74,8 @@ namespace Zombie_Survival.Characters
             shotgun_reload.LoadContent(content);
             shotgun_attack.LoadContent(content);
 
+
+            _size = knife._frames[0];
             _frames = pistol._frames;
             // Initialize position to the center of the viewport
             Movements.Position = new Vector2(_viewport.Width / 2, _viewport.Height / 2);
@@ -83,7 +86,7 @@ namespace Zombie_Survival.Characters
         public static void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
-
+            ////////////////CHANGE WEAPON//////////////////////////////////
             if (keyboardState.IsKeyDown(Keys.D1) && !isMoving) // 1 = RIFLE
             {
                 _currentFrame = 0;
@@ -114,7 +117,7 @@ namespace Zombie_Survival.Characters
 
 
 
-
+            //////////////////////RELOAD/////////////////////////////////////
             else if (keyboardState.IsKeyDown(Keys.R) && !isMoving) // RELOAD
             {
                 isMoving = true;
@@ -134,6 +137,10 @@ namespace Zombie_Survival.Characters
                 }
 
             }
+
+
+
+            ////////////////////ATTACK//////////////////////////////////////
             else if (keyboardState.IsKeyDown(Keys.Enter) && !isMoving) // ATTACK
             {
                 isMoving = true;
@@ -169,8 +176,6 @@ namespace Zombie_Survival.Characters
                     isMoving = false;
                     _currentFrame = 0; // Loop back to the first frame
 
-
-
                     /// RESET FRAME IN THE CURRENT WEAPON
                     if (currentWeapone.ToLower() == Weapon.rifle.ToString())
                     {
@@ -191,7 +196,7 @@ namespace Zombie_Survival.Characters
                 }
             }
 
-            Movements.Update(gameTime, _frames[_currentFrame]);
+            Movements.Update(gameTime, _size);
 
             var gameArea = new Rectangle(0, 0, Maps.Sprite._frames[0].Width, Maps.Sprite._frames[0].Height);
             Camera.Update(gameArea, Movements.Position, _viewport);
@@ -206,7 +211,7 @@ namespace Zombie_Survival.Characters
                 null,
                 Color.White,
                 Movements.Rotation, // Rotation angle
-                new Vector2(_frames[_currentFrame].Width / 2, _frames[_currentFrame].Height / 2), // Origin set to center
+                new Vector2(_size.Width / 2, _size.Height / 2), // Origin set to center
                 .5f, // Scale
                 SpriteEffects.None,
                 0f
