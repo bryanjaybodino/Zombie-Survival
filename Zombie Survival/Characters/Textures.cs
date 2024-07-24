@@ -56,5 +56,37 @@ namespace Zombie_Survival.Characters
             }
         }
 
+        public class knife
+        {
+            public Texture2D[] _frames;
+            public void LoadContent(ContentManager content)
+            {
+                // Load each frame of the GIF
+                _frames = new Texture2D[]
+                {
+                content.Load<Texture2D>("Characters/Knife/1"),
+                content.Load<Texture2D>("Characters/Knife/2"),
+                content.Load<Texture2D>("Characters/Knife/3"),
+                content.Load<Texture2D>("Characters/Knife/4"),
+                content.Load<Texture2D>("Characters/Knife/5"),
+                content.Load<Texture2D>("Characters/Knife/6"),
+                content.Load<Texture2D>("Characters/Knife/7"),
+                content.Load<Texture2D>("Characters/Knife/8"),
+                content.Load<Texture2D>("Characters/Knife/9"),
+                content.Load<Texture2D>("Characters/Knife/10"),
+                content.Load<Texture2D>("Characters/Knife/11"),
+                content.Load<Texture2D>("Characters/Knife/12"),
+                content.Load<Texture2D>("Characters/Knife/13"),
+                content.Load<Texture2D>("Characters/Knife/14"),
+                content.Load<Texture2D>("Characters/Knife/15"),
+                content.Load<Texture2D>("Characters/Knife/16"),
+                content.Load<Texture2D>("Characters/Knife/17"),
+                content.Load<Texture2D>("Characters/Knife/18"),
+                content.Load<Texture2D>("Characters/Knife/19"),
+                content.Load<Texture2D>("Characters/Knife/20"),
+                };
+            }
+        }
+
     }
 }

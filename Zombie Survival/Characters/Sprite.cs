@@ -12,6 +12,7 @@ namespace Zombie_Survival.Characters
     {
         static Textures.pistol pistol = new Textures.pistol();
         static Textures.pistol_attack pistol_attack = new Textures.pistol_attack();
+        static Textures.knife knife = new Textures.knife();
 
 
         private static Texture2D[] _frames;
@@ -30,6 +31,7 @@ namespace Zombie_Survival.Characters
 
             pistol.LoadContent(content);
             pistol_attack.LoadContent(content);
+            knife.LoadContent(content);
 
             _frames = pistol._frames;
             // Initialize position to the center of the viewport
@@ -46,16 +48,29 @@ namespace Zombie_Survival.Characters
         static bool isAttacking = false;
         public static void Update(GameTime gameTime)
         {
-
-
             KeyboardState keyboardState = Keyboard.GetState();
-            if (keyboardState.IsKeyDown(Keys.Enter) && !isAttacking)
+            if (keyboardState.IsKeyDown(Keys.D1) && !isAttacking) // 1 = PISTOL
+            {
+                _currentFrame = 0;
+                currentWeapone = Weapon.pistol.ToString();
+                _frames = pistol._frames;
+            }
+            if (keyboardState.IsKeyDown(Keys.D3) && !isAttacking) // 3 = KNIFE
+            {
+                _currentFrame = 0;
+                currentWeapone = Weapon.knife.ToString();
+                _frames = knife._frames;
+            }
+
+            else if (keyboardState.IsKeyDown(Keys.Enter) && !isAttacking) // ATTACK
             {
                 isAttacking = true;
                 _currentFrame = 0;
-                _frames = pistol_attack._frames;
+                if (currentWeapone.ToLower() == Weapon.pistol.ToString())
+                {
+                    _frames = pistol_attack._frames;
+                }  
             }
-
 
 
             // Update animation frame
@@ -70,7 +85,7 @@ namespace Zombie_Survival.Characters
                     if (currentWeapone.ToLower() == Weapon.pistol.ToString())
                     {
                         _frames = pistol._frames;
-                    } 
+                    }
                 }
             }
             if (keyboardState.IsKeyUp(Keys.Enter))
