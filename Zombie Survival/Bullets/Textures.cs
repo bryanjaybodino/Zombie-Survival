@@ -10,14 +10,14 @@ namespace Zombie_Survival.Bullets
 {
     public class Textures
     {
-        public class Bullets
+        public static class Bullets
         {
-            public class Pistol
+            public static class Pistol
             {
-                public static Texture2D _frames;
+                public static Texture2D frames;
                 public static void LoadContent(ContentManager content)
                 {
-                    _frames = content.Load<Texture2D>($"Characters/Pistol/Bullet");
+                    frames = content.Load<Texture2D>($"Characters/Pistol/Bullet");
                 }
             }
         }

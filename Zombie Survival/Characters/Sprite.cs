@@ -51,7 +51,7 @@ namespace Zombie_Survival.Characters
 
         public void Update(GameTime gameTime)
         {
-            
+
             KeyboardState keyboardState = Keyboard.GetState();
             ////////////////CHANGE WEAPON//////////////////////////////////
             if (keyboardState.IsKeyDown(Keys.D1) && !isMoving) // 1 = RIFLE
@@ -169,10 +169,13 @@ namespace Zombie_Survival.Characters
             Movements.Update(gameTime, _size);
             var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
             Camera.Update(gameArea, Movements.Position, _viewport);
+            shoot.Update(gameTime);
         }
 
-        public  void Draw(SpriteBatch _spriteBatch)
+        public void Draw(SpriteBatch _spriteBatch)
         {
+
+            shoot.Draw(_spriteBatch);
             // Draw the current frame with rotation
             _spriteBatch.Draw(
                 _frames[_currentFrame],
@@ -185,7 +188,10 @@ namespace Zombie_Survival.Characters
                 SpriteEffects.None,
                 0f
             );
+
      
+
+
         }
     }
 }

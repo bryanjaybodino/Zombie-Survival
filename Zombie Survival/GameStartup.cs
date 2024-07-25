@@ -72,6 +72,9 @@ namespace Zombie_Survival
             Characters.Textures.ShotgunAttack.LoadContent(Content);
 
 
+            //BULLETA
+            Bullets.Textures.Bullets.Pistol.LoadContent(Content);
+
         }
 
         protected override void Update(GameTime gameTime)
