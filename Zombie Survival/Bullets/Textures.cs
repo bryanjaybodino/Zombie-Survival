@@ -20,6 +20,24 @@ namespace Zombie_Survival.Bullets
                     frames = content.Load<Texture2D>($"Characters/Pistol/Bullet");
                 }
             }
+
+            public static class Rifle
+            {
+                public static Texture2D frames;
+                public static void LoadContent(ContentManager content)
+                {
+                    frames = content.Load<Texture2D>($"Characters/Rifle/Bullet");
+                }
+            }
+
+            public static class Shotgun
+            {
+                public static Texture2D frames;
+                public static void LoadContent(ContentManager content)
+                {
+                    frames = content.Load<Texture2D>($"Characters/Shotgun/Bullet");
+                }
+            }
         }
     }
 }

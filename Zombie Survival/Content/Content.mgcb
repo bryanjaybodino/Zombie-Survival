@@ -1417,6 +1417,18 @@
 /processorParam:TextureFormat=Color
 /build:Characters/Rifle/9.png
 
+#begin Characters/Rifle/Bullet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters/Rifle/Bullet.png
+
 #begin Characters/Shotgun Attack/1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1932,6 +1944,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Characters/Shotgun/9.png
+
+#begin Characters/Shotgun/Bullet.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Characters/Shotgun/Bullet.png
 
 #begin Maps/Covid19.png
 /importer:TextureImporter

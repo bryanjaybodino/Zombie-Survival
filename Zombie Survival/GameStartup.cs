@@ -72,8 +72,10 @@ namespace Zombie_Survival
             Characters.Textures.ShotgunAttack.LoadContent(Content);
 
 
-            //BULLETA
+            //BULLETS
             Bullets.Textures.Bullets.Pistol.LoadContent(Content);
+            Bullets.Textures.Bullets.Rifle.LoadContent(Content);
+            Bullets.Textures.Bullets.Shotgun.LoadContent(Content);
 
         }
 

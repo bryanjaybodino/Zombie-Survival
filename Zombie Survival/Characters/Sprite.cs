@@ -117,11 +117,12 @@ namespace Zombie_Survival.Characters
                 if (currentWeapon.ToLower() == Weapon.rifle.ToString())
                 {
                     _frames = RifleAttack.frames;
+                    shoot.Attack(Bullets.Textures.Bullets.Rifle.frames);
                 }
                 else if (currentWeapon.ToLower() == Weapon.pistol.ToString())
                 {
                     _frames = PistolAttack.frames;
-                    shoot.Attack();
+                    shoot.Attack(Bullets.Textures.Bullets.Pistol.frames);
                 }
                 else if (currentWeapon.ToLower() == Weapon.knife.ToString())
                 {
@@ -130,6 +131,7 @@ namespace Zombie_Survival.Characters
                 else if (currentWeapon.ToLower() == Weapon.shotgun.ToString())
                 {
                     _frames = ShotgunAttack.frames;
+                    shoot.Attack(Bullets.Textures.Bullets.Shotgun.frames);
                 }
             }
 
@@ -188,10 +190,6 @@ namespace Zombie_Survival.Characters
                 SpriteEffects.None,
                 0f
             );
-
-     
-
-
         }
     }
 }
