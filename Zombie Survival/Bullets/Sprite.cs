@@ -2,26 +2,21 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Zombie_Survival.Bullets
 {
     public class Sprite
     {
-
         private Vector2 Position { get; set; }
         private Vector2 Direction { get; set; }
         private float Speed { get; set; }
         private float Rotation { get; set; }
-        private bool IsActive { get; set; }
-        private Texture2D _frames;
-        private float Scale { get; set; } // Add a Scale property
+        public bool IsActive { get; set; }
+        public Texture2D _frames;
+        private float Scale { get; set; }
+        private float MaxDistance { get; set; }
 
-       
-        public Sprite(Texture2D texture, Vector2 position, Vector2 direction, float speed,float rotation,float scale)
+        public Sprite(Texture2D texture, Vector2 position, Vector2 direction, float speed, float rotation, float scale, float maxDistance)
         {
             this._frames = texture;
             Position = position;
@@ -30,23 +25,26 @@ namespace Zombie_Survival.Bullets
             IsActive = true;
             Scale = scale;
             Rotation = rotation;
+            MaxDistance = maxDistance;
         }
 
         public void Update(GameTime gameTime)
         {
             Position += Direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            // Check if bullet goes off-screen (example condition)
-            //if (Position.X < 0 || Position.X > 800 || Position.Y < 0 || Position.Y > 600) // Adjust screen bounds as needed
-            //{
-            //    IsActive = false;
-            //}
+            // Check if the bullet goes off-screen (example condition)
+            if (Vector2.Distance(Position,Characters.Movements.Position) > MaxDistance)
+            {
+                IsActive = false;
+            }
         }
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Draw(_frames, Position, null, Color.White, Rotation, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            if (IsActive)
+            {
+                _spriteBatch.Draw(_frames, Position, null, Color.White, Rotation, Vector2.Zero, Scale, SpriteEffects.None, 0f);
+            }
         }
     }
-
 }

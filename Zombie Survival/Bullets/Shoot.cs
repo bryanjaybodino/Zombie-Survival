@@ -34,7 +34,7 @@ namespace Zombie_Survival.Bullets
             Vector2 direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
             direction.Normalize();
 
-            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 1000f, rotation, scale));
+            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, rotation, scale, 10000f));
         }
 
 
@@ -55,7 +55,7 @@ namespace Zombie_Survival.Bullets
             Vector2 direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
             direction.Normalize();
 
-            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 1000f, rotation, scale));
+            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, rotation, scale,10000f));
         }
 
 
@@ -64,10 +64,13 @@ namespace Zombie_Survival.Bullets
             float scale = 0.05f;
             Vector2 position = Characters.Movements.Position;
             float rotation = Characters.Movements.Rotation;
-            Vector2 gunOffset = new Vector2(65, 10);// PARA SUMAKTO YUNG BALA SA BARIL
+            Vector2 gunOffset = new Vector2(65, 10); // Adjust as needed
+
+            // Define the maximum distance for shotgun bullets
+            float maxDistance = 400f; // Adjust this value to shorten or lengthen the range
 
             // Shoot three bullets with slightly different angles
-            for (int i = -1; i <=1 ; i++)
+            for (int i = -1; i <= 1; i++)
             {
                 float spreadAngle = 0.1f * i; // Adjust the spread angle as needed
                 float bulletRotation = rotation + spreadAngle;
@@ -82,9 +85,8 @@ namespace Zombie_Survival.Bullets
                 Vector2 direction = new Vector2((float)Math.Cos(bulletRotation), (float)Math.Sin(bulletRotation));
                 direction.Normalize();
 
-                bullets.Add(new Sprite(frames, bulletStartPosition, direction, 1000f, bulletRotation, scale));
+                bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, bulletRotation, scale, maxDistance));
             }
-
         }
 
 
@@ -111,9 +113,13 @@ namespace Zombie_Survival.Bullets
 
         public void Update(GameTime gameTime)
         {
-            foreach (var bullet in bullets)
+            for (int i = bullets.Count - 1; i >= 0; i--)
             {
-                bullet.Update(gameTime);
+                bullets[i].Update(gameTime);
+                if (!bullets[i].IsActive)
+                {
+                    bullets.RemoveAt(i);
+                }
             }
         }
 
