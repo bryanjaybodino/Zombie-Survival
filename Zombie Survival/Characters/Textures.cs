@@ -16,102 +16,102 @@ namespace Zombie_Survival.Characters
             return frames;
         }
 
-        public class Pistol
+        public static class Pistol
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Pistol", 20);
+                frames = LoadTextures(content, "Characters/Pistol", 20);
             }
         }
 
-        public class PistolAttack
+        public static class PistolAttack
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Pistol Attack", 3);
+                frames = LoadTextures(content, "Characters/Pistol Attack", 3);
             }
         }
 
-        public class PistolReload
+        public static class PistolReload
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Pistol Reload", 15);
+                frames = LoadTextures(content, "Characters/Pistol Reload", 15);
             }
         }
 
-        public class Rifle
+        public static class Rifle
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Rifle", 20);
+                frames = LoadTextures(content, "Characters/Rifle", 20);
             }
         }
 
-        public class RifleAttack
+        public static class RifleAttack
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Rifle Attack", 3);
+                frames = LoadTextures(content, "Characters/Rifle Attack", 3);
             }
         }
 
-        public class RifleReload
+        public static class RifleReload
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Rifle Reload", 20);
+                frames = LoadTextures(content, "Characters/Rifle Reload", 20);
             }
         }
 
-        public class Knife
+        public static class Knife
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Knife", 20);
+                frames = LoadTextures(content, "Characters/Knife", 20);
             }
         }
 
-        public class KnifeAttack
+        public static class KnifeAttack
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Knife Attack", 15);
+                frames = LoadTextures(content, "Characters/Knife Attack", 15);
             }
         }
 
-        public class Shotgun
+        public static class Shotgun
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Shotgun", 20);
+                frames = LoadTextures(content, "Characters/Shotgun", 20);
             }
         }
 
-        public class ShotgunAttack
+        public static class ShotgunAttack
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Shotgun Attack", 3);
+                frames = LoadTextures(content, "Characters/Shotgun Attack", 3);
             }
         }
 
-        public class ShotgunReload
+        public static class ShotgunReload
         {
-            public Texture2D[] _frames;
-            public void LoadContent(ContentManager content)
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
             {
-                _frames = LoadTextures(content, "Characters/Shotgun Reload", 20);
+                frames = LoadTextures(content, "Characters/Shotgun Reload", 20);
             }
         }
     }

@@ -5,42 +5,29 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using Zombie_Survival.Globals;
 using static Zombie_Survival.Characters.Textures;
+using System.Collections.Generic;
+using System.Reflection.Metadata;
 
 namespace Zombie_Survival.Characters
 {
     public class Sprite
     {
 
-        //PISTOL
-        static Textures.Pistol pistol = new Textures.Pistol();
-        static Textures.PistolAttack pistol_attack = new Textures.PistolAttack();
-        static Textures.PistolReload pistol_reload = new Textures.PistolReload();
-
-        //RIFLE
-        static Textures.Rifle rifle = new Textures.Rifle();
-        static Textures.RifleReload rifle_reload = new Textures.RifleReload();
-        static Textures.RifleAttack rifle_attack = new Textures.RifleAttack();
-
-        //KNIFE
-        static Textures.Knife knife = new Textures.Knife();
-        static Textures.KnifeAttack knife_attack = new Textures.KnifeAttack();
-
-        //SHOTGUN
-        static Textures.Shotgun shotgun = new Textures.Shotgun();
-        static Textures.ShotgunReload shotgun_reload = new Textures.ShotgunReload();
-        static Textures.ShotgunAttack shotgun_attack = new Textures.ShotgunAttack();
 
 
 
-        private static Texture2D[] _frames;
-        private static int _currentFrame;
-        private static double _frameTime;
-        private static double _elapsedTime;
-        private static SpriteBatch _spriteBatch;
-        private static Viewport _viewport;
-        static string currentWeapone = "pistol";
-        private static Texture2D _size;
-        static bool isMoving = false; private enum Weapon
+        Bullets.Shoot shoot = new Bullets.Shoot();
+
+
+
+        private Texture2D[] _frames;
+        private int _currentFrame;
+        private double _frameTime;
+        private double _elapsedTime;
+        private Viewport _viewport;
+        private string currentWeapon = "knife";
+        private Texture2D _size;
+        private bool isMoving = false; private enum Weapon
         {
             pistol,
             rifle,
@@ -48,68 +35,48 @@ namespace Zombie_Survival.Characters
             shotgun
         }
 
-        public static void LoadContent(ContentManager content, SpriteBatch spriteBatch, Viewport viewport)
+
+        public Sprite(Viewport viewport)
         {
             _viewport = viewport;
-            _spriteBatch = spriteBatch;
             _currentFrame = 0;
-            _frameTime = 100; // Time per frame in milliseconds
-
-            //RIFLE
-            rifle.LoadContent(content);
-            rifle_reload.LoadContent(content);
-            rifle_attack.LoadContent(content);
-
-            //PISTOL
-            pistol.LoadContent(content);
-            pistol_attack.LoadContent(content);
-            pistol_reload.LoadContent(content);
-
-            //KNIFE
-            knife.LoadContent(content);
-            knife_attack.LoadContent(content);
-
-            //SHOTGUN
-            shotgun.LoadContent(content);
-            shotgun_reload.LoadContent(content);
-            shotgun_attack.LoadContent(content);
+            _frameTime = 50; // Time per frame in milliseconds
+            _frames = Knife.frames;
+            _size = Knife.frames[0];
 
 
-            _size = knife._frames[0];
-            _frames = pistol._frames;
             // Initialize position to the center of the viewport
             Movements.Position = new Vector2(_viewport.Width / 2, _viewport.Height / 2);
         }
 
-
-
-        public static void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
+            
             KeyboardState keyboardState = Keyboard.GetState();
             ////////////////CHANGE WEAPON//////////////////////////////////
             if (keyboardState.IsKeyDown(Keys.D1) && !isMoving) // 1 = RIFLE
             {
                 _currentFrame = 0;
-                currentWeapone = Weapon.rifle.ToString();
-                _frames = rifle._frames;
+                currentWeapon = Weapon.rifle.ToString();
+                _frames = Rifle.frames;
             }
             else if (keyboardState.IsKeyDown(Keys.D2) && !isMoving) // 2 = PISTOL
             {
                 _currentFrame = 0;
-                currentWeapone = Weapon.pistol.ToString();
-                _frames = pistol._frames;
+                currentWeapon = Weapon.pistol.ToString();
+                _frames = Pistol.frames;
             }
             else if (keyboardState.IsKeyDown(Keys.D3) && !isMoving) // 3 = KNIFE
             {
                 _currentFrame = 0;
-                currentWeapone = Weapon.knife.ToString();
-                _frames = knife._frames;
+                currentWeapon = Weapon.knife.ToString();
+                _frames = Knife.frames;
             }
             else if (keyboardState.IsKeyDown(Keys.D4) && !isMoving) // 4 = SHOTGUN
             {
                 _currentFrame = 0;
-                currentWeapone = Weapon.shotgun.ToString();
-                _frames = shotgun._frames;
+                currentWeapon = Weapon.shotgun.ToString();
+                _frames = Shotgun.frames;
             }
 
 
@@ -123,20 +90,21 @@ namespace Zombie_Survival.Characters
                 isMoving = true;
                 _currentFrame = 0;
 
-                if (currentWeapone.ToLower() == Weapon.rifle.ToString())
+                if (currentWeapon.ToLower() == Weapon.rifle.ToString())
                 {
-                    _frames = rifle_reload._frames;
+                    _frames = RifleReload.frames;
                 }
-                else if (currentWeapone.ToLower() == Weapon.pistol.ToString())
+                else if (currentWeapon.ToLower() == Weapon.pistol.ToString())
                 {
-                    _frames = pistol_reload._frames;
+                    _frames = PistolReload.frames;
                 }
-                else if (currentWeapone.ToLower() == Weapon.shotgun.ToString())
+                else if (currentWeapon.ToLower() == Weapon.shotgun.ToString())
                 {
-                    _frames = shotgun_reload._frames;
+                    _frames = ShotgunReload.frames;
                 }
 
             }
+
 
 
 
@@ -146,21 +114,22 @@ namespace Zombie_Survival.Characters
                 isMoving = true;
                 _currentFrame = 0;
 
-                if (currentWeapone.ToLower() == Weapon.rifle.ToString())
+                if (currentWeapon.ToLower() == Weapon.rifle.ToString())
                 {
-                    _frames = rifle_attack._frames;
+                    _frames = RifleAttack.frames;
                 }
-                else if (currentWeapone.ToLower() == Weapon.pistol.ToString())
+                else if (currentWeapon.ToLower() == Weapon.pistol.ToString())
                 {
-                    _frames = pistol_attack._frames;
+                    _frames = PistolAttack.frames;
+                    shoot.Attack();
                 }
-                else if (currentWeapone.ToLower() == Weapon.knife.ToString())
+                else if (currentWeapon.ToLower() == Weapon.knife.ToString())
                 {
-                    _frames = knife_attack._frames;
+                    _frames = KnifeAttack.frames;
                 }
-                else if (currentWeapone.ToLower() == Weapon.shotgun.ToString())
+                else if (currentWeapon.ToLower() == Weapon.shotgun.ToString())
                 {
-                    _frames = shotgun_attack._frames;
+                    _frames = ShotgunAttack.frames;
                 }
             }
 
@@ -177,32 +146,32 @@ namespace Zombie_Survival.Characters
                     _currentFrame = 0; // Loop back to the first frame
 
                     /// RESET FRAME IN THE CURRENT WEAPON
-                    if (currentWeapone.ToLower() == Weapon.rifle.ToString())
+                    if (currentWeapon.ToLower() == Weapon.rifle.ToString())
                     {
-                        _frames = rifle._frames;
+                        _frames = Rifle.frames;
                     }
-                    else if (currentWeapone.ToLower() == Weapon.pistol.ToString())
+                    else if (currentWeapon.ToLower() == Weapon.pistol.ToString())
                     {
-                        _frames = pistol._frames;
+                        _frames = Pistol.frames;
+
                     }
-                    else if (currentWeapone.ToLower() == Weapon.knife.ToString())
+                    else if (currentWeapon.ToLower() == Weapon.knife.ToString())
                     {
-                        _frames = knife._frames;
+                        _frames = Knife.frames;
                     }
-                    else if (currentWeapone.ToLower() == Weapon.shotgun.ToString())
+                    else if (currentWeapon.ToLower() == Weapon.shotgun.ToString())
                     {
-                        _frames = shotgun._frames;
+                        _frames = Shotgun.frames;
                     }
                 }
             }
 
             Movements.Update(gameTime, _size);
-
-            var gameArea = new Rectangle(0, 0, Maps.Sprite._frames[0].Width, Maps.Sprite._frames[0].Height);
+            var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
             Camera.Update(gameArea, Movements.Position, _viewport);
         }
 
-        public static void Draw()
+        public  void Draw(SpriteBatch _spriteBatch)
         {
             // Draw the current frame with rotation
             _spriteBatch.Draw(
@@ -216,6 +185,7 @@ namespace Zombie_Survival.Characters
                 SpriteEffects.None,
                 0f
             );
+     
         }
     }
 }

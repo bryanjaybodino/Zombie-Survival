@@ -11,29 +11,21 @@ namespace Zombie_Survival.Maps
 {
     public class Sprite
     {
-        public static Texture2D[] _frames;
-        private static int _currentFrame;
-        private static double _frameTime;
-        private static double _elapsedTime;
-        private static Vector2 _imagePosition;
+        private Texture2D[] _frames;
+        private int _currentFrame;
+        private double _frameTime;
+        private double _elapsedTime;
+        private Vector2 _imagePosition;
 
-        private static SpriteBatch _spriteBatch;
-        public static void LoadContent(ContentManager content, SpriteBatch spriteBatch, Viewport viewport)
+        public Sprite(Viewport viewport)
         {
-            _spriteBatch = spriteBatch;
             _imagePosition = new Vector2(0, 0); // Set initial position of the image
             _currentFrame = 0;
             _frameTime = 100; // Time per frame in milliseconds
-
-            // Load each frame of the GIF
-            _frames = new Texture2D[]
-            {
-                content.Load<Texture2D>("Maps/Covid19"),
-                // Add more frames as needed
-            }; 
+            _frames = Textures.Covid19.frames;
         }
 
-        public static void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             // Update animation frame
             _elapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -47,7 +39,7 @@ namespace Zombie_Survival.Maps
                 }
             }
         }
-        public static void Draw()
+        public void Draw(SpriteBatch _spriteBatch)
         {
             _spriteBatch.Draw(_frames[_currentFrame], _imagePosition, Color.White);
         }

@@ -12,7 +12,7 @@ namespace Zombie_Survival.Characters
     public class Movements
     {
 
-        private static float _movementSpeed = 600f;
+        private static float _movementSpeed = 200f;
         public static float Rotation = 0f;
         public static Vector2 Position;
         public static void Update(GameTime gameTime,Texture2D texture)
@@ -60,7 +60,7 @@ namespace Zombie_Survival.Characters
             Position += movement;
 
 
-            Rectangle moveArea = new Rectangle(150, 150, Maps.Sprite._frames[0].Width, Maps.Sprite._frames[0].Height);
+            Rectangle moveArea = new Rectangle(150, 150, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
             Position.X = MathHelper.Clamp(Position.X, moveArea.Left, moveArea.Right - (texture.Width+50));
             Position.Y = MathHelper.Clamp(Position.Y, moveArea.Top, moveArea.Bottom - texture.Height-100);
 
