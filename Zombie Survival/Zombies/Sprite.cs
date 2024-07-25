@@ -11,8 +11,10 @@ namespace Zombie_Survival.Zombies
         private double _frameTime;
         private double _elapsedTime;
         private Vector2 _imagePosition;
-        private Vector2 _scale; // Added scale field
-        private float _rotation; // Added rotation field
+        private Vector2 _scale;
+        private float _rotation;
+        private float _movementSpeed;
+        private float _minDistance; // Minimum distance to maintain from the character
 
         public Sprite(Viewport viewport)
         {
@@ -20,8 +22,10 @@ namespace Zombie_Survival.Zombies
             _currentFrame = 0;
             _frameTime = 50; // Time per frame in milliseconds
             _frames = Textures.Macho.frames;
-            _scale = new Vector2(.5f, .5f); // Initialize scale to 1 (no scaling)
+            _scale = new Vector2(.5f, .5f); // Initialize scale to 0.5
             _rotation = 0f; // Initialize rotation to 0
+            _movementSpeed = 100f; // Initialize movement speed (pixels per second)
+            _minDistance = 80f; // Minimum distance to maintain from the character (adjust as needed)
         }
 
         public void Update(GameTime gameTime)
@@ -42,13 +46,14 @@ namespace Zombie_Survival.Zombies
 
         private void FollowCharacter(GameTime gameTime)
         {
-
             Vector2 characterPosition = Characters.Movements.Position;
             Vector2 direction = characterPosition - _imagePosition;
-            if (direction.Length() > 0)
+            float distance = direction.Length();
+
+            if (distance > _minDistance)
             {
                 direction.Normalize(); // Get the direction as a unit vector
-                _imagePosition += direction * 100f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                _imagePosition += direction * _movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 // Calculate rotation angle
                 _rotation = (float)Math.Atan2(direction.Y, direction.X);
