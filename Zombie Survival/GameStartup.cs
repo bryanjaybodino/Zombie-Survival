@@ -32,12 +32,14 @@ namespace Zombie_Survival
 
         private Characters.Sprite _characters;
         private Maps.Sprite _maps;
+        private Zombies.Sprite _zombies;
         protected override void Initialize()
         {
             base.Initialize();
       
             _characters = new Characters.Sprite(GraphicsDevice.Viewport);
             _maps = new Maps.Sprite(GraphicsDevice.Viewport);
+            _zombies = new Zombies.Sprite(GraphicsDevice.Viewport);
         }
 
 
@@ -77,6 +79,11 @@ namespace Zombie_Survival
             Bullets.Textures.Bullets.Rifle.LoadContent(Content);
             Bullets.Textures.Bullets.Shotgun.LoadContent(Content);
 
+
+
+            //ZOMBIES
+            Zombies.Textures.Macho.LoadContent(Content);
+
         }
 
         protected override void Update(GameTime gameTime)
@@ -87,6 +94,7 @@ namespace Zombie_Survival
 
             _maps.Update(gameTime);
             _characters.Update(gameTime);
+            _zombies.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -103,6 +111,9 @@ namespace Zombie_Survival
             //CHARACTER
             _characters.Draw(_spriteBatch);
 
+
+            //ZOMBIE
+            _zombies.Draw(_spriteBatch);
 
 
             _spriteBatch.End();

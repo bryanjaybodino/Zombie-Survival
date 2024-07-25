@@ -15,17 +15,17 @@ namespace Zombie_Survival.Characters
         private static float _movementSpeed = 200f;
         public static float Rotation = 0f;
         public static Vector2 Position;
-        public static void Update(GameTime gameTime,Texture2D texture)
+        public static void Update(GameTime gameTime, Texture2D texture)
         {
-            // Get mouse state
-            //MouseState mouseState = Mouse.GetState();
+            //Get mouse state
+            ////MouseState mouseState = Mouse.GetState();
 
-            //// Calculate direction to the mouse
-            //Vector2 direction = new Vector2(mouseState.X, mouseState.Y) - Movements.Position;
-            //float angle = (float)Math.Atan2(direction.Y, direction.X);
+            ////// Calculate direction to the mouse
+            ////Vector2 direction = new Vector2(mouseState.X, mouseState.Y) - Movements.Position;
+            ////float angle = (float)Math.Atan2(direction.Y, direction.X);
 
-            //// Update the angle if needed (e.g., for a rotating sprite)
-            //Movements.Rotation = angle;
+            ////// Update the angle if needed (e.g., for a rotating sprite)
+            ////Movements.Rotation = angle;
 
             // Update camera and other movements if needed
 
@@ -35,8 +35,8 @@ namespace Zombie_Survival.Characters
             Vector2 movement = Vector2.Zero;
 
             if (keyboardState.IsKeyDown(Keys.A))
-            {            
-                movement.X -= _movementSpeed * deltaTime;               
+            {
+                movement.X -= _movementSpeed * deltaTime;
             }
             if (keyboardState.IsKeyDown(Keys.D))
             {
@@ -61,8 +61,8 @@ namespace Zombie_Survival.Characters
 
 
             Rectangle moveArea = new Rectangle(150, 150, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
-            Position.X = MathHelper.Clamp(Position.X, moveArea.Left, moveArea.Right - (texture.Width+50));
-            Position.Y = MathHelper.Clamp(Position.Y, moveArea.Top, moveArea.Bottom - texture.Height-100);
+            Position.X = MathHelper.Clamp(Position.X, moveArea.Left, moveArea.Right - (texture.Width + 50));
+            Position.Y = MathHelper.Clamp(Position.Y, moveArea.Top, moveArea.Bottom - texture.Height - 100);
 
 
             System.Diagnostics.Debug.WriteLine($"Movement x: " + Position.X);

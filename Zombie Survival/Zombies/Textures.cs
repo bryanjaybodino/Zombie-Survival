@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Zombie_Survival.Maps
+namespace Zombie_Survival.Zombies
 {
     public class Textures
     {
@@ -15,19 +15,26 @@ namespace Zombie_Survival.Maps
             Texture2D[] frames = new Texture2D[numFrames];
             for (int i = 0; i < numFrames; i++)
             {
-                frames[i] = content.Load<Texture2D>($"{directoryPath}");
+                frames[i] = content.Load<Texture2D>($"{directoryPath}/{i + 1}");
             }
             return frames;
         }
 
-        public static class Covid19
+        public static class Macho
         {
             public static Texture2D[] frames;
             public static void LoadContent(ContentManager content)
             {
-                frames = LoadTextures(content, "Maps/Covid19", 1);
+                frames = LoadTextures(content, "Zombies/Macho", 17);
             }
         }
-
+        public static class MachoAttack
+        {
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
+            {
+                frames = LoadTextures(content, "Zombies/Macho Attack", 17);
+            }
+        }
     }
 }
