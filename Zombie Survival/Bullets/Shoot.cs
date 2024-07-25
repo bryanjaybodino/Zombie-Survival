@@ -67,7 +67,7 @@ namespace Zombie_Survival.Bullets
             Vector2 gunOffset = new Vector2(65, 10); // Adjust as needed
 
             // Define the maximum distance for shotgun bullets
-            float maxDistance = 400f; // Adjust this value to shorten or lengthen the range
+            float maxDistance = 300f; // Adjust this value to shorten or lengthen the range
 
             // Shoot three bullets with slightly different angles
             for (int i = -1; i <= 1; i++)
