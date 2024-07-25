@@ -1,27 +1,15 @@
-﻿using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using Zombie_Survival.Globals;
 using static Zombie_Survival.Characters.Textures;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Zombie_Survival.Characters
 {
     public class Sprite
     {
-
-
-
-
         Bullets.Shoot shoot = new Bullets.Shoot();
-
-
-
         private Texture2D[] _frames;
         private int _currentFrame;
         private double _frameTime;
@@ -30,8 +18,8 @@ namespace Zombie_Survival.Characters
         private string currentWeapon = "knife";
         private Texture2D _size;
 
-
-        private bool isMoving = false; private enum Weapon
+        private bool isMoving = false;
+        private enum Weapon
         {
             pistol,
             rifle,
@@ -39,6 +27,11 @@ namespace Zombie_Survival.Characters
             shotgun
         }
 
+        // Cooldown related variables
+        private double _firePistolCooldown = 400; // Cooldown time in milliseconds
+        private double _fireShotgunCooldown = 800; // Cooldown time in milliseconds
+        private double _fireRifleCooldown = 300; // Cooldown time in milliseconds
+        private double _lastFireTime = 0;
 
         public Sprite(Viewport viewport)
         {
@@ -48,16 +41,18 @@ namespace Zombie_Survival.Characters
             _frames = Knife.frames;
             _size = Knife.frames[0];
 
-
             // Initialize position to the center of the viewport
             Movements.Position = new Vector2(_viewport.Width / 2, _viewport.Height / 2);
         }
 
         public void Update(GameTime gameTime)
         {
-
             KeyboardState keyboardState = Keyboard.GetState();
-            ////////////////CHANGE WEAPON//////////////////////////////////
+
+            // Update the cooldown timer
+            _lastFireTime += gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            // Change weapon logic
             if (keyboardState.IsKeyDown(Keys.D1) && !isMoving) // 1 = RIFLE
             {
                 _currentFrame = 0;
@@ -72,7 +67,6 @@ namespace Zombie_Survival.Characters
             }
             else if (keyboardState.IsKeyDown(Keys.D3) && !isMoving) // 3 = KNIFE
             {
-                
                 _currentFrame = 0;
                 currentWeapon = Weapon.knife.ToString();
                 _frames = Knife.frames;
@@ -84,12 +78,7 @@ namespace Zombie_Survival.Characters
                 _frames = Shotgun.frames;
             }
 
-
-
-
-
-
-            //////////////////////RELOAD/////////////////////////////////////
+            // Reload logic
             else if (keyboardState.IsKeyDown(Keys.R) && !isMoving) // RELOAD
             {
                 isMoving = true;
@@ -107,39 +96,42 @@ namespace Zombie_Survival.Characters
                 {
                     _frames = ShotgunReload.frames;
                 }
-
             }
 
-
-
-
-            ////////////////////ATTACK//////////////////////////////////////
+            // Attack logic with cooldown check
             else if (keyboardState.IsKeyDown(Keys.Enter) && !isMoving) // ATTACK
-            {
-                isMoving = true;
+            { 
                 _currentFrame = 0;
                 _elapsedTime = 0;
-                if (currentWeapon.ToLower() == Weapon.rifle.ToString())
+             
+                if (currentWeapon.ToLower() == Weapon.rifle.ToString() && _lastFireTime >= _fireRifleCooldown)
                 {
+                    _lastFireTime = 0;
+                    isMoving = true;
                     _frames = RifleAttack.frames;
                     shoot.Attack(Bullets.Textures.Bullets.Rifle.frames);
                 }
-                else if (currentWeapon.ToLower() == Weapon.pistol.ToString())
+                else if (currentWeapon.ToLower() == Weapon.pistol.ToString() && _lastFireTime >= _firePistolCooldown)
                 {
+                    _lastFireTime = 0;
+                    isMoving = true;
                     _frames = PistolAttack.frames;
                     shoot.Attack(Bullets.Textures.Bullets.Pistol.frames);
                 }
-                else if (currentWeapon.ToLower() == Weapon.knife.ToString())
+                else if (currentWeapon.ToLower() == Weapon.shotgun.ToString() && _lastFireTime >= _fireShotgunCooldown)
                 {
-                    _frames = KnifeAttack.frames;
-                }
-                else if (currentWeapon.ToLower() == Weapon.shotgun.ToString())
-                {
+                    _lastFireTime = 0;
+                    isMoving = true;
                     _frames = ShotgunAttack.frames;
                     shoot.Attack(Bullets.Textures.Bullets.Shotgun.frames);
                 }
+                else if (currentWeapon.ToLower() == Weapon.knife.ToString())
+                {
+                    _lastFireTime = 0;
+                    isMoving = true;
+                    _frames = KnifeAttack.frames;
+                }
             }
-
 
             // Update animation frame
             _elapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -151,7 +143,7 @@ namespace Zombie_Survival.Characters
                 {
                     _currentFrame = 0; // Loop back to the first frame
 
-                    /// RESET FRAME IN THE CURRENT WEAPON
+                    // Reset frame to the current weapon's idle frame
                     if (currentWeapon.ToLower() == Weapon.rifle.ToString())
                     {
                         isMoving = false;
@@ -173,14 +165,7 @@ namespace Zombie_Survival.Characters
                         isMoving = false;
                     }
                 }
-
-
             }
-
-
-
-
-
 
             Movements.Update(gameTime, _size);
             var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
@@ -190,7 +175,6 @@ namespace Zombie_Survival.Characters
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-
             shoot.Draw(_spriteBatch);
             // Draw the current frame with rotation
             _spriteBatch.Draw(

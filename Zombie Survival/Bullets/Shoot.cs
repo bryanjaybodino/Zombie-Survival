@@ -43,7 +43,7 @@ namespace Zombie_Survival.Bullets
             float scale = 0.05f;
             Vector2 position = Characters.Movements.Position;
             float rotation = Characters.Movements.Rotation;
-            Vector2 gunOffset = new Vector2(30, 10);// PARA SUMAKTO YUNG BALA SA BARIL
+            Vector2 gunOffset = new Vector2(40, 10);// PARA SUMAKTO YUNG BALA SA BARIL
 
             // Rotate the offset based on the character's rotation
             Vector2 rotatedOffset = Vector2.Transform(gunOffset, Matrix.CreateRotationZ(rotation));
