@@ -125,6 +125,7 @@ namespace Zombie_Survival.Characters
                     isMoving = true;
                     _frames = RifleAttack.frames;
                     shoot.Attack(Bullets.Textures.Bullets.Rifle.frames);
+                    Sounds.SoundEffects.RifleAttack.audio.Play();
                 }
                 else if (currentWeapon.ToLower() == Weapon.pistol.ToString() && _lastFireTime >= _firePistolCooldown)
                 {
@@ -132,6 +133,7 @@ namespace Zombie_Survival.Characters
                     isMoving = true;
                     _frames = PistolAttack.frames;
                     shoot.Attack(Bullets.Textures.Bullets.Pistol.frames);
+                    Sounds.SoundEffects.PistolAttack.audio.Play();
                 }
                 else if (currentWeapon.ToLower() == Weapon.shotgun.ToString() && _lastFireTime >= _fireShotgunCooldown)
                 {
@@ -146,6 +148,7 @@ namespace Zombie_Survival.Characters
                     isMoving = true;
                     _frames = KnifeAttack.frames;
                     _slash.Attack();
+                    Sounds.SoundEffects.KnifeAttack.audio.Play();
 
                 }
             }

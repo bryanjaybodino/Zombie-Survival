@@ -63,7 +63,7 @@ namespace Zombie_Survival.Knife_Slash
                     {
                         for (int j = zombies.Count - 1; j >= 0; j--)
                         {
-                            if (BoundingBox.Intersects(zombies[j].BoundingBox))
+                            if (BoundingBox.Intersects((Rectangle)zombies[j].BoundingBox))
                             {
                                 // Bullet hits the zombie
                                 isActive = true;

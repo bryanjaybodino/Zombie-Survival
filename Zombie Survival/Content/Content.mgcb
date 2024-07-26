@@ -2065,6 +2065,24 @@
 /processorParam:TextureFormat=Color
 /build:Maps/Covid19.png
 
+#begin Sounds/Knife Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Knife Sound.wav
+
+#begin Sounds/Pistol Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Pistol Sound.wav
+
+#begin Sounds/Rifle Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Rifle Sound.wav
+
 #begin Zombies/Macho Attack/1.png
 /importer:TextureImporter
 /processor:TextureProcessor

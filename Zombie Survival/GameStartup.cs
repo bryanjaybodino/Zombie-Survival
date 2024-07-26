@@ -60,7 +60,7 @@ namespace Zombie_Survival
                 for (int j = 0; j < columns; j++)
                 {
                     Vector2 position = new Vector2(j * spacing, i * spacing);
-                    _zombies.Add(new Zombies.Sprite(GraphicsDevice.Viewport, position));
+                    _zombies.Add(new Zombies.Sprite(position));
                 }
             }
 
@@ -71,9 +71,6 @@ namespace Zombie_Survival
 
         protected override void LoadContent()
         {
-
-
-
 
             //MAP
             Maps.Textures.Covid19.LoadContent(Content);
@@ -91,7 +88,6 @@ namespace Zombie_Survival
             //KNIFE SLASH
             Knife_Slash.Textures.Slash.LoadContent(Content);
 
-
             //PISTOL
             Characters.Textures.Pistol.LoadContent(Content);
             Characters.Textures.PistolReload.LoadContent(Content);
@@ -108,15 +104,18 @@ namespace Zombie_Survival
             Bullets.Textures.Bullets.Rifle.LoadContent(Content);
             Bullets.Textures.Bullets.Shotgun.LoadContent(Content);
 
-
             //CROSSHAIR
             Crosshairs.Textures.Green.LoadContent(Content);
-
 
             //ZOMBIES
             Zombies.Textures.Macho.LoadContent(Content);
             Zombies.Textures.MachoAttack.LoadContent(Content);
 
+
+            //SOUNDS
+            Sounds.SoundEffects.RifleAttack.LoadContent(Content);
+            Sounds.SoundEffects.PistolAttack.LoadContent(Content);
+            Sounds.SoundEffects.KnifeAttack.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)
