@@ -50,14 +50,9 @@ namespace Zombie_Survival.Characters
             Position.X = MathHelper.Clamp(Position.X, moveArea.Left, moveArea.Right - (texture.Width + 50));
             Position.Y = MathHelper.Clamp(Position.Y, moveArea.Top, moveArea.Bottom - texture.Height - 100);
 
-            // Get the mouse position in screen coordinates
-            Vector2 MousePosition = Mouse.GetState().Position.ToVector2();
-
-            // Transform mouse position to world coordinates
-            Vector2 transformedMousePosition = Vector2.Transform(MousePosition, Matrix.Invert(cameraTransform));
-
+           
             // Calculate the direction from the character to the mouse
-            var direction = transformedMousePosition - Position;
+            var direction = Globals.MouseInput.transformedMousePosition - Position;
             direction.Normalize();
             Rotation = (float)Math.Atan2(direction.Y, direction.X);
 

@@ -15,7 +15,7 @@ namespace Zombie_Survival
         {
             _graphics = new GraphicsDeviceManager(this); 
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            //IsMouseVisible = true;
 
             _graphics.PreferredBackBufferWidth = 1280;
             _graphics.PreferredBackBufferHeight = 800;
@@ -33,6 +33,7 @@ namespace Zombie_Survival
         private Characters.Sprite _characters;
         private Maps.Sprite _maps;
         private Zombies.Sprite _zombies;
+        private Crosshairs.Sprite _crosshairs;
         protected override void Initialize()
         {
             base.Initialize();
@@ -40,6 +41,7 @@ namespace Zombie_Survival
             _characters = new Characters.Sprite(GraphicsDevice.Viewport);
             _maps = new Maps.Sprite(GraphicsDevice.Viewport);
             _zombies = new Zombies.Sprite(GraphicsDevice.Viewport);
+            _crosshairs = new Crosshairs.Sprite(GraphicsDevice.Viewport);
         }
 
 
@@ -80,6 +82,9 @@ namespace Zombie_Survival
             Bullets.Textures.Bullets.Shotgun.LoadContent(Content);
 
 
+            //CROSSHAIR
+            Crosshairs.Textures.Green.LoadContent(Content);
+
 
             //ZOMBIES
             Zombies.Textures.Macho.LoadContent(Content);
@@ -95,6 +100,12 @@ namespace Zombie_Survival
             _maps.Update(gameTime);
             _characters.Update(gameTime);
             _zombies.Update(gameTime);
+            _crosshairs.Update(gameTime);
+
+
+
+            // PARA ACCURATE PARIN YUNG MOUSE POSITION
+            Globals.MouseInput.Update(Camera.Transform);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -114,6 +125,10 @@ namespace Zombie_Survival
 
             //ZOMBIE
             _zombies.Draw(_spriteBatch);
+
+
+            //CROSSHAIR
+            _crosshairs.Draw(_spriteBatch);
 
 
             _spriteBatch.End();

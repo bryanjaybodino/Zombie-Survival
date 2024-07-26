@@ -127,7 +127,7 @@ namespace Zombie_Survival.Characters
                     _frames = ShotgunAttack.frames;
                     shoot.Attack(Bullets.Textures.Bullets.Shotgun.frames);
                 }
-                else if (currentWeapon.ToLower() == Weapon.knife.ToString() && _lastFireTime >= _fireKnifeCooldown)
+                else if (currentWeapon.ToLower() == Weapon.knife.ToString())
                 {
                     _lastFireTime = 0;
                     isMoving = true;
