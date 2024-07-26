@@ -49,6 +49,7 @@ namespace Zombie_Survival.Characters
         public void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
+            MouseState mouseState = Mouse.GetState();
 
             // Update the cooldown timer
             _lastFireTime += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -100,11 +101,11 @@ namespace Zombie_Survival.Characters
             }
 
             // Attack logic with cooldown check
-            else if (keyboardState.IsKeyDown(Keys.Enter) && !isMoving) // ATTACK
-            { 
+            else if (mouseState.LeftButton == ButtonState.Pressed && !isMoving) // ATTACK
+            {
                 _currentFrame = 0;
                 _elapsedTime = 0;
-             
+
                 if (currentWeapon.ToLower() == Weapon.rifle.ToString() && _lastFireTime >= _fireRifleCooldown)
                 {
                     _lastFireTime = 0;
@@ -168,7 +169,7 @@ namespace Zombie_Survival.Characters
                 }
             }
 
-            Movements.Update(gameTime, _size);
+            Movements.Update(gameTime, _size, Camera.Transform);
             var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
             Camera.Update(gameArea, Movements.Position, _viewport);
             shoot.Update(gameTime);

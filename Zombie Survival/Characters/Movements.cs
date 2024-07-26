@@ -11,7 +11,7 @@ namespace Zombie_Survival.Characters
         public static float Rotation = 0f;
         public static Vector2 Position;
 
-        public static void Update(GameTime gameTime, Texture2D texture)
+        public static void Update(GameTime gameTime, Texture2D texture, Matrix cameraTransform)
         {
             KeyboardState keyboardState = Keyboard.GetState();
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -34,6 +34,14 @@ namespace Zombie_Survival.Characters
                 movement.Y += _movementSpeed * deltaTime;
             }
 
+            /////// Rotate Base on the Movement 
+            //if (movement != Vector2.Zero)
+            //{
+            //    Rotation = (float)Math.Atan2(movement.Y, movement.X);
+            //}
+
+
+
             // Update the position
             Position += movement;
 
@@ -42,32 +50,16 @@ namespace Zombie_Survival.Characters
             Position.X = MathHelper.Clamp(Position.X, moveArea.Left, moveArea.Right - (texture.Width + 50));
             Position.Y = MathHelper.Clamp(Position.Y, moveArea.Top, moveArea.Bottom - texture.Height - 100);
 
+            // Get the mouse position in screen coordinates
+            Vector2 MousePosition = Mouse.GetState().Position.ToVector2();
 
-            // Rotate Base on the Movement
-            if (movement != Vector2.Zero)
-            {
-                Rotation = (float)Math.Atan2(movement.Y, movement.X);
-            }
+            // Transform mouse position to world coordinates
+            Vector2 transformedMousePosition = Vector2.Transform(MousePosition, Matrix.Invert(cameraTransform));
 
-
-
-            ////// Get mouse state
-            ////MouseState mouseState = Mouse.GetState();
-            ////Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
-
-            ////// Adjust mouse position to be relative to character
-            ////Vector2 characterCenter = Position + new Vector2(texture.Width / 2, texture.Height / 2);
-            ////Vector2 direction = mousePosition - characterCenter;
-
-            ////// Calculate rotation angle
-            ////if (direction != Vector2.Zero)
-            ////{
-            ////    direction.Normalize(); // Ensure direction is a unit vector
-            ////    Rotation = (float)Math.Atan2(direction.Y, direction.X);
-            ////}
-            ///
-
-
+            // Calculate the direction from the character to the mouse
+            var direction = transformedMousePosition - Position;
+            direction.Normalize();
+            Rotation = (float)Math.Atan2(direction.Y, direction.X);
 
             // Debug output to verify calculations
             System.Diagnostics.Debug.WriteLine($"Rotation: {Rotation}");
