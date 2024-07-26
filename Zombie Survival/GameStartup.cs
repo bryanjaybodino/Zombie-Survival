@@ -120,13 +120,14 @@ namespace Zombie_Survival
             base.Update(gameTime);
 
             _maps.Update(gameTime);
-            _characters.Update(gameTime);
-           
 
 
-            for(int i = 0; i < _zombies.Count; i++)
+            _characters.Update(gameTime, _zombies);
+
+            for (int i = 0; i < _zombies.Count; i++)
             {
                 _zombies[i].Update(gameTime, _zombies);
+             
             }
 
 

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using Zombie_Survival.Globals;
 using static Zombie_Survival.Characters.Textures;
 
@@ -46,7 +47,7 @@ namespace Zombie_Survival.Characters
             Movements.Position = new Vector2(_viewport.Width / 2, _viewport.Height / 2);
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, List<Zombies.Sprite> zombies)
         {
             KeyboardState keyboardState = Keyboard.GetState();
             MouseState mouseState = Mouse.GetState();
@@ -170,11 +171,25 @@ namespace Zombie_Survival.Characters
             }
 
             Movements.Update(gameTime, _size, Camera.Transform);
+            AvoidOverlapping(zombies);
             var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
             Camera.Update(gameArea, Movements.Position, _viewport);
             shoot.Update(gameTime);
         }
-
+        private void AvoidOverlapping(List<Zombies.Sprite> zombies)
+        {
+            foreach (var sprite in zombies)
+            {
+                float distance = Vector2.Distance(Movements.Position, sprite.Position);
+                if (distance < 50f)
+                {
+                    // Move away to avoid overlapping
+                    Vector2 moveAway = Movements.Position - sprite.Position;
+                    moveAway.Normalize();
+                    Movements.Position += moveAway * (50f - distance);
+                }
+            }
+        }
         public void Draw(SpriteBatch _spriteBatch)
         {
             shoot.Draw(_spriteBatch);
