@@ -35,16 +35,18 @@ namespace Zombie_Survival
         private Maps.Sprite _maps;
         private List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
         private Crosshairs.Sprite _crosshairs;
+
+    
+
+
         protected override void Initialize()
         {
             base.Initialize();
 
             _characters = new Characters.Sprite(GraphicsDevice.Viewport);
             _maps = new Maps.Sprite(GraphicsDevice.Viewport);
-
             _crosshairs = new Crosshairs.Sprite(GraphicsDevice.Viewport);
-
-
+          
 
 
 
@@ -85,6 +87,10 @@ namespace Zombie_Survival
             //KNIFE
             Characters.Textures.Knife.LoadContent(Content);
             Characters.Textures.KnifeAttack.LoadContent(Content);
+
+            //KNIFE SLASH
+            Knife_Slash.Textures.Slash.LoadContent(Content);
+
 
             //PISTOL
             Characters.Textures.Pistol.LoadContent(Content);
@@ -127,13 +133,13 @@ namespace Zombie_Survival
             for (int i = 0; i < _zombies.Count; i++)
             {
                 _zombies[i].Update(gameTime, _zombies);
-             
+
             }
 
 
             _crosshairs.Update(gameTime);
 
-
+           
 
             // PARA ACCURATE PARIN YUNG MOUSE POSITION
             Globals.MouseInput.Update(Camera.Transform);
@@ -150,9 +156,7 @@ namespace Zombie_Survival
             _maps.Draw(_spriteBatch);
 
 
-            //CHARACTER
-            _characters.Draw(_spriteBatch);
-
+      
 
             //ZOMBIE
 
@@ -161,11 +165,12 @@ namespace Zombie_Survival
                 _zombies[i].Draw(_spriteBatch);
             }
 
-
-           
-
             //CROSSHAIR
             _crosshairs.Draw(_spriteBatch);
+
+
+            //CHARACTER
+            _characters.Draw(_spriteBatch);
 
 
             _spriteBatch.End();

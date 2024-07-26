@@ -5,12 +5,15 @@ using System;
 using System.Collections.Generic;
 using Zombie_Survival.Globals;
 using static Zombie_Survival.Characters.Textures;
+using static Zombie_Survival.Knife_Slash.Textures;
 
 namespace Zombie_Survival.Characters
 {
     public class Sprite
     {
         Bullets.Shoot shoot = new Bullets.Shoot();
+        public Knife_Slash.Sprite _slash;
+
         private Texture2D[] _frames;
         private int _currentFrame;
         private double _frameTime;
@@ -44,6 +47,8 @@ namespace Zombie_Survival.Characters
 
         public Sprite(Viewport viewport)
         {
+
+            _slash = new Knife_Slash.Sprite(viewport);
             _viewport = viewport;
             _currentFrame = 0;
             _frameTime = 50; // Time per frame in milliseconds
@@ -140,6 +145,8 @@ namespace Zombie_Survival.Characters
                     _lastFireTime = 0;
                     isMoving = true;
                     _frames = KnifeAttack.frames;
+                    _slash.Attack();
+
                 }
             }
 
@@ -168,6 +175,7 @@ namespace Zombie_Survival.Characters
                     {
                         _frames = Knife.frames;
                         isMoving = false;
+                        _slash.Hide(); ;
                     }
                     else if (currentWeapon.ToLower() == Weapon.shotgun.ToString())
                     {
@@ -176,7 +184,7 @@ namespace Zombie_Survival.Characters
                     }
                 }
             }
-
+            _slash.Update(gameTime);
             Movements.Update(gameTime, _size, Camera.Transform);
             AvoidOverlapping(zombies);
             var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
@@ -199,6 +207,7 @@ namespace Zombie_Survival.Characters
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
+            _slash.Draw(_spriteBatch);
             shoot.Draw(_spriteBatch);
             // Draw the current frame with rotation
             _spriteBatch.Draw(
@@ -215,6 +224,9 @@ namespace Zombie_Survival.Characters
 
             // Draw the bounding box for debugging
             Globals.Debugger.Draw(_spriteBatch, BoundingBox);
+
+
+
         }
     }
 }
