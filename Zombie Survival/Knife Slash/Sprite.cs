@@ -59,7 +59,7 @@ namespace Zombie_Survival.Knife_Slash
 
                 if (isActive)
                 {
-                    if (_currentFrame == (_frames.Length-1))
+                    if (_currentFrame == (_frames.Length - 1))
                     {
                         for (int j = zombies.Count - 1; j >= 0; j--)
                         {
@@ -68,6 +68,8 @@ namespace Zombie_Survival.Knife_Slash
                                 // Bullet hits the zombie
                                 isActive = true;
                                 zombies.RemoveAt(j);
+                                //RESPAWN ZOMBIE
+                                Zombies.Respawn.Start(zombies);
                                 break;
                             }
                         }
@@ -75,7 +77,7 @@ namespace Zombie_Survival.Knife_Slash
                     }
                 }
 
-              
+
             }
 
 

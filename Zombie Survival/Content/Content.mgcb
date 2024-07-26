@@ -2083,6 +2083,12 @@
 /processorParam:Quality=Best
 /build:Sounds/Rifle Sound.wav
 
+#begin Sounds/Shotgun Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Shotgun Sound.wav
+
 #begin Zombies/Macho Attack/1.png
 /importer:TextureImporter
 /processor:TextureProcessor

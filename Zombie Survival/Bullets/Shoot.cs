@@ -121,7 +121,7 @@ namespace Zombie_Survival.Bullets
 
                 for (int j = zombies.Count - 1; j >= 0; j--)
                 {
-                    if (bullets[i].BoundingBox.Intersects((Rectangle)zombies[j].BoundingBox))
+                    if (bullets[i].BoundingBox.Intersects(zombies[j].BoundingBox))
                     {
                         // Bullet hits the zombie
                         bulletHit = true;
@@ -129,13 +129,8 @@ namespace Zombie_Survival.Bullets
 
 
 
-                        Random random = new Random();
-                        float newX = random.Next(Maps.Textures.Covid19.frames[0].Width);
-                        float newY = random.Next(Maps.Textures.Covid19.frames[0].Height);
-
-
-                        Vector2 NewPosition = new Vector2(newX, newY);
-                        zombies.Add(new Zombies.Sprite(NewPosition));
+                        //RESPAWN ZOMBIE
+                        Zombies.Respawn.Start(zombies);
                         break;
                     }
                 }

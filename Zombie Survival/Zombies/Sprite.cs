@@ -8,7 +8,7 @@ namespace Zombie_Survival.Zombies
 {
     public class Sprite
     {
-        private Texture2D[] _frames;
+        private Texture2D[] _frames { get; set; }
         private int _currentFrame;
         private double _frameTime;
         private double _elapsedTime;
@@ -23,12 +23,13 @@ namespace Zombie_Survival.Zombies
         {
             get
             {
-                return Globals.Debugger.BoundingBox(_frames[0], Position, _scale, 0.5f);
+                
+                return Globals.Debugger.BoundingBox(Textures.Macho.frames[0], Position, _scale, 0.5f);
             }
         }
 
 
-        public Sprite(Viewport viewport, Vector2 position)
+        public Sprite(Vector2 position)
         {
             Position = position;
             _currentFrame = 0;

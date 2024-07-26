@@ -46,25 +46,12 @@ namespace Zombie_Survival
             _characters = new Characters.Sprite(GraphicsDevice.Viewport);
             _maps = new Maps.Sprite(GraphicsDevice.Viewport);
             _crosshairs = new Crosshairs.Sprite(GraphicsDevice.Viewport);
-          
 
 
-
-            // Example: Create 10 sprites and position them in a grid
-            int rows = 2;
-            int columns = 2;
-            int spacing = 100; // Adjust spacing as needed
-
-            for (int i = 0; i < rows; i++)
+            for(int i =0; i < 6; i++)
             {
-                for (int j = 0; j < columns; j++)
-                {
-                    Vector2 position = new Vector2(j * spacing, i * spacing);
-                    _zombies.Add(new Zombies.Sprite(position));
-                }
+                Zombies.Respawn.Start(_zombies);
             }
-
-
         }
 
 
@@ -116,6 +103,7 @@ namespace Zombie_Survival
             Sounds.SoundEffects.RifleAttack.LoadContent(Content);
             Sounds.SoundEffects.PistolAttack.LoadContent(Content);
             Sounds.SoundEffects.KnifeAttack.LoadContent(Content);
+            Sounds.SoundEffects.ShotgunAttack.LoadContent(Content);
         }
 
         protected override void Update(GameTime gameTime)

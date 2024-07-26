@@ -40,11 +40,10 @@ namespace Zombie_Survival.Characters
 
         // Cooldown related variables
         private double _firePistolCooldown = 400; // Cooldown time in milliseconds
-        private double _fireShotgunCooldown = 800; // Cooldown time in milliseconds
+        private double _fireShotgunCooldown = 1800; // Cooldown time in milliseconds
         private double _fireRifleCooldown = 300; // Cooldown time in milliseconds
         private double _fireKnifeCooldown = 1200; // Cooldown time in milliseconds
         private double _lastFireTime = 0;
-
         public Sprite(Viewport viewport)
         {
 
@@ -141,6 +140,7 @@ namespace Zombie_Survival.Characters
                     isMoving = true;
                     _frames = ShotgunAttack.frames;
                     shoot.Attack(Bullets.Textures.Bullets.Shotgun.frames);
+                    Sounds.SoundEffects.ShotgunAttack.audio.Play();
                 }
                 else if (currentWeapon.ToLower() == Weapon.knife.ToString())
                 {

@@ -21,11 +21,20 @@ namespace Zombie_Survival.Globals
 
         public static Rectangle BoundingBox(Texture2D frame, Vector2 position, Vector2 scale, float scaleFactor)
         {
-            int width = (int)(frame.Width * scale.X * scaleFactor);
-            int height = (int)(frame.Height * scale.Y * scaleFactor);
-            int x = (int)(position.X - (width / 2));
-            int y = (int)(position.Y - (height / 2));
-            return new Rectangle(x, y, width, height);
+            if(frame != null)
+            {
+
+                int width = (int)(frame.Width * scale.X * scaleFactor);
+                int height = (int)(frame.Height * scale.Y * scaleFactor);
+                int x = (int)(position.X - (width / 2));
+                int y = (int)(position.Y - (height / 2));
+                return new Rectangle(x, y, width, height);
+            }
+            else
+            {
+                return new Rectangle(0, 0, 0, 0);
+            }
+
         }
     }
 }

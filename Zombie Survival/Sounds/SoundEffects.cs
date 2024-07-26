@@ -36,5 +36,14 @@ namespace Zombie_Survival.Sounds
                 audio = content.Load<SoundEffect>("Sounds/Knife Sound");
             }
         }
+
+        public static class ShotgunAttack
+        {
+            public static SoundEffect audio;
+            public static void LoadContent(ContentManager content)
+            {
+                audio = content.Load<SoundEffect>("Sounds/Shotgun Sound");
+            }
+        }
     }
 }
