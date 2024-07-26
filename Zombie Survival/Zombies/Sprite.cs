@@ -136,7 +136,7 @@ namespace Zombie_Survival.Zombies
 
 
                 // Draw the bounding box for debugging
-                Globals.Debugger.Draw(_spriteBatch, BoundingBox);
+                //Globals.Debugger.Draw(_spriteBatch, BoundingBox);
             }
             catch { }
         }

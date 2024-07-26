@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace Zombie_Survival.Knife_Slash
 {
@@ -15,6 +16,14 @@ namespace Zombie_Survival.Knife_Slash
         private Vector2 _scale;
         private bool isActive = false;
 
+
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                return Globals.Debugger.BoundingBox(_frames[0], Position, _scale, 0.5f);
+            }
+        }
         public void Attack()
         {
             _currentFrame = 0;
@@ -35,7 +44,7 @@ namespace Zombie_Survival.Knife_Slash
             _frames = Textures.Slash.frames;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, List<Zombies.Sprite> zombies)
         {
             // Update animation frame
             _elapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -47,6 +56,26 @@ namespace Zombie_Survival.Knife_Slash
                 {
                     _currentFrame = 0; // Loop back to the first frame
                 }
+
+                if (isActive)
+                {
+                    if (_currentFrame == (_frames.Length-1))
+                    {
+                        for (int j = zombies.Count - 1; j >= 0; j--)
+                        {
+                            if (BoundingBox.Intersects(zombies[j].BoundingBox))
+                            {
+                                // Bullet hits the zombie
+                                isActive = true;
+                                zombies.RemoveAt(j);
+                                break;
+                            }
+                        }
+
+                    }
+                }
+
+              
             }
 
 
@@ -78,6 +107,8 @@ namespace Zombie_Survival.Knife_Slash
                     0f
                 );
             }
+            // Draw the bounding box for debugging
+            //Globals.Debugger.Draw(_spriteBatch, BoundingBox);
         }
     }
 }

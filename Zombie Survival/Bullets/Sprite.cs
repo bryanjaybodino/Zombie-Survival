@@ -21,12 +21,9 @@ namespace Zombie_Survival.Bullets
         {
             get
             {
+                Vector2 scale = new Vector2(0.05f, 0.05f);
                 float scaleFactor = 0.4f; // Adjust this factor as needed
-                int width = (int)(_frames.Width * Scale * scaleFactor);
-                int height = (int)(_frames.Height * Scale * scaleFactor);
-                int x = (int)(Position.X - (width / 2));
-                int y = (int)(Position.Y - (height / 2));
-                return new Rectangle(x, y, width, height);
+                return Globals.Debugger.BoundingBox(_frames, Position, scale, scaleFactor);
             }
         }
 
@@ -62,10 +59,7 @@ namespace Zombie_Survival.Bullets
                 _spriteBatch.Draw(_frames, Position, null, Color.White, Rotation, Vector2.Zero, Scale, SpriteEffects.None, 0f);
 
                 // Draw the bounding box for debugging
-                //Rectangle boundingBox = BoundingBox;
-                //Texture2D whiteTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
-                //whiteTexture.SetData(new[] { Color.White });
-                //_spriteBatch.Draw(whiteTexture, boundingBox, Color.Red * 0.5f);
+                //Globals.Debugger.Draw(_spriteBatch, BoundingBox);
             }
         }
 

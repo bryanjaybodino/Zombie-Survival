@@ -184,7 +184,7 @@ namespace Zombie_Survival.Characters
                     }
                 }
             }
-            _slash.Update(gameTime);
+            _slash.Update(gameTime, zombies);
             Movements.Update(gameTime, _size, Camera.Transform);
             AvoidOverlapping(zombies);
             var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
@@ -223,7 +223,7 @@ namespace Zombie_Survival.Characters
             );
 
             // Draw the bounding box for debugging
-            Globals.Debugger.Draw(_spriteBatch, BoundingBox);
+            //Globals.Debugger.Draw(_spriteBatch, BoundingBox);
 
 
 
