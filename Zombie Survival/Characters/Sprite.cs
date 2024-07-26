@@ -18,8 +18,15 @@ namespace Zombie_Survival.Characters
         private Viewport _viewport;
         private string currentWeapon = "knife";
         private Texture2D _size;
-
         private bool isMoving = false;
+
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                return Globals.Debugger.BoundingBox(_size, Movements.Position, new Vector2(0.5f, 0.6f), 0.5f);
+            }
+        }
         private enum Weapon
         {
             pistol,
@@ -205,6 +212,9 @@ namespace Zombie_Survival.Characters
                 SpriteEffects.None,
                 0f
             );
+
+            // Draw the bounding box for debugging
+            Globals.Debugger.Draw(_spriteBatch, BoundingBox);
         }
     }
 }

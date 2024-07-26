@@ -23,12 +23,7 @@ namespace Zombie_Survival.Zombies
         {
             get
             {
-                float scaleFactor = 0.5f; // Adjust this factor as needed
-                int width = (int)(_frames[0].Width * _scale.X * scaleFactor);
-                int height = (int)(_frames[0].Height * _scale.Y * scaleFactor);
-                int x = (int)(Position.X - (width / 2));
-                int y = (int)(Position.Y - (height / 2));
-                return new Rectangle(x, y, width, height);
+                return Globals.Debugger.BoundingBox(_frames[0], Position, _scale, 0.5f);
             }
         }
 
@@ -54,7 +49,7 @@ namespace Zombie_Survival.Zombies
                     _currentFrame = 0; // Loop back to the first frame
                 }
             }
-    
+
 
             // Follow character and avoid overlapping with other sprites
             bool isFollowing = FollowCharacter(gameTime);
@@ -78,7 +73,7 @@ namespace Zombie_Survival.Zombies
             Vector2 direction = characterPosition - Position;
             float distance = direction.Length();
 
-            if (distance > (_minDistance-40f))
+            if (distance > (_minDistance - 40f))
             {
                 direction.Normalize(); // Get the direction as a unit vector
                 Position += direction * _movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -139,12 +134,9 @@ namespace Zombie_Survival.Zombies
 
 
 
-          
+
                 // Draw the bounding box for debugging
-                Rectangle boundingBox = BoundingBox;
-                Texture2D whiteTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
-                whiteTexture.SetData(new[] { Color.White });
-                _spriteBatch.Draw(whiteTexture, boundingBox, Color.Red * 0.5f);
+                Globals.Debugger.Draw(_spriteBatch, BoundingBox);
             }
             catch { }
         }
