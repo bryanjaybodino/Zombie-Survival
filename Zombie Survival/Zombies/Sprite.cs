@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Zombie_Survival.Zombies
 {
@@ -17,6 +18,19 @@ namespace Zombie_Survival.Zombies
 
         public Vector2 Position { get; private set; }
         public float Rotation { get; private set; } = 0f;
+
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                float scaleFactor = 0.5f; // Adjust this factor as needed
+                int width = (int)(_frames[0].Width * _scale.X * scaleFactor);
+                int height = (int)(_frames[0].Height * _scale.Y * scaleFactor);
+                int x = (int)(Position.X - (width / 2));
+                int y = (int)(Position.Y - (height / 2));
+                return new Rectangle(x, y, width, height);
+            }
+        }
 
 
         public Sprite(Viewport viewport, Vector2 position)
@@ -107,17 +121,30 @@ namespace Zombie_Survival.Zombies
                 {
                     _currentFrame = 0;
                 }
+
+
+                Vector2 origin = new Vector2(_frames[_currentFrame].Width / 2, _frames[_currentFrame].Height / 2);
+
                 _spriteBatch.Draw(
                     _frames[_currentFrame],
                     Position,
                     null,
                     Color.White,
                     Rotation,
-                    new Vector2(_frames[_currentFrame].Width / 2, _frames[_currentFrame].Height / 2),
+                    origin, // Use the center of the frame as the origin
                     _scale,
                     SpriteEffects.None,
                     0f
                 );
+
+
+
+          
+                // Draw the bounding box for debugging
+                Rectangle boundingBox = BoundingBox;
+                Texture2D whiteTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
+                whiteTexture.SetData(new[] { Color.White });
+                _spriteBatch.Draw(whiteTexture, boundingBox, Color.Red * 0.5f);
             }
             catch { }
         }

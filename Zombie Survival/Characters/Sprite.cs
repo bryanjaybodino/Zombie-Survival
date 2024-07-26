@@ -174,7 +174,7 @@ namespace Zombie_Survival.Characters
             AvoidOverlapping(zombies);
             var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
             Camera.Update(gameArea, Movements.Position, _viewport);
-            shoot.Update(gameTime);
+            shoot.Update(gameTime, zombies);
         }
         private void AvoidOverlapping(List<Zombies.Sprite> zombies)
         {

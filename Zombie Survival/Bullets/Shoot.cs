@@ -55,7 +55,7 @@ namespace Zombie_Survival.Bullets
             Vector2 direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
             direction.Normalize();
 
-            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, rotation, scale,10000f));
+            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, rotation, scale, 10000f));
         }
 
 
@@ -95,28 +95,47 @@ namespace Zombie_Survival.Bullets
 
         public void Attack(Texture2D frames)
         {
-            if (frames.Name == "Characters/Pistol/Bullet") 
+            if (frames.Name == "Characters/Pistol/Bullet")
             {
                 Pistol(frames);
             }
             else if (frames.Name == "Characters/Rifle/Bullet")
             {
-                Rifle(frames);  
+                Rifle(frames);
             }
             else if (frames.Name == "Characters/Shotgun/Bullet")
             {
                 Shotgun(frames);
             }
 
-       
+
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, List<Zombies.Sprite> zombies)
         {
             for (int i = bullets.Count - 1; i >= 0; i--)
             {
                 bullets[i].Update(gameTime);
-                if (!bullets[i].IsActive)
+
+                bool bulletHit = false;
+
+                for (int j = zombies.Count - 1; j >= 0; j--)
+                {
+                    if (bullets[i].BoundingBox.Intersects(zombies[j].BoundingBox))
+                    {
+                        // Bullet hits the zombie
+                        bulletHit = true;
+                        zombies.RemoveAt(j);
+                        break;
+                    }
+                }
+
+                // If the bullet hit a zombie, remove it
+                if (bulletHit)
+                {
+                    bullets.RemoveAt(i);
+                }
+                else if (!bullets[i].IsActive)
                 {
                     bullets.RemoveAt(i);
                 }
