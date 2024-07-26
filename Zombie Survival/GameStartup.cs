@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using Zombie_Survival.Globals;
 
 
@@ -13,7 +14,7 @@ namespace Zombie_Survival
 
         public GameStartup()
         {
-            _graphics = new GraphicsDeviceManager(this); 
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             //IsMouseVisible = true;
 
@@ -32,23 +33,43 @@ namespace Zombie_Survival
 
         private Characters.Sprite _characters;
         private Maps.Sprite _maps;
-        private Zombies.Sprite _zombies;
+        private List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
         private Crosshairs.Sprite _crosshairs;
         protected override void Initialize()
         {
             base.Initialize();
-      
+
             _characters = new Characters.Sprite(GraphicsDevice.Viewport);
             _maps = new Maps.Sprite(GraphicsDevice.Viewport);
-            _zombies = new Zombies.Sprite(GraphicsDevice.Viewport);
+
             _crosshairs = new Crosshairs.Sprite(GraphicsDevice.Viewport);
+
+
+
+
+
+            // Example: Create 10 sprites and position them in a grid
+            int rows = 2;
+            int columns = 2;
+            int spacing = 100; // Adjust spacing as needed
+
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    Vector2 position = new Vector2(j * spacing, i * spacing);
+                    _zombies.Add(new Zombies.Sprite(GraphicsDevice.Viewport, position));
+                }
+            }
+
+
         }
 
 
 
         protected override void LoadContent()
         {
-           
+
 
 
 
@@ -88,6 +109,7 @@ namespace Zombie_Survival
 
             //ZOMBIES
             Zombies.Textures.Macho.LoadContent(Content);
+            Zombies.Textures.MachoAttack.LoadContent(Content);
 
         }
 
@@ -99,7 +121,15 @@ namespace Zombie_Survival
 
             _maps.Update(gameTime);
             _characters.Update(gameTime);
-            _zombies.Update(gameTime);
+           
+
+
+            for(int i = 0; i < _zombies.Count; i++)
+            {
+                _zombies[i].Update(gameTime, _zombies);
+            }
+
+
             _crosshairs.Update(gameTime);
 
 
@@ -124,8 +154,14 @@ namespace Zombie_Survival
 
 
             //ZOMBIE
-            _zombies.Draw(_spriteBatch);
 
+            for (int i = 0; i < _zombies.Count; i++)
+            {
+                _zombies[i].Draw(_spriteBatch);
+            }
+
+
+           
 
             //CROSSHAIR
             _crosshairs.Draw(_spriteBatch);

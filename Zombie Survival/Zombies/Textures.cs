@@ -33,7 +33,7 @@ namespace Zombie_Survival.Zombies
             public static Texture2D[] frames;
             public static void LoadContent(ContentManager content)
             {
-                frames = LoadTextures(content, "Zombies/Macho Attack", 17);
+                frames = LoadTextures(content, "Zombies/Macho Attack", 9);
             }
         }
     }

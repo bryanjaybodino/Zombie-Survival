@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace Zombie_Survival.Zombies
 {
@@ -10,25 +11,23 @@ namespace Zombie_Survival.Zombies
         private int _currentFrame;
         private double _frameTime;
         private double _elapsedTime;
-        private Vector2 _imagePosition;
         private Vector2 _scale;
-        private float _rotation;
-        private float _movementSpeed;
-        private float _minDistance; // Minimum distance to maintain from the character
+        private float _movementSpeed = 140f; // Initialize movement speed (pixels per second)
+        private float _minDistance = 100f; // Minimum distance to maintain from other sprites
 
-        public Sprite(Viewport viewport)
+        public Vector2 Position { get; private set; }
+        public float Rotation { get; private set; } = 0f;
+
+
+        public Sprite(Viewport viewport, Vector2 position)
         {
-            _imagePosition = new Vector2(0, 0); // Set initial position of the image
+            Position = position;
             _currentFrame = 0;
             _frameTime = 50; // Time per frame in milliseconds
-            _frames = Textures.Macho.frames;
-            _scale = new Vector2(.5f, .5f); // Initialize scale to 0.5
-            _rotation = 0f; // Initialize rotation to 0
-            _movementSpeed = 100f; // Initialize movement speed (pixels per second)
-            _minDistance = 80f; // Minimum distance to maintain from the character (adjust as needed)
+            _scale = new Vector2(.5f, .5f); // Initialize scale to 0.5     
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, List<Sprite> sprites)
         {
             // Update animation frame
             _elapsedTime += gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -41,38 +40,86 @@ namespace Zombie_Survival.Zombies
                     _currentFrame = 0; // Loop back to the first frame
                 }
             }
-            FollowCharacter(gameTime);
+    
+
+            // Follow character and avoid overlapping with other sprites
+            bool isFollowing = FollowCharacter(gameTime);
+
+            // Ensure no overlapping with other sprites
+            AvoidOverlapping(sprites);
+
+            if (isFollowing)
+            {
+                _frames = Textures.Macho.frames;
+            }
+            else // ATTACKING
+            {
+                _frames = Textures.MachoAttack.frames;
+            }
         }
 
-        private void FollowCharacter(GameTime gameTime)
+        private bool FollowCharacter(GameTime gameTime)
         {
             Vector2 characterPosition = Characters.Movements.Position;
-            Vector2 direction = characterPosition - _imagePosition;
+            Vector2 direction = characterPosition - Position;
             float distance = direction.Length();
 
-            if (distance > _minDistance)
+            if (distance > (_minDistance-40f))
             {
                 direction.Normalize(); // Get the direction as a unit vector
-                _imagePosition += direction * _movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Position += direction * _movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
                 // Calculate rotation angle
-                _rotation = (float)Math.Atan2(direction.Y, direction.X);
+                Rotation = (float)Math.Atan2(direction.Y, direction.X);
+                _frameTime = 50;
+                return true; // IF FOLLOWING
+            }
+            else
+            {
+                _frameTime = 100;
+                return false; // ATTACK ANIMATION
+            }
+        }
+
+        private void AvoidOverlapping(List<Sprite> sprites)
+        {
+            foreach (var sprite in sprites)
+            {
+                if (sprite != this)
+                {
+                    float distance = Vector2.Distance(Position, sprite.Position);
+                    if (distance < _minDistance)
+                    {
+                        // Move away to avoid overlapping
+                        Vector2 moveAway = Position - sprite.Position;
+                        moveAway.Normalize();
+                        Position += moveAway * (_minDistance - distance);
+                    }
+                }
             }
         }
 
         public void Draw(SpriteBatch _spriteBatch)
         {
-            _spriteBatch.Draw(
-                _frames[_currentFrame],
-                _imagePosition,
-                null,
-                Color.White,
-                _rotation,
-                new Vector2(_frames[_currentFrame].Width / 2, _frames[_currentFrame].Height / 2),
-                _scale,
-                SpriteEffects.None,
-                0f
-            );
+            try
+            {
+                if (_currentFrame >= _frames.Length)
+                {
+                    _currentFrame = 0;
+                }
+                _spriteBatch.Draw(
+                    _frames[_currentFrame],
+                    Position,
+                    null,
+                    Color.White,
+                    Rotation,
+                    new Vector2(_frames[_currentFrame].Width / 2, _frames[_currentFrame].Height / 2),
+                    _scale,
+                    SpriteEffects.None,
+                    0f
+                );
+            }
+            catch { }
         }
     }
 }

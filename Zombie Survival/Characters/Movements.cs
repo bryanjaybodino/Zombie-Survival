@@ -7,6 +7,12 @@ namespace Zombie_Survival.Characters
 {
     public class Movements
     {
+
+
+
+
+
+
         private static float _movementSpeed = 200f;
         public static float Rotation = 0f;
         public static Vector2 Position;
