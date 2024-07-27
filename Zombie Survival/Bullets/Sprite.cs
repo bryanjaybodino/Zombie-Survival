@@ -15,21 +15,21 @@ namespace Zombie_Survival.Bullets
         public Texture2D _frames;
         private float Scale { get; set; }
         private float MaxDistance { get; set; }
-
+        public int BulletDamage { get; set; }
 
         public Rectangle BoundingBox
         {
             get
             {
-                Vector2 scale = new Vector2(0.05f, 0.05f);
+                Vector2 scale = new Vector2(0.01f, 0.01f);
                 float scaleFactor = 0.4f; // Adjust this factor as needed
-                return Globals.Debugger.BoundingBox(_frames, Position, scale, scaleFactor);
+
+                Vector2 position = new Vector2(Position.X, Position.Y);
+                return Globals.Debugger.BoundingBox(_frames, position, scale, scaleFactor);
             }
         }
 
-
-
-        public Sprite(Texture2D texture, Vector2 position, Vector2 direction, float speed, float rotation, float scale, float maxDistance)
+        public Sprite(Texture2D texture, Vector2 position, Vector2 direction, float speed, float rotation, float scale, float maxDistance, int bulletDamage)
         {
             this._frames = texture;
             Position = position;
@@ -39,6 +39,7 @@ namespace Zombie_Survival.Bullets
             Scale = scale;
             Rotation = rotation;
             MaxDistance = maxDistance;
+            BulletDamage = bulletDamage;
         }
 
         public void Update(GameTime gameTime)

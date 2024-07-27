@@ -12,37 +12,125 @@ namespace Zombie_Survival.Sounds
 {
     public class SoundEffects
     {
-        public static class RifleAttack
+        public static class Rifle
         {
-            public static SoundEffect audio;
-            public static void LoadContent(ContentManager content)
+            public static class Attack
             {
-                audio = content.Load<SoundEffect>("Sounds/Rifle Sound");
+                public static SoundEffectInstance audio;
+                public static void LoadContent(ContentManager content)
+                {
+                    SoundEffect sound = content.Load<SoundEffect>("Sounds/Rifle Sound");
+                    audio = sound.CreateInstance();
+                    audio.IsLooped = false;
+                    audio.Volume = 0.1f;
+                }
             }
-        }
-        public static class PistolAttack
-        {
-            public static SoundEffect audio;
-            public static void LoadContent(ContentManager content)
+            public static class Reload
             {
-                audio = content.Load<SoundEffect>("Sounds/Pistol Sound");
-            }
-        }
-        public static class KnifeAttack
-        {
-            public static SoundEffect audio;
-            public static void LoadContent(ContentManager content)
-            {
-                audio = content.Load<SoundEffect>("Sounds/Knife Sound");
+                public static SoundEffectInstance audio;
+                public static void LoadContent(ContentManager content)
+                {
+                    SoundEffect sound = content.Load<SoundEffect>("Sounds/Rifle Reload Sound");
+                    audio = sound.CreateInstance();
+                    audio.IsLooped = false;
+                    audio.Volume = 0.1f;
+                }
             }
         }
 
-        public static class ShotgunAttack
+
+
+
+        public static class Pistol
         {
-            public static SoundEffect audio;
+            public static class Attack
+            {
+                public static SoundEffectInstance audio;
+                public static void LoadContent(ContentManager content)
+                {
+                    SoundEffect sound = content.Load<SoundEffect>("Sounds/Pistol Sound");
+                    audio = sound.CreateInstance();
+                    audio.IsLooped = false;
+                    audio.Volume = 0.1f;
+                }
+            }
+
+            public static class Reload
+            {
+                public static SoundEffectInstance audio;
+                public static void LoadContent(ContentManager content)
+                {
+                    SoundEffect sound = content.Load<SoundEffect>("Sounds/Pistol Reload Sound");
+                    audio = sound.CreateInstance();
+                    audio.IsLooped = false;
+                    audio.Volume = 0.025f;
+                }
+            }
+        }
+
+
+        public static class Shotgun
+        {
+            public static class Attack
+            {
+                public static SoundEffectInstance audio;
+                public static void LoadContent(ContentManager content)
+                {
+                    SoundEffect sound = content.Load<SoundEffect>("Sounds/Shotgun Sound");
+                    audio = sound.CreateInstance();
+                    audio.IsLooped = false;
+                    audio.Volume = 0.1f;
+                }
+            }
+            public static class Reload
+            {
+                public static SoundEffectInstance audio;
+                public static void LoadContent(ContentManager content)
+                {
+                    SoundEffect sound = content.Load<SoundEffect>("Sounds/Pistol Reload Sound");
+                    audio = sound.CreateInstance();
+                    audio.IsLooped = false;
+                    audio.Volume = 0.1f;
+                }
+            }
+        }
+
+
+        public static class Knife
+        {
+            public static class Attack
+            {
+                public static SoundEffectInstance audio;
+                public static void LoadContent(ContentManager content)
+                {
+                    SoundEffect sound = content.Load<SoundEffect>("Sounds/Knife Sound");
+                    audio = sound.CreateInstance();
+                    audio.IsLooped = false;
+                    audio.Volume = 0.1f;
+                }
+            }
+        }
+
+        public static class Zombie
+        {
+            public static SoundEffectInstance audio;
             public static void LoadContent(ContentManager content)
             {
-                audio = content.Load<SoundEffect>("Sounds/Shotgun Sound");
+                SoundEffect sound = content.Load<SoundEffect>("Sounds/Zombie Sound");
+                audio = sound.CreateInstance();
+                audio.IsLooped = true;
+                audio.Volume = 0.04f;
+            }
+            public static class Attack
+            {
+                public static SoundEffectInstance audio;
+                public static void LoadContent(ContentManager content)
+                {
+                    SoundEffect sound = content.Load<SoundEffect>("Sounds/Zombie Attack Sound");
+                    audio = sound.CreateInstance();
+                    audio.IsLooped = false;
+                    audio.Volume = 0.1f;
+                }
             }
         }
     }

@@ -15,8 +15,7 @@ namespace Zombie_Survival.Knife_Slash
         private float Rotation;
         private Vector2 _scale;
         private bool isActive = false;
-
-
+        private int KnifeDamage { get; set; } = 50;
         public Rectangle BoundingBox
         {
             get
@@ -63,13 +62,18 @@ namespace Zombie_Survival.Knife_Slash
                     {
                         for (int j = zombies.Count - 1; j >= 0; j--)
                         {
-                            if (BoundingBox.Intersects((Rectangle)zombies[j].BoundingBox))
+                            if (BoundingBox.Intersects(zombies[j].BoundingBox))
                             {
-                                // Bullet hits the zombie
+                                // Knife hits the zombie
                                 isActive = true;
-                                zombies.RemoveAt(j);
-                                //RESPAWN ZOMBIE
-                                Zombies.Respawn.Start(zombies);
+                                zombies[j].isReceivedDamage = true;
+                                zombies[j].ZombieHealth -= KnifeDamage;
+                                if(zombies[j].ZombieHealth <= 0)
+                                {
+                                    zombies.RemoveAt(j);
+                                    //RESPAWN ZOMBIE
+                                    Zombies.Respawn.Start(zombies);
+                                }  
                                 break;
                             }
                         }
@@ -109,6 +113,9 @@ namespace Zombie_Survival.Knife_Slash
                     0f
                 );
             }
+
+
+
             // Draw the bounding box for debugging
             //Globals.Debugger.Draw(_spriteBatch, BoundingBox);
         }

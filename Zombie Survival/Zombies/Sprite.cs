@@ -13,17 +13,19 @@ namespace Zombie_Survival.Zombies
         private double _frameTime;
         private double _elapsedTime;
         private Vector2 _scale;
-        private float _movementSpeed = 140f; // Initialize movement speed (pixels per second)
+        private float _movementSpeed = 150f; // Initialize movement speed (pixels per second)
         private float _minDistance = 100f; // Minimum distance to maintain from other sprites
 
         public Vector2 Position { get; private set; }
         public float Rotation { get; private set; } = 0f;
+        public int ZombieHealth { get; set; } = 100;
+        public bool isReceivedDamage { get; set; } = false;
 
         public Rectangle BoundingBox
         {
             get
             {
-                
+
                 return Globals.Debugger.BoundingBox(Textures.Macho.frames[0], Position, _scale, 0.5f);
             }
         }
@@ -65,8 +67,13 @@ namespace Zombie_Survival.Zombies
             else // ATTACKING
             {
                 _frames = Textures.MachoAttack.frames;
+                if (_currentFrame == (_frames.Length / 2))/// Middle of the Frame Sound Triggered
+                {
+                    Sounds.SoundEffects.Zombie.Attack.audio.Play();
+                }
             }
         }
+
 
         private bool FollowCharacter(GameTime gameTime)
         {
@@ -86,7 +93,7 @@ namespace Zombie_Survival.Zombies
             }
             else
             {
-                _frameTime = 100;
+                _frameTime = 70;
                 return false; // ATTACK ANIMATION
             }
         }
@@ -120,7 +127,6 @@ namespace Zombie_Survival.Zombies
 
 
                 Vector2 origin = new Vector2(_frames[_currentFrame].Width / 2, _frames[_currentFrame].Height / 2);
-
                 _spriteBatch.Draw(
                     _frames[_currentFrame],
                     Position,
@@ -135,6 +141,44 @@ namespace Zombie_Survival.Zombies
 
 
 
+
+
+                ////
+                if (isReceivedDamage)
+                {
+                    Rectangle HealthBar = new Rectangle((int)Position.X, (int)Position.Y, 20, ZombieHealth);
+                    Texture2D whiteTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
+                    whiteTexture.SetData(new[] { Color.White });
+                    origin = new Vector2(HealthBar.Width / 2, HealthBar.Height / 2);
+
+                    Color HealthBarColor = Color.White;
+                    if (ZombieHealth >= 80)
+                    {
+                        HealthBarColor = Color.Green;
+                    }
+                    else if (ZombieHealth >= 50 && ZombieHealth < 80)
+                    {
+                        HealthBarColor = Color.Orange;
+                    }
+                    else
+                    {
+                        HealthBarColor = Color.Red;
+                    }
+
+
+                    _spriteBatch.Draw(
+                      whiteTexture,
+                        Position,
+                        HealthBar,
+                        HealthBarColor,
+                        Rotation,
+                        origin, // Use the center of the frame as the origin
+                        _scale,
+                        SpriteEffects.None,
+                        0f
+                    );
+
+                }
 
                 // Draw the bounding box for debugging
                 //Globals.Debugger.Draw(_spriteBatch, BoundingBox);

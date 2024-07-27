@@ -36,7 +36,7 @@ namespace Zombie_Survival
         private List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
         private Crosshairs.Sprite _crosshairs;
 
-    
+
 
 
         protected override void Initialize()
@@ -48,7 +48,7 @@ namespace Zombie_Survival
             _crosshairs = new Crosshairs.Sprite(GraphicsDevice.Viewport);
 
 
-            for(int i =0; i < 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Zombies.Respawn.Start(_zombies);
             }
@@ -100,10 +100,19 @@ namespace Zombie_Survival
 
 
             //SOUNDS
-            Sounds.SoundEffects.RifleAttack.LoadContent(Content);
-            Sounds.SoundEffects.PistolAttack.LoadContent(Content);
-            Sounds.SoundEffects.KnifeAttack.LoadContent(Content);
-            Sounds.SoundEffects.ShotgunAttack.LoadContent(Content);
+            Sounds.SoundEffects.Rifle.Attack.LoadContent(Content);
+            Sounds.SoundEffects.Pistol.Attack.LoadContent(Content);
+            Sounds.SoundEffects.Shotgun.Attack.LoadContent(Content);
+            Sounds.SoundEffects.Knife.Attack.LoadContent(Content);
+
+            Sounds.SoundEffects.Rifle.Reload.LoadContent(Content);
+            Sounds.SoundEffects.Pistol.Reload.LoadContent(Content);
+            Sounds.SoundEffects.Shotgun.Reload.LoadContent(Content);
+
+            Sounds.SoundEffects.Zombie.LoadContent(Content);
+            Sounds.SoundEffects.Zombie.Attack.LoadContent(Content);
+
+            Sounds.SoundEffects.Zombie.audio.Play();
         }
 
         protected override void Update(GameTime gameTime)
@@ -126,7 +135,7 @@ namespace Zombie_Survival
 
             _crosshairs.Update(gameTime);
 
-           
+
 
             // PARA ACCURATE PARIN YUNG MOUSE POSITION
             Globals.MouseInput.Update(Camera.Transform);
@@ -143,7 +152,7 @@ namespace Zombie_Survival
             _maps.Draw(_spriteBatch);
 
 
-      
+
 
             //ZOMBIE
 

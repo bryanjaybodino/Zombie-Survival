@@ -2071,11 +2071,23 @@
 /processorParam:Quality=Best
 /build:Sounds/Knife Sound.wav
 
+#begin Sounds/Pistol Reload Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Pistol Reload Sound.wav
+
 #begin Sounds/Pistol Sound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/Pistol Sound.wav
+
+#begin Sounds/Rifle Reload Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Rifle Reload Sound.wav
 
 #begin Sounds/Rifle Sound.wav
 /importer:WavImporter
@@ -2088,6 +2100,18 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Sounds/Shotgun Sound.wav
+
+#begin Sounds/Zombie Attack Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Zombie Attack Sound.wav
+
+#begin Sounds/Zombie Sound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/Zombie Sound.wav
 
 #begin Zombies/Macho Attack/1.png
 /importer:TextureImporter

@@ -19,6 +19,9 @@ namespace Zombie_Survival.Bullets
 
         private void Pistol(Texture2D frames)
         {
+            int BulletDamage = 10;
+
+
             float scale = 0.02f;
             Vector2 position = Characters.Movements.Position;
             float rotation = Characters.Movements.Rotation;
@@ -34,12 +37,15 @@ namespace Zombie_Survival.Bullets
             Vector2 direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
             direction.Normalize();
 
-            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, rotation, scale, 10000f));
+            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, rotation, scale, 10000f, BulletDamage));
         }
 
 
         private void Rifle(Texture2D frames)
         {
+            int BulletDamage = 20;
+
+
             float scale = 0.05f;
             Vector2 position = Characters.Movements.Position;
             float rotation = Characters.Movements.Rotation;
@@ -55,16 +61,18 @@ namespace Zombie_Survival.Bullets
             Vector2 direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
             direction.Normalize();
 
-            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, rotation, scale, 10000f));
+            bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, rotation, scale, 10000f, BulletDamage));
         }
 
 
         private void Shotgun(Texture2D frames)
         {
+            int BulletDamage = 50;
+
             float scale = 0.05f;
             Vector2 position = Characters.Movements.Position;
             float rotation = Characters.Movements.Rotation;
-            Vector2 gunOffset = new Vector2(65, 10); // Adjust as needed
+            Vector2 gunOffset = new Vector2(40, 10); // Adjust as needed
 
             // Define the maximum distance for shotgun bullets
             float maxDistance = 300f; // Adjust this value to shorten or lengthen the range
@@ -85,7 +93,7 @@ namespace Zombie_Survival.Bullets
                 Vector2 direction = new Vector2((float)Math.Cos(bulletRotation), (float)Math.Sin(bulletRotation));
                 direction.Normalize();
 
-                bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, bulletRotation, scale, maxDistance));
+                bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, bulletRotation, scale, maxDistance, BulletDamage));
             }
         }
 
@@ -125,12 +133,17 @@ namespace Zombie_Survival.Bullets
                     {
                         // Bullet hits the zombie
                         bulletHit = true;
-                        zombies.RemoveAt(j);
 
 
 
-                        //RESPAWN ZOMBIE
-                        Zombies.Respawn.Start(zombies);
+                        zombies[j].isReceivedDamage = true; ;
+                        zombies[j].ZombieHealth -= bullets[i].BulletDamage;
+                        if (zombies[j].ZombieHealth <= 0)
+                        {
+                            zombies.RemoveAt(j);
+                            //RESPAWN ZOMBIE
+                            Zombies.Respawn.Start(zombies);
+                        }
                         break;
                     }
                 }
