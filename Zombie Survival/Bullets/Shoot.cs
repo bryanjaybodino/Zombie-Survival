@@ -17,10 +17,8 @@ namespace Zombie_Survival.Bullets
 
 
 
-        private void Pistol(Texture2D frames)
+        private void Pistol(Texture2D frames,int BulletDamage)
         {
-            int BulletDamage = 10;
-
 
             float scale = 0.02f;
             Vector2 position = Characters.Movements.Position;
@@ -36,15 +34,12 @@ namespace Zombie_Survival.Bullets
             // Calculate the direction based on the rotation
             Vector2 direction = new Vector2((float)Math.Cos(rotation), (float)Math.Sin(rotation));
             direction.Normalize();
-
             bullets.Add(new Sprite(frames, bulletStartPosition, direction, 2500f, rotation, scale, 10000f, BulletDamage));
         }
 
 
-        private void Rifle(Texture2D frames)
+        private void Rifle(Texture2D frames, int BulletDamage)
         {
-            int BulletDamage = 20;
-
 
             float scale = 0.05f;
             Vector2 position = Characters.Movements.Position;
@@ -65,9 +60,8 @@ namespace Zombie_Survival.Bullets
         }
 
 
-        private void Shotgun(Texture2D frames)
+        private void Shotgun(Texture2D frames, int BulletDamage)
         {
-            int BulletDamage = 50;
 
             float scale = 0.05f;
             Vector2 position = Characters.Movements.Position;
@@ -101,22 +95,20 @@ namespace Zombie_Survival.Bullets
 
 
 
-        public void Attack(Texture2D frames)
+        public void Attack(Texture2D frames,int Damage)
         {
             if (frames.Name == "Characters/Pistol/Bullet")
             {
-                Pistol(frames);
+                Pistol(frames, Damage);
             }
             else if (frames.Name == "Characters/Rifle/Bullet")
             {
-                Rifle(frames);
+                Rifle(frames, Damage);
             }
             else if (frames.Name == "Characters/Shotgun/Bullet")
             {
-                Shotgun(frames);
+                Shotgun(frames, Damage);
             }
-
-
         }
 
         public void Update(GameTime gameTime, List<Zombies.Sprite> zombies)
@@ -164,10 +156,11 @@ namespace Zombie_Survival.Bullets
                 else if (!bullets[i].IsActive)
                 {
                     bullets.RemoveAt(i);
-                }              
+                }
             }
 
-            for(int i =0; i < _bloods.Count; i++) {
+            for (int i = 0; i < _bloods.Count; i++)
+            {
                 _bloods[i].Update(gameTime, _bloods);
             }
         }

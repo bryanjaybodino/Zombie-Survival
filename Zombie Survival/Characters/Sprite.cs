@@ -13,7 +13,6 @@ namespace Zombie_Survival.Characters
     {
         Bullets.Shoot shoot = new Bullets.Shoot();
         public Knife_Slash.Sprite _slash;
-
         private Texture2D[] _frames;
         private int _currentFrame;
         private double _frameTime;
@@ -23,10 +22,18 @@ namespace Zombie_Survival.Characters
         private Texture2D _size;
         private bool isMoving = false;
 
+
+
+        //THIS IS FOR CURRENT AMMO
+        Bullets.Magazines.Rifle RifleMagazine = new Bullets.Magazines.Rifle();
+        Bullets.Magazines.Pistol PistolMagazine = new Bullets.Magazines.Pistol();
+        Bullets.Magazines.Shotgun ShotgunMagazine = new Bullets.Magazines.Shotgun();
+
         public Rectangle BoundingBox
         {
             get
             {
+
                 return Globals.Debugger.BoundingBox(_size, Movements.Position, new Vector2(0.5f, 0.6f), 0.5f);
             }
         }
@@ -42,7 +49,6 @@ namespace Zombie_Survival.Characters
         private double _firePistolCooldown = 400; // Cooldown time in milliseconds
         private double _fireShotgunCooldown = 1800; // Cooldown time in milliseconds
         private double _fireRifleCooldown = 100; // Cooldown time in milliseconds
-        private double _fireKnifeCooldown = 1200; // Cooldown time in milliseconds
         private double _lastFireTime = 0;
         public Sprite(Viewport viewport)
         {
@@ -67,26 +73,30 @@ namespace Zombie_Survival.Characters
             _lastFireTime += gameTime.ElapsedGameTime.TotalMilliseconds;
 
             // Change weapon logic
-            if (keyboardState.IsKeyDown(Keys.D1) && !isMoving) // 1 = RIFLE
+            if (keyboardState.IsKeyDown(Keys.D1) && !isMoving && currentWeapon != Weapon.rifle.ToString()) // 1 = RIFLE
             {
+                _lastFireTime = 100000; // PARA MAKA BARIL AGAD KAPAG NAKAPAG SWITCH WEAPON
                 _currentFrame = 0;
                 currentWeapon = Weapon.rifle.ToString();
                 _frames = Rifle.frames;
             }
-            else if (keyboardState.IsKeyDown(Keys.D2) && !isMoving) // 2 = PISTOL
+            else if (keyboardState.IsKeyDown(Keys.D2) && !isMoving && currentWeapon != Weapon.pistol.ToString()) // 2 = PISTOL
             {
+                _lastFireTime = 100000;// PARA MAKA BARIL AGAD KAPAG NAKAPAG SWITCH WEAPON
                 _currentFrame = 0;
                 currentWeapon = Weapon.pistol.ToString();
                 _frames = Pistol.frames;
             }
-            else if (keyboardState.IsKeyDown(Keys.D3) && !isMoving) // 3 = KNIFE
+            else if (keyboardState.IsKeyDown(Keys.D3) && !isMoving && currentWeapon != Weapon.knife.ToString()) // 3 = KNIFE
             {
+                _lastFireTime = 100000; // PARA MAKA BARIL AGAD KAPAG NAKAPAG SWITCH WEAPON
                 _currentFrame = 0;
                 currentWeapon = Weapon.knife.ToString();
                 _frames = Knife.frames;
             }
-            else if (keyboardState.IsKeyDown(Keys.D4) && !isMoving) // 4 = SHOTGUN
+            else if (keyboardState.IsKeyDown(Keys.D4) && !isMoving && currentWeapon != Weapon.shotgun.ToString()) // 4 = SHOTGUN
             {
+                _lastFireTime = 100000;// PARA MAKA BARIL AGAD KAPAG NAKAPAG SWITCH WEAPON
                 _currentFrame = 0;
                 currentWeapon = Weapon.shotgun.ToString();
                 _frames = Shotgun.frames;
@@ -100,18 +110,16 @@ namespace Zombie_Survival.Characters
 
                 if (currentWeapon.ToLower() == Weapon.rifle.ToString())
                 {
-                    _frames = RifleReload.frames;
-                    Sounds.SoundEffects.Rifle.Reload.audio.Play();
+                    _frames = RifleMagazine.Reload(currentWeapon.ToLower());
                 }
                 else if (currentWeapon.ToLower() == Weapon.pistol.ToString())
                 {
-                    _frames = PistolReload.frames;
-                    Sounds.SoundEffects.Pistol.Reload.audio.Play();
+                    _frames = PistolMagazine.Reload(currentWeapon.ToLower());
+
                 }
                 else if (currentWeapon.ToLower() == Weapon.shotgun.ToString())
                 {
-                    _frames = ShotgunReload.frames;
-                    Sounds.SoundEffects.Shotgun.Reload.audio.Play();
+                    _frames = ShotgunMagazine.Reload(currentWeapon.ToLower());
                 }
             }
 
@@ -123,28 +131,46 @@ namespace Zombie_Survival.Characters
 
                 if (currentWeapon.ToLower() == Weapon.rifle.ToString() && _lastFireTime >= _fireRifleCooldown)
                 {
-                    _lastFireTime = 0;
-                    isMoving = true;
-                    _frames = RifleAttack.frames;
-                    shoot.Attack(Bullets.Textures.Bullets.Rifle.frames);
-                    Sounds.SoundEffects.Rifle.Attack.audio.Play();
+                    if (RifleMagazine.CurrentBullets > 0)
+                    {
+                        _lastFireTime = 0;
+                        isMoving = true;
+                        _frames = RifleAttack.frames;
+                        shoot.Attack(Bullets.Textures.Bullets.Rifle.frames, RifleMagazine.Damage);
+                        Sounds.SoundEffects.Rifle.Attack.audio.Play();
 
+                        /// MINUS 1 BULLET
+                        RifleMagazine.Shoot();
+                    }
                 }
                 else if (currentWeapon.ToLower() == Weapon.pistol.ToString() && _lastFireTime >= _firePistolCooldown)
                 {
-                    _lastFireTime = 0;
-                    isMoving = true;
-                    _frames = PistolAttack.frames;
-                    shoot.Attack(Bullets.Textures.Bullets.Pistol.frames);
-                    Sounds.SoundEffects.Pistol.Attack.audio.Play();
+                    if (PistolMagazine.CurrentBullets > 0)
+                    {
+                        _lastFireTime = 0;
+                        isMoving = true;
+                        _frames = PistolAttack.frames;
+                        shoot.Attack(Bullets.Textures.Bullets.Pistol.frames, PistolMagazine.Damage);
+                        Sounds.SoundEffects.Pistol.Attack.audio.Play();
+
+                        /// MINUS 1 BULLET
+                        PistolMagazine.Shoot();
+                    }
                 }
                 else if (currentWeapon.ToLower() == Weapon.shotgun.ToString() && _lastFireTime >= _fireShotgunCooldown)
                 {
-                    _lastFireTime = 0;
-                    isMoving = true;
-                    _frames = ShotgunAttack.frames;
-                    shoot.Attack(Bullets.Textures.Bullets.Shotgun.frames);
-                    Sounds.SoundEffects.Shotgun.Attack.audio.Play();
+                    if (ShotgunMagazine.CurrentBullets > 0)
+                    {
+                        _lastFireTime = 0;
+                        isMoving = true;
+                        _frames = ShotgunAttack.frames;
+                        shoot.Attack(Bullets.Textures.Bullets.Shotgun.frames, ShotgunMagazine.Damage);
+                        Sounds.SoundEffects.Shotgun.Attack.audio.Play();
+
+                        /// MINUS 1 BULLET
+                        ShotgunMagazine.Shoot();
+                    }
+
                 }
                 else if (currentWeapon.ToLower() == Weapon.knife.ToString())
                 {

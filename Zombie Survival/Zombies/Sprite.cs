@@ -81,13 +81,14 @@ namespace Zombie_Survival.Zombies
             Vector2 direction = characterPosition - Position;
             float distance = direction.Length();
 
-            if (distance > (_minDistance - 40f))
-            {
-                direction.Normalize(); // Get the direction as a unit vector
-                Position += direction * _movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            direction.Normalize(); // Get the direction as a unit vector
+            Position += direction * _movementSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                // Calculate rotation angle
-                Rotation = (float)Math.Atan2(direction.Y, direction.X);
+            // Calculate rotation angle
+            Rotation = (float)Math.Atan2(direction.Y, direction.X);
+
+            if (distance > (_minDistance - 20f))
+            { 
                 _frameTime = 50;
                 return true; // IF FOLLOWING
             }
