@@ -7,6 +7,9 @@ namespace Zombie_Survival.Knife_Slash
 {
     public class Sprite
     {
+        private List<Blood_Effects.Sprite> _bloods = new List<Blood_Effects.Sprite>();
+
+
         private Texture2D[] _frames;
         private int _currentFrame;
         private double _frameTime;
@@ -68,12 +71,19 @@ namespace Zombie_Survival.Knife_Slash
                                 isActive = true;
                                 zombies[j].isReceivedDamage = true;
                                 zombies[j].ZombieHealth -= KnifeDamage;
-                                if(zombies[j].ZombieHealth <= 0)
+                                if (zombies[j].ZombieHealth <= 0)
                                 {
+                                    //BLOOD EFFECTS IF ZOMBIE DIE
+                                    Blood_Effects.Sprite blood = new Blood_Effects.Sprite(zombies[j].BoundingBox.X, zombies[j].BoundingBox.Y, zombies[j].Rotation);
+                                    _bloods.Add(blood);
+
+                                    //KILL ZOMBIE
                                     zombies.RemoveAt(j);
+
+
                                     //RESPAWN ZOMBIE
                                     Zombies.Respawn.Start(zombies);
-                                }  
+                                }
                                 break;
                             }
                         }
@@ -83,6 +93,14 @@ namespace Zombie_Survival.Knife_Slash
 
 
             }
+
+
+            for (int i = 0; i < _bloods.Count; i++)
+            {
+                _bloods[i].Update(gameTime, _bloods);
+            }
+
+
 
 
             // Set the rotation to the character's rotation
@@ -114,7 +132,11 @@ namespace Zombie_Survival.Knife_Slash
                 );
             }
 
-
+            //DRAW BLOOED EFFECTS
+            foreach (var blood in _bloods)
+            {
+                blood.Draw(_spriteBatch);
+            }
 
             // Draw the bounding box for debugging
             //Globals.Debugger.Draw(_spriteBatch, BoundingBox);

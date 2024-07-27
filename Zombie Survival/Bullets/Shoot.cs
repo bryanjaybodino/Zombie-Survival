@@ -13,7 +13,7 @@ namespace Zombie_Survival.Bullets
     internal class Shoot
     {
         List<Sprite> bullets = new List<Sprite>();
-
+        private List<Blood_Effects.Sprite> _bloods = new List<Blood_Effects.Sprite>();
 
 
 
@@ -140,7 +140,15 @@ namespace Zombie_Survival.Bullets
                         zombies[j].ZombieHealth -= bullets[i].BulletDamage;
                         if (zombies[j].ZombieHealth <= 0)
                         {
+
+                            //BLOOD EFFECTS IF ZOMBIE DIE
+                            Blood_Effects.Sprite blood = new Blood_Effects.Sprite(zombies[j].BoundingBox.X, zombies[j].BoundingBox.Y, zombies[j].Rotation);
+                            _bloods.Add(blood);
+
+                            //KILL ZOMBIE
                             zombies.RemoveAt(j);
+
+
                             //RESPAWN ZOMBIE
                             Zombies.Respawn.Start(zombies);
                         }
@@ -156,7 +164,11 @@ namespace Zombie_Survival.Bullets
                 else if (!bullets[i].IsActive)
                 {
                     bullets.RemoveAt(i);
-                }
+                }              
+            }
+
+            for(int i =0; i < _bloods.Count; i++) {
+                _bloods[i].Update(gameTime, _bloods);
             }
         }
 
@@ -166,6 +178,12 @@ namespace Zombie_Survival.Bullets
             foreach (var bullet in bullets)
             {
                 bullet.Draw(_spriteBatch);
+            }
+
+            //DRAW BLOOED EFFECTS
+            foreach (var blood in _bloods)
+            {
+                blood.Draw(_spriteBatch);
             }
         }
     }

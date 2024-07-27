@@ -93,7 +93,7 @@ namespace Zombie_Survival.Zombies
             }
             else
             {
-                _frameTime = 70;
+                _frameTime = 80;
                 return false; // ATTACK ANIMATION
             }
         }

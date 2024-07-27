@@ -98,6 +98,9 @@ namespace Zombie_Survival
             Zombies.Textures.Macho.LoadContent(Content);
             Zombies.Textures.MachoAttack.LoadContent(Content);
 
+            //BLOOD EFFECTS
+            Blood_Effects.Textures.KillZombie.LoadContent(Content);
+
 
             //SOUNDS
             Sounds.SoundEffects.Rifle.Attack.LoadContent(Content);
@@ -153,6 +156,8 @@ namespace Zombie_Survival
 
 
 
+            //CHARACTER
+            _characters.Draw(_spriteBatch);
 
             //ZOMBIE
 
@@ -165,8 +170,6 @@ namespace Zombie_Survival
             _crosshairs.Draw(_spriteBatch);
 
 
-            //CHARACTER
-            _characters.Draw(_spriteBatch);
 
 
             _spriteBatch.End();

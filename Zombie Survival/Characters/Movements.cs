@@ -13,7 +13,7 @@ namespace Zombie_Survival.Characters
 
 
 
-        private static float _movementSpeed = 200f;
+        private static float _movementSpeed = 170f;
         public static float Rotation = 0f;
         public static Vector2 Position;
 
