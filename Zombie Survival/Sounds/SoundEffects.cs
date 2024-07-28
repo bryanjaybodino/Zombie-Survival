@@ -33,7 +33,7 @@ namespace Zombie_Survival.Sounds
                     SoundEffect sound = content.Load<SoundEffect>("Sounds/Rifle Reload Sound");
                     audio = sound.CreateInstance();
                     audio.IsLooped = false;
-                    audio.Volume = 0.1f;
+                    audio.Volume = 0.025f;
                 }
             }
         }
@@ -90,7 +90,7 @@ namespace Zombie_Survival.Sounds
                     SoundEffect sound = content.Load<SoundEffect>("Sounds/Pistol Reload Sound");
                     audio = sound.CreateInstance();
                     audio.IsLooped = false;
-                    audio.Volume = 0.1f;
+                    audio.Volume = 0.025f;
                 }
             }
         }

@@ -35,8 +35,7 @@ namespace Zombie_Survival
         private Maps.Sprite _maps;
         private List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
         private Crosshairs.Sprite _crosshairs;
-
-
+    
 
 
         protected override void Initialize()
@@ -46,7 +45,6 @@ namespace Zombie_Survival
             _characters = new Characters.Sprite(GraphicsDevice.Viewport);
             _maps = new Maps.Sprite(GraphicsDevice.Viewport);
             _crosshairs = new Crosshairs.Sprite(GraphicsDevice.Viewport);
-
 
             for (int i = 0; i < 6; i++)
             {
@@ -100,6 +98,15 @@ namespace Zombie_Survival
 
             //BLOOD EFFECTS
             Blood_Effects.Textures.KillZombie.LoadContent(Content);
+
+
+            //WEAPONS
+            Weapons.Textures.Pistol.LoadContent(Content);
+            Weapons.Textures.Rifle.LoadContent(Content);
+            Weapons.Textures.Shotgun.LoadContent(Content);
+            Weapons.Textures.Knife.LoadContent(Content);
+
+
 
 
             //SOUNDS

@@ -29,6 +29,9 @@ namespace Zombie_Survival.Characters
         Bullets.Magazines.Pistol PistolMagazine = new Bullets.Magazines.Pistol();
         Bullets.Magazines.Shotgun ShotgunMagazine = new Bullets.Magazines.Shotgun();
 
+        //DISPLAY CURRENT WEAPON
+        Weapons.Sprite _weapon;
+
         public Rectangle BoundingBox
         {
             get
@@ -52,7 +55,7 @@ namespace Zombie_Survival.Characters
         private double _lastFireTime = 0;
         public Sprite(Viewport viewport)
         {
-
+            _weapon = new Weapons.Sprite(viewport);
             _slash = new Knife_Slash.Sprite(viewport);
             _viewport = viewport;
             _currentFrame = 0;
@@ -223,6 +226,8 @@ namespace Zombie_Survival.Characters
             var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
             Camera.Update(gameArea, Movements.Position, _viewport);
             shoot.Update(gameTime, zombies);
+
+            _weapon.Update(gameTime, currentWeapon);
         }
         private void AvoidOverlapping(List<Zombies.Sprite> zombies)
         {
@@ -240,6 +245,8 @@ namespace Zombie_Survival.Characters
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
+
+            _weapon.Draw(_spriteBatch);
             _slash.Draw(_spriteBatch);
             shoot.Draw(_spriteBatch);
             // Draw the current frame with rotation
