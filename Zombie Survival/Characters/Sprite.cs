@@ -25,9 +25,9 @@ namespace Zombie_Survival.Characters
 
 
         //THIS IS FOR CURRENT AMMO
-        Bullets.Magazines.Rifle RifleMagazine = new Bullets.Magazines.Rifle();
-        Bullets.Magazines.Pistol PistolMagazine = new Bullets.Magazines.Pistol();
-        Bullets.Magazines.Shotgun ShotgunMagazine = new Bullets.Magazines.Shotgun();
+        public static Bullets.Magazines.Rifle RifleMagazine = new Bullets.Magazines.Rifle();
+        public static Bullets.Magazines.Pistol PistolMagazine = new Bullets.Magazines.Pistol();
+        public static Bullets.Magazines.Shotgun ShotgunMagazine = new Bullets.Magazines.Shotgun();
 
         //DISPLAY CURRENT WEAPON
         Weapons.Sprite _weapon;

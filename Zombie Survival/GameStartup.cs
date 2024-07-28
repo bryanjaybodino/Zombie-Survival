@@ -35,8 +35,6 @@ namespace Zombie_Survival
         private Maps.Sprite _maps;
         private List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
         private Crosshairs.Sprite _crosshairs;
-    
-
 
         protected override void Initialize()
         {
@@ -106,7 +104,15 @@ namespace Zombie_Survival
             Weapons.Textures.Shotgun.LoadContent(Content);
             Weapons.Textures.Knife.LoadContent(Content);
 
+            //OTHER UI ELEMENTS
+            UI_Elements.Textures.Skull.LoadContent(Content);
+            UI_Elements.Textures.Heart.LoadContent(Content);
+            UI_Elements.Textures.Cash.LoadContent(Content);
+            UI_Elements.Textures.Bullet.LoadContent(Content);
 
+
+            //GLOBAL
+            Globals.FontTexture.LoadContent(Content);
 
 
             //SOUNDS
@@ -149,6 +155,8 @@ namespace Zombie_Survival
 
             // PARA ACCURATE PARIN YUNG MOUSE POSITION
             Globals.MouseInput.Update(Camera.Transform);
+
+
         }
 
         protected override void Draw(GameTime gameTime)
@@ -175,7 +183,6 @@ namespace Zombie_Survival
 
             //CROSSHAIR
             _crosshairs.Draw(_spriteBatch);
-
 
 
 
