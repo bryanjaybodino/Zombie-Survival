@@ -17,7 +17,7 @@ namespace Zombie_Survival.Bullets
 
 
 
-        private void Pistol(Texture2D frames,int BulletDamage)
+        private void Pistol(Texture2D frames, int BulletDamage)
         {
 
             float scale = 0.02f;
@@ -95,7 +95,7 @@ namespace Zombie_Survival.Bullets
 
 
 
-        public void Attack(Texture2D frames,int Damage)
+        public void Attack(Texture2D frames, int Damage)
         {
             if (frames.Name == "Characters/Pistol/Bullet")
             {
@@ -126,22 +126,28 @@ namespace Zombie_Survival.Bullets
                         // Bullet hits the zombie
                         bulletHit = true;
 
-
-
-                        zombies[j].isReceivedDamage = true; ;
+                        // Apply damage
+                        zombies[j].isReceivedDamage = true;
                         zombies[j].ZombieHealth -= bullets[i].BulletDamage;
+
+
+
+                        // Apply backward movement when the zombie has received damage
+                        Vector2 backwardDirection = Vector2.Normalize(zombies[j].Position - Characters.Movements.Position);
+                        Vector2 Velocity = backwardDirection * 500f;
+                        zombies[j].Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+
                         if (zombies[j].ZombieHealth <= 0)
                         {
-
-                            //BLOOD EFFECTS IF ZOMBIE DIE
+                            // BLOOD EFFECTS IF ZOMBIE DIES
                             Blood_Effects.Sprite blood = new Blood_Effects.Sprite(zombies[j].BoundingBox.X, zombies[j].BoundingBox.Y, zombies[j].Rotation);
                             _bloods.Add(blood);
 
-                            //KILL ZOMBIE
+                            // KILL ZOMBIE
                             zombies.RemoveAt(j);
 
-
-                            //RESPAWN ZOMBIE
+                            // RESPAWN ZOMBIE
                             Zombies.Respawn.Start(zombies);
                             Zombies.Respawn.AddKill();
                         }
@@ -160,11 +166,13 @@ namespace Zombie_Survival.Bullets
                 }
             }
 
+            // Update blood effects
             for (int i = 0; i < _bloods.Count; i++)
             {
                 _bloods[i].Update(gameTime, _bloods);
             }
         }
+
 
         public void Draw(SpriteBatch _spriteBatch)
         {

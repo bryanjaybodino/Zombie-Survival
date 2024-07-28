@@ -141,7 +141,7 @@ namespace Zombie_Survival
             base.Update(gameTime);
 
 
-            if (Characters.Movements.GameOver)
+            if (GameScreen.GameOver)
             { 
             }
             else
@@ -174,7 +174,7 @@ namespace Zombie_Survival
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Camera.Transform); // para soft lang yung lakad ng character pag sunod sa camera
 
 
-            if (Characters.Movements.GameOver)
+            if (GameScreen.GameOver)
             {
                 Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.GameOver.Screen.frames, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
             }

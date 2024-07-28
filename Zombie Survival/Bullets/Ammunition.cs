@@ -82,7 +82,7 @@ namespace Zombie_Survival.Bullets
         {
             public Rifle()
             {
-                Damage = 30;
+                Damage = 35;
                 MaxBullets = 30;
                 CurrentBullets = 30;
                 TotalBullets = 120;
@@ -93,7 +93,7 @@ namespace Zombie_Survival.Bullets
         {
             public Pistol()
             {
-                Damage = 20;
+                Damage = 25;
                 MaxBullets = 15;
                 CurrentBullets = 15;
                 TotalBullets = 45;
@@ -104,7 +104,7 @@ namespace Zombie_Survival.Bullets
         {
             public Shotgun()
             {
-                Damage = 75;
+                Damage = 85;
                 MaxBullets = 7;
                 CurrentBullets = 7;
                 TotalBullets = 35;

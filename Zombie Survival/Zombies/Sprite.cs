@@ -16,7 +16,7 @@ namespace Zombie_Survival.Zombies
         private float _movementSpeed = 150f; // Initialize movement speed (pixels per second)
         private float _minDistance = 100f; // Minimum distance to maintain from other sprites
 
-        public Vector2 Position { get; private set; }
+        public Vector2 Position { get;  set; }
         public float Rotation { get; private set; } = 0f;
         public int ZombieHealth { get; set; } = 100;
         public int ZombieDamage { get; set; } = 5;
