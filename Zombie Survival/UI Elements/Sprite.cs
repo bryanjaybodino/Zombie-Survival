@@ -5,24 +5,73 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Zombie_Survival.UI_Elements
 {
     public class Sprite
     {
-        private Viewport _viewport;
+        private static Viewport _viewport;
+        private int TotalHealthBar;
+        private Timer _myTimer;
+        private double _totalPlayTime;
+        private bool _isGameActive;
+
+        private string playTimeText;
         public Sprite(Viewport viewport)
         {
             _viewport = viewport;
+            TotalHealthBar = Characters.Movements.HealhtBar;
+            _totalPlayTime = 0.0;
+            _isGameActive = true;
+            _myTimer = new Timer(1); // Timer for 5 seconds
+            _myTimer.Elapsed += _myTimer_Elapsed; ;
+            _myTimer.Start();
+        }
+
+        private void _myTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            _totalPlayTime += 1;
+            playTimeText = $"Play Time: {TimeSpan.FromSeconds(_totalPlayTime):hh\\:mm\\:ss}";
         }
 
         public void Draw(SpriteBatch _spriteBatch, string currentWeapon)
         {
             //HEART
-            DisplayImage(_spriteBatch, Textures.Heart.frames, 0.1f, 10, 10);
+            var heartPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Heart.frames, 30f, 30f, 30, 30);
+            Globals.FontTexture.Draw(_spriteBatch, "Health : ", new Vector2(heartPosition.X + 30, heartPosition.Y-15), Color.WhiteSmoke, false, 1.5f);
+
+
+            ///HEALTH BAR
+            Globals.BoxTexture.Draw(_spriteBatch, TotalHealthBar, 15, Color.Black, new Vector2(heartPosition.X + 110, heartPosition.Y - 10));
+
+            int healthBarGreen = (TotalHealthBar * 3) / 4;
+            int healthBarOrange = TotalHealthBar / 2;
+
+            // Ensure that Characters.Movements.HealthBar is correctly initialized
+            int currentHealth = Characters.Movements.HealhtBar;
+
+            // Determine color based on health value
+            Color healthColor;
+            if (currentHealth >= healthBarGreen)
+            {
+                healthColor = Color.LimeGreen;
+            }
+            else if (currentHealth >= healthBarOrange)
+            {
+                healthColor = Color.Orange;
+            }
+            else
+            {
+                healthColor = Color.Red;
+            }
+
+            // Draw the health bar
+            Globals.BoxTexture.Draw(_spriteBatch, currentHealth, 15, healthColor, new Vector2(heartPosition.X + 110, heartPosition.Y - 10));
+
 
             //BULLETS
-            var bulletPosition = DisplayImage(_spriteBatch, Textures.Bullet.frames, 0.1f, 10, 35);
+            var bulletPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Bullet.frames, 30f, 30f, 30, 60);
             string currentBullets = "";
 
             //GET THE BULLET FROM CHARACTERS
@@ -42,35 +91,17 @@ namespace Zombie_Survival.UI_Elements
             {
                 currentBullets = Characters.Sprite.ShotgunMagazine.CurrentBullets + "/" + Characters.Sprite.ShotgunMagazine.TotalBullets;
             }
+            Globals.FontTexture.Draw(_spriteBatch, "Ammo : " + currentBullets, new Vector2(bulletPosition.X + 30, bulletPosition.Y-15), Color.WhiteSmoke, false, 1.5f);
 
 
-            Globals.FontTexture.Draw(_spriteBatch, "Ammo : " + currentBullets, new Vector2(bulletPosition.X + 30, bulletPosition.Y+5), Color.WhiteSmoke, true);
+
+            //SKULLS
+            var skullPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Skull.frames, 30f,30f, _viewport.Width - 300, 30);
+            Globals.FontTexture.Draw(_spriteBatch, "Kills : " + Zombies.Respawn.TotalKills().ToString("N0"), new Vector2(skullPosition.X + 30, skullPosition.Y-15), Color.WhiteSmoke, false, 1.5f);
+
+            //PLAYTIME
+            Globals.FontTexture.Draw(_spriteBatch, playTimeText, new Vector2(skullPosition.X + 30, skullPosition.Y+15), Color.WhiteSmoke, false, 1.5f);
         }
 
-
-
-        private Vector2 DisplayImage(SpriteBatch _spriteBatch, Texture2D[] _frames, float size, float X = 0, float Y = 0)
-        {
-            var frameHeight = _frames[0].Height * size;
-            var frameWidth = _frames[0].Width * size;
-            var x = Globals.Camera.cameraPosition.X;
-            var y = Globals.Camera.cameraPosition.Y;
-            Vector2 CurrentPosition = new Vector2(x + X, y + Y);
-
-            Vector2 origin = new Vector2(frameWidth / 2, frameHeight / 2);
-            _spriteBatch.Draw(
-                _frames[0],
-                new Vector2(CurrentPosition.X, CurrentPosition.Y),
-                null,
-                Color.White,
-                0f,
-                origin, // Use the center of the frame as the origin
-                size,
-                SpriteEffects.None,
-                0f
-            );
-
-            return CurrentPosition;
-        }
     }
 }

@@ -109,6 +109,9 @@ namespace Zombie_Survival
             UI_Elements.Textures.Heart.LoadContent(Content);
             UI_Elements.Textures.Cash.LoadContent(Content);
             UI_Elements.Textures.Bullet.LoadContent(Content);
+            UI_Elements.Textures.GameOver.Screen.LoadContent(Content);
+            UI_Elements.Textures.GameOver.Back.LoadContent(Content);
+            UI_Elements.Textures.GameOver.PlayAgain.LoadContent(Content);
 
 
             //GLOBAL
@@ -137,25 +140,29 @@ namespace Zombie_Survival
                 Exit();
             base.Update(gameTime);
 
-            _maps.Update(gameTime);
 
-
-            _characters.Update(gameTime, _zombies);
-
-            for (int i = 0; i < _zombies.Count; i++)
-            {
-                _zombies[i].Update(gameTime, _zombies);
-
+            if (Characters.Movements.GameOver)
+            { 
             }
+            else
+            {
+                _maps.Update(gameTime);
 
 
-            _crosshairs.Update(gameTime);
+                _characters.Update(gameTime, _zombies);
+
+                for (int i = 0; i < _zombies.Count; i++)
+                {
+                    _zombies[i].Update(gameTime, _zombies);
+
+                }
 
 
+                _crosshairs.Update(gameTime);
 
-            // PARA ACCURATE PARIN YUNG MOUSE POSITION
-            Globals.MouseInput.Update(Camera.Transform);
-
+                // PARA ACCURATE PARIN YUNG MOUSE POSITION
+                Globals.MouseInput.Update(Camera.Transform);
+            }
 
         }
 
@@ -166,23 +173,31 @@ namespace Zombie_Survival
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Camera.Transform); // para soft lang yung lakad ng character pag sunod sa camera
 
-            //MAP
-            _maps.Draw(_spriteBatch);
 
-
-
-            //CHARACTER
-            _characters.Draw(_spriteBatch);
-
-            //ZOMBIE
-
-            for (int i = 0; i < _zombies.Count; i++)
+            if (Characters.Movements.GameOver)
             {
-                _zombies[i].Draw(_spriteBatch);
+                Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.GameOver.Screen.frames, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
             }
+            else
+            {
+                //MAP
+                _maps.Draw(_spriteBatch);
 
-            //CROSSHAIR
-            _crosshairs.Draw(_spriteBatch);
+
+
+                //CHARACTER
+                _characters.Draw(_spriteBatch);
+
+                //ZOMBIE
+
+                for (int i = 0; i < _zombies.Count; i++)
+                {
+                    _zombies[i].Draw(_spriteBatch);
+                }
+
+                //CROSSHAIR
+                _crosshairs.Draw(_spriteBatch);
+            }
 
 
 

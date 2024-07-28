@@ -9,6 +9,18 @@ namespace Zombie_Survival.Zombies
 {
     internal class Respawn
     {
+
+        private static double kills { get; set; } = 0;
+
+        public static void AddKill()
+        {
+            kills++;
+        }
+        public static double TotalKills()
+        {
+            return kills;
+        }
+
         public static void Start(List<Zombies.Sprite> zombies)
         {
 

@@ -83,6 +83,7 @@ namespace Zombie_Survival.Knife_Slash
 
                                     //RESPAWN ZOMBIE
                                     Zombies.Respawn.Start(zombies);
+                                    Zombies.Respawn.AddKill();
                                 }
                                 break;
                             }

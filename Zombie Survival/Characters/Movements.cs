@@ -7,15 +7,24 @@ namespace Zombie_Survival.Characters
 {
     public class Movements
     {
-
-
-
-
-
-
         private static float _movementSpeed = 170f;
         public static float Rotation = 0f;
         public static Vector2 Position;
+        public static int HealhtBar = 200;
+        public static bool GameOver
+        {
+            get
+            {
+                if (HealhtBar <= 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
 
         public static void Update(GameTime gameTime, Texture2D texture, Matrix cameraTransform)
         {
@@ -56,7 +65,7 @@ namespace Zombie_Survival.Characters
             Position.X = MathHelper.Clamp(Position.X, moveArea.Left, moveArea.Right - (texture.Width + 50));
             Position.Y = MathHelper.Clamp(Position.Y, moveArea.Top, moveArea.Bottom - texture.Height - 100);
 
-           
+
             // Calculate the direction from the character to the mouse
             var direction = Globals.MouseInput.transformedMousePosition - Position;
             direction.Normalize();

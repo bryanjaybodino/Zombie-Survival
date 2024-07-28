@@ -143,6 +143,7 @@ namespace Zombie_Survival.Bullets
 
                             //RESPAWN ZOMBIE
                             Zombies.Respawn.Start(zombies);
+                            Zombies.Respawn.AddKill();
                         }
                         break;
                     }

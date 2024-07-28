@@ -30,23 +30,41 @@ namespace Zombie_Survival.Bullets
                     CurrentBullets += TotalBullets;
                     TotalBullets = 0;
                 }
-            }
 
-            if (currentWeapon.ToLower() == "rifle")
-            {
-                Sounds.SoundEffects.Rifle.Reload.audio.Play();
-                return RifleReload.frames;
-            }
-            else if (currentWeapon.ToLower() == "pistol")
-            {
-                Sounds.SoundEffects.Pistol.Reload.audio.Play();
-                return PistolReload.frames;
+                if (currentWeapon.ToLower() == "rifle")
+                {
+                    Sounds.SoundEffects.Rifle.Reload.audio.Play();
+                    return RifleReload.frames;
+                }
+                else if (currentWeapon.ToLower() == "pistol")
+                {
+                    Sounds.SoundEffects.Pistol.Reload.audio.Play();
+                    return PistolReload.frames;
+                }
+                else
+                {
+                    Sounds.SoundEffects.Shotgun.Reload.audio.Play();
+                    return ShotgunReload.frames;
+                }
             }
             else
             {
-                Sounds.SoundEffects.Shotgun.Reload.audio.Play();
-                return ShotgunReload.frames;
+
+                if (currentWeapon.ToLower() == "rifle")
+                {
+
+                    return Rifle.frames;
+                }
+                else if (currentWeapon.ToLower() == "pistol")
+                {
+                    return Pistol.frames;
+                }
+                else
+                {
+                    return Shotgun.frames;
+                }
             }
+
 
         }
         public void Shoot()
@@ -64,10 +82,10 @@ namespace Zombie_Survival.Bullets
         {
             public Rifle()
             {
-                Damage = 20;
+                Damage = 30;
                 MaxBullets = 30;
                 CurrentBullets = 30;
-                TotalBullets = 90;
+                TotalBullets = 120;
             }
         }
 
@@ -75,7 +93,7 @@ namespace Zombie_Survival.Bullets
         {
             public Pistol()
             {
-                Damage = 10;
+                Damage = 20;
                 MaxBullets = 15;
                 CurrentBullets = 15;
                 TotalBullets = 45;
@@ -86,7 +104,7 @@ namespace Zombie_Survival.Bullets
         {
             public Shotgun()
             {
-                Damage = 50;
+                Damage = 75;
                 MaxBullets = 7;
                 CurrentBullets = 7;
                 TotalBullets = 35;

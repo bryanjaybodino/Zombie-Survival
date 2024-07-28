@@ -29,8 +29,9 @@ namespace Zombie_Survival.Characters
         public static Bullets.Magazines.Pistol PistolMagazine = new Bullets.Magazines.Pistol();
         public static Bullets.Magazines.Shotgun ShotgunMagazine = new Bullets.Magazines.Shotgun();
 
-        //DISPLAY CURRENT WEAPON
-        Weapons.Sprite _weapon;
+
+         //DISPLAY CURRENT WEAPON
+         Weapons.Sprite _weapon;
 
         public Rectangle BoundingBox
         {
@@ -53,6 +54,7 @@ namespace Zombie_Survival.Characters
         private double _fireShotgunCooldown = 1800; // Cooldown time in milliseconds
         private double _fireRifleCooldown = 100; // Cooldown time in milliseconds
         private double _lastFireTime = 0;
+
         public Sprite(Viewport viewport)
         {
             _weapon = new Weapons.Sprite(viewport);

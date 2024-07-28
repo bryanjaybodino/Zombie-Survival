@@ -52,5 +52,33 @@ namespace Zombie_Survival.UI_Elements
                 frames = LoadTextures(content, "UI Elements/Skull", 1);
             }
         }
+
+        public class GameOver
+        {
+            public static class Screen
+            {
+                public static Texture2D[] frames;
+                public static void LoadContent(ContentManager content)
+                {
+                    frames = LoadTextures(content, "UI Elements/Game Over/Screen", 1);
+                }
+            }
+            public static class Back
+            {
+                public static Texture2D[] frames;
+                public static void LoadContent(ContentManager content)
+                {
+                    frames = LoadTextures(content, "UI Elements/Game Over/Back", 1);
+                }
+            }
+            public static class PlayAgain
+            {
+                public static Texture2D[] frames;
+                public static void LoadContent(ContentManager content)
+                {
+                    frames = LoadTextures(content, "UI Elements/Game Over/Play Again", 1);
+                }
+            }
+        }
     }
 }

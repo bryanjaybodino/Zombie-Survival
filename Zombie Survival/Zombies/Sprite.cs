@@ -19,8 +19,10 @@ namespace Zombie_Survival.Zombies
         public Vector2 Position { get; private set; }
         public float Rotation { get; private set; } = 0f;
         public int ZombieHealth { get; set; } = 100;
+        public int ZombieDamage { get; set; } = 5;
         public bool isReceivedDamage { get; set; } = false;
 
+        private int MaxHealth ;
         public Rectangle BoundingBox
         {
             get
@@ -37,6 +39,8 @@ namespace Zombie_Survival.Zombies
             _currentFrame = 0;
             _frameTime = 50; // Time per frame in milliseconds
             _scale = new Vector2(.5f, .5f); // Initialize scale to 0.5     
+
+            MaxHealth = ZombieHealth;
         }
 
         public void Update(GameTime gameTime, List<Sprite> sprites)
@@ -70,6 +74,7 @@ namespace Zombie_Survival.Zombies
                 if (_currentFrame == (_frames.Length / 2))/// Middle of the Frame Sound Triggered
                 {
                     Sounds.SoundEffects.Zombie.Attack.audio.Play();
+                    Characters.Movements.HealhtBar -= ZombieDamage;
                 }
             }
         }
@@ -142,12 +147,11 @@ namespace Zombie_Survival.Zombies
 
 
 
-
-
                 ////
                 if (isReceivedDamage)
                 {
                     Rectangle HealthBar = new Rectangle((int)Position.X, (int)Position.Y, 20, ZombieHealth);
+                    Rectangle MaxHealthBar = new Rectangle((int)Position.X, (int)Position.Y, 20, MaxHealth);
                     Texture2D whiteTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
                     whiteTexture.SetData(new[] { Color.White });
                     origin = new Vector2(HealthBar.Width / 2, HealthBar.Height / 2);
@@ -155,7 +159,7 @@ namespace Zombie_Survival.Zombies
                     Color HealthBarColor = Color.White;
                     if (ZombieHealth >= 80)
                     {
-                        HealthBarColor = Color.Green;
+                        HealthBarColor = Color.LimeGreen;
                     }
                     else if (ZombieHealth >= 50 && ZombieHealth < 80)
                     {
@@ -166,18 +170,13 @@ namespace Zombie_Survival.Zombies
                         HealthBarColor = Color.Red;
                     }
 
+                    // Use the center of the frame as the origin
+                    _spriteBatch.Draw(whiteTexture, Position, MaxHealthBar, Color.Black, Rotation, origin, _scale, SpriteEffects.None, 0f) ;
+                    _spriteBatch.Draw(whiteTexture,Position,HealthBar, HealthBarColor, Rotation, origin, _scale, SpriteEffects.None, 0f);
 
-                    _spriteBatch.Draw(
-                      whiteTexture,
-                        Position,
-                        HealthBar,
-                        HealthBarColor,
-                        Rotation,
-                        origin, // Use the center of the frame as the origin
-                        _scale,
-                        SpriteEffects.None,
-                        0f
-                    );
+
+
+
 
                 }
 
