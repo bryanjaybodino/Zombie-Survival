@@ -39,11 +39,11 @@ namespace Zombie_Survival.UI_Elements
         {
             //HEART
             var heartPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Heart.frames, 30f, 30f, 30, 30);
-            Globals.FontTexture.Draw(_spriteBatch, "Health : ", new Vector2(heartPosition.X + 30, heartPosition.Y-15), Color.WhiteSmoke, false, 1.5f);
+            Globals.FontTexture.Draw(_spriteBatch, "Health : ", new Vector2(heartPosition.X + 35, heartPosition.Y), Color.WhiteSmoke, false, 1.5f);
 
 
             ///HEALTH BAR
-            Globals.BoxTexture.Draw(_spriteBatch, TotalHealthBar, 15, Color.Black, new Vector2(heartPosition.X + 110, heartPosition.Y - 10));
+            Globals.BoxTexture.Draw(_spriteBatch, TotalHealthBar, 15, Color.Black, new Vector2(heartPosition.X + 115, heartPosition.Y + 5));
 
             int healthBarGreen = (TotalHealthBar * 3) / 4;
             int healthBarOrange = TotalHealthBar / 2;
@@ -67,7 +67,7 @@ namespace Zombie_Survival.UI_Elements
             }
 
             // Draw the health bar
-            Globals.BoxTexture.Draw(_spriteBatch, currentHealth, 15, healthColor, new Vector2(heartPosition.X + 110, heartPosition.Y - 10));
+            Globals.BoxTexture.Draw(_spriteBatch, currentHealth, 15, healthColor, new Vector2(heartPosition.X + 115, heartPosition.Y+5));
 
 
             //BULLETS
@@ -91,16 +91,16 @@ namespace Zombie_Survival.UI_Elements
             {
                 currentBullets = Characters.Sprite.ShotgunMagazine.CurrentBullets + "/" + Characters.Sprite.ShotgunMagazine.TotalBullets;
             }
-            Globals.FontTexture.Draw(_spriteBatch, "Ammo : " + currentBullets, new Vector2(bulletPosition.X + 30, bulletPosition.Y-15), Color.WhiteSmoke, false, 1.5f);
+            Globals.FontTexture.Draw(_spriteBatch, "Ammo : " + currentBullets, new Vector2(bulletPosition.X + 35, bulletPosition.Y+5), Color.WhiteSmoke, false, 1.5f);
 
 
 
             //SKULLS
-            var skullPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Skull.frames, 30f,30f, _viewport.Width - 300, 30);
-            Globals.FontTexture.Draw(_spriteBatch, "Kills : " + Zombies.Respawn.TotalKills().ToString("N0"), new Vector2(skullPosition.X + 30, skullPosition.Y-15), Color.WhiteSmoke, false, 1.5f);
+            var skullPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Skull.frames, 30f, 30f, _viewport.Width - 300, 30);
+            Globals.FontTexture.Draw(_spriteBatch, "Kills : " + Zombies.Respawn.TotalKills().ToString("N0"), new Vector2(skullPosition.X + 35, skullPosition.Y+5), Color.WhiteSmoke, false, 1.5f);
 
             //PLAYTIME
-            Globals.FontTexture.Draw(_spriteBatch, playTimeText, new Vector2(skullPosition.X + 30, skullPosition.Y+15), Color.WhiteSmoke, false, 1.5f);
+            Globals.FontTexture.Draw(_spriteBatch, playTimeText, new Vector2(skullPosition.X + 35, skullPosition.Y+35), Color.WhiteSmoke, false, 1.5f);
         }
 
     }

@@ -31,6 +31,7 @@ namespace Zombie_Survival
         }
 
 
+        private GameScreen.GameOver _gameover;
         private Characters.Sprite _characters;
         private Maps.Sprite _maps;
         private List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
@@ -43,6 +44,7 @@ namespace Zombie_Survival
             _characters = new Characters.Sprite(GraphicsDevice.Viewport);
             _maps = new Maps.Sprite(GraphicsDevice.Viewport);
             _crosshairs = new Crosshairs.Sprite(GraphicsDevice.Viewport);
+            _gameover = new GameScreen.GameOver(GraphicsDevice.Viewport);
 
             for (int i = 0; i < 6; i++)
             {
@@ -109,6 +111,7 @@ namespace Zombie_Survival
             UI_Elements.Textures.Heart.LoadContent(Content);
             UI_Elements.Textures.Cash.LoadContent(Content);
             UI_Elements.Textures.Bullet.LoadContent(Content);
+            UI_Elements.Textures.MouseCursor.LoadContent(Content);
             UI_Elements.Textures.GameOver.Screen.LoadContent(Content);
             UI_Elements.Textures.GameOver.Back.LoadContent(Content);
             UI_Elements.Textures.GameOver.PlayAgain.LoadContent(Content);
@@ -136,13 +139,16 @@ namespace Zombie_Survival
 
         protected override void Update(GameTime gameTime)
         {
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             base.Update(gameTime);
 
 
-            if (GameScreen.GameOver)
-            { 
+
+            if (_gameover.status)
+            {
+                _gameover.Update(gameTime);
             }
             else
             {
@@ -160,9 +166,18 @@ namespace Zombie_Survival
 
                 _crosshairs.Update(gameTime);
 
-                // PARA ACCURATE PARIN YUNG MOUSE POSITION
-                Globals.MouseInput.Update(Camera.Transform);
-            }
+
+
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                {
+                    Characters.Movements.HealhtBar = 0;
+                }
+
+            }            
+            
+            // PARA ACCURATE PARIN YUNG MOUSE POSITION
+            Globals.MouseInput.Update(Camera.Transform);
 
         }
 
@@ -174,9 +189,9 @@ namespace Zombie_Survival
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Camera.Transform); // para soft lang yung lakad ng character pag sunod sa camera
 
 
-            if (GameScreen.GameOver)
+            if (_gameover.status)
             {
-                Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.GameOver.Screen.frames, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
+                _gameover.Draw(_spriteBatch);
             }
             else
             {

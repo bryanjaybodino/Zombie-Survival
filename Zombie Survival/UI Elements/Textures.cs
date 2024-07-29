@@ -53,6 +53,17 @@ namespace Zombie_Survival.UI_Elements
             }
         }
 
+        public static class MouseCursor
+        {
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
+            {
+                frames = LoadTextures(content, "UI Elements/Mouse Cursor", 1);
+            }
+        }
+
+
+
         public class GameOver
         {
             public static class Screen

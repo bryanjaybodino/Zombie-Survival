@@ -10,7 +10,7 @@ namespace Zombie_Survival.Globals
 {
     public class RectangleImage
     {
-        public static Vector2 Draw(SpriteBatch _spriteBatch, Texture2D[] _frames, float width, float height, float X = 0, float Y = 0)
+        public static Rectangle Draw(SpriteBatch _spriteBatch, Texture2D[] _frames, float width, float height, float X = 0, float Y = 0)
         {
             // Calculate the position of the image
             var x = Globals.Camera.cameraPosition.X;
@@ -37,7 +37,7 @@ namespace Zombie_Survival.Globals
                 0f                 // Layer depth
             );
 
-            return CurrentPosition;
+            return destinationRectangle;
         }
     }
 }
