@@ -37,6 +37,13 @@ namespace Zombie_Survival.UI_Elements
 
         public void Draw(SpriteBatch _spriteBatch, string currentWeapon)
         {
+            var x = Globals.Camera.cameraPosition.X;
+            var y = Globals.Camera.cameraPosition.Y;
+
+            Globals.BoxTexture.Draw(_spriteBatch,_viewport.Width, 85, Color.Black * 0.4f,new Vector2(x,y));
+
+
+
             //HEART
             var heartPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Heart.frames, 30f, 30f, 30, 30);
             Globals.FontTexture.Draw(_spriteBatch, "Health : ", new Vector2(heartPosition.X + 35, heartPosition.Y), Color.WhiteSmoke, false, 1.5f);
@@ -98,6 +105,12 @@ namespace Zombie_Survival.UI_Elements
             //SKULLS
             var skullPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Skull.frames, 30f, 30f, _viewport.Width - 300, 30);
             Globals.FontTexture.Draw(_spriteBatch, "Kills : " + Zombies.Respawn.TotalKills().ToString("N0"), new Vector2(skullPosition.X + 35, skullPosition.Y), Color.WhiteSmoke, false, 1.5f);
+
+
+
+            //CLOCK
+            var clockPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Clock.frames, 20f, 20f, _viewport.Width - 300, 60);
+
 
             //PLAYTIME
             Globals.FontTexture.Draw(_spriteBatch, playTimeText, new Vector2(skullPosition.X + 35, skullPosition.Y+35), Color.WhiteSmoke, false, 1.5f);

@@ -133,5 +133,20 @@ namespace Zombie_Survival.Sounds
                 }
             }
         }
+
+
+        public static class Background
+        {
+
+            public static SoundEffectInstance audio;
+            public static void LoadContent(ContentManager content)
+            {
+                SoundEffect sound = content.Load<SoundEffect>("Sounds/Background Sound");
+                audio = sound.CreateInstance();
+                audio.IsLooped = true;
+                audio.Volume = 0.01f;
+            }
+
+        }
     }
 }

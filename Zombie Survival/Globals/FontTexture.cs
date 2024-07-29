@@ -35,7 +35,7 @@ namespace Zombie_Survival.Globals
 
                 foreach (var offset in offsets)
                 {
-                    _spriteBatch.DrawString(messageFont, message, position + offset, color, rotation, origin, scale, SpriteEffects.None, 0f);
+                    _spriteBatch.DrawString(messageFont, message, position + offset, Color.Black, rotation, origin, scale, SpriteEffects.None, 0f);
                 }
             }
 

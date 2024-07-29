@@ -28,6 +28,15 @@ namespace Zombie_Survival.UI_Elements
                 frames = LoadTextures(content, "UI Elements/Heart", 1);
             }
         }
+
+        public static class Clock
+        {
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
+            {
+                frames = LoadTextures(content, "UI Elements/Clock", 1);
+            }
+        }
         public static class Bullet
         {
             public static Texture2D[] frames;
@@ -88,6 +97,46 @@ namespace Zombie_Survival.UI_Elements
                 public static void LoadContent(ContentManager content)
                 {
                     frames = LoadTextures(content, "UI Elements/Game Over/Play Again", 1);
+                }
+            }
+        }
+
+
+
+
+
+        public class Menu
+        {
+            public static class Screen
+            {
+                public static Texture2D[] frames;
+                public static void LoadContent(ContentManager content)
+                {
+                    frames = LoadTextures(content, "UI Elements/Menu/Screen", 1);
+                }
+            }
+            public static class Play
+            {
+                public static Texture2D[] frames;
+                public static void LoadContent(ContentManager content)
+                {
+                    frames = LoadTextures(content, "UI Elements/Menu/Play", 1);
+                }
+            }
+            public static class ZombieSurvival
+            {
+                public static Texture2D[] frames;
+                public static void LoadContent(ContentManager content)
+                {
+                    frames = LoadTextures(content, "UI Elements/Menu/Zombie Survival", 1);
+                }
+            }
+            public static class Exit
+            {
+                public static Texture2D[] frames;
+                public static void LoadContent(ContentManager content)
+                {
+                    frames = LoadTextures(content, "UI Elements/Menu/Exit", 1);
                 }
             }
         }

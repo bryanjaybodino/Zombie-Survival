@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using Zombie_Survival.Characters;
 using Zombie_Survival.Globals;
 using Zombie_Survival.Zombies;
 using static Zombie_Survival.GameScreen;
+using static Zombie_Survival.Sounds.SoundEffects;
 using static Zombie_Survival.UI_Elements.Textures;
 using static Zombie_Survival.UI_Elements.Textures.GameOver;
 
@@ -21,10 +23,11 @@ namespace Zombie_Survival
         {
             Menu,
             Playing,
-            GameOver
+            GameOver,
+            Exit
         }
 
-        public static GameState CurrentState { get; set; } = GameState.GameOver;
+        public static GameState CurrentState { get; set; } = GameState.Menu;
         public class GameOver
         {
             Viewport _viewport;
@@ -65,6 +68,9 @@ namespace Zombie_Survival
 
 
 
+                Globals.FontTexture.Draw(_spriteBatch, "TOTAL KILLS : " + Zombies.Respawn.TotalKills(), new Vector2(centerWViewport - 200, centerHViewport - 200), Color.White, true, 3, 0);
+
+
                 //MOUSE COURSOR
                 _mouseCursor = new Rectangle((int)Globals.MouseInput.transformedMousePosition.X, (int)Globals.MouseInput.transformedMousePosition.Y, 10, 10);//FOR POINTER
                 Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.MouseCursor.frames, cursorWidth, cursorHeight, Globals.MouseInput.actualMousePosition.X + 30, Globals.MouseInput.actualMousePosition.Y + 30); //DESIGN ONLY
@@ -72,7 +78,7 @@ namespace Zombie_Survival
             public void Update(GameTime gameTime)
             {
 
-    
+
                 var mouseInput = Mouse.GetState();
                 if (_mouseCursor.Intersects(_playAgain))
                 {
@@ -90,7 +96,7 @@ namespace Zombie_Survival
                     if (mouseInput.LeftButton == ButtonState.Pressed)
                     {
                         GameScreen.CurrentState = GameState.Menu;
-                    } 
+                    }
                 }
 
             }
@@ -170,6 +176,92 @@ namespace Zombie_Survival
                 _crosshairs.Draw(_spriteBatch);
             }
 
+        }
+
+
+
+        public class Menu
+        {
+            Viewport _viewport;
+            private Rectangle _play;
+            private Rectangle _exit;
+            private Rectangle _mouseCursor;
+
+            public Menu(Viewport viewport)
+            {
+                _viewport = viewport;
+
+            }
+            public void Update(GameTime gameTime)
+            {
+                var mouseInput = Mouse.GetState();
+                if (_mouseCursor.Intersects(_play))
+                {
+
+                    if (mouseInput.LeftButton == ButtonState.Pressed)
+                    {
+                        Characters.Movements.HealhtBar = 200;
+                        GameStartup._playing.Restart();
+                        CurrentState = GameState.Playing;
+                    }
+                }
+                else if (_mouseCursor.Intersects(_exit))
+                {
+                    if (mouseInput.LeftButton == ButtonState.Pressed)
+                    {
+                        CurrentState = GameState.Exit;
+                    }
+                }
+            }
+            public void Draw(SpriteBatch _spriteBatch)
+            {
+                var viewPortH = _viewport.Height;
+                var viewPortW = _viewport.Width;
+
+                var centerHViewport = _viewport.Height / 2;
+                var centerWViewport = _viewport.Width / 2;
+
+                //SCREEN
+                Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu.Screen.frames, viewPortW, viewPortH, centerWViewport, centerHViewport);
+                // ZOMBIE SURVIVAL TEXT
+                Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu.ZombieSurvival.frames, (viewPortW / 2), (viewPortH / 2), centerWViewport + 200, centerHViewport - 200);
+
+
+
+                //PLAY BUTTON
+                _play = Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu.Play.frames, 300, 50, centerWViewport + 250, centerHViewport);
+
+
+                //EXIT BUTTON
+                _exit = Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu.Exit.frames, 300, 50, centerWViewport + 250, centerHViewport + 80);
+
+
+                ////INSTRUCTION BUTTON
+                //var c = Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu..frames, 300, 50, centerWViewport + 250, centerHViewport + 80);
+
+
+
+
+
+
+
+
+
+
+                var cursorWidth = UI_Elements.Textures.MouseCursor.frames[0].Width;
+                var cursorHeight = UI_Elements.Textures.MouseCursor.frames[0].Height;
+
+
+                //MOUSE COURSOR
+                _mouseCursor = new Rectangle((int)Globals.MouseInput.transformedMousePosition.X, (int)Globals.MouseInput.transformedMousePosition.Y, 10, 10);//FOR POINTER
+                Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.MouseCursor.frames, cursorWidth, cursorHeight, Globals.MouseInput.actualMousePosition.X + 30, Globals.MouseInput.actualMousePosition.Y + 30); //DESIGN ONLY
+
+
+
+
+
+
+            }
         }
 
     }
