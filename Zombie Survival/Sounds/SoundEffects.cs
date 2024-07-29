@@ -137,7 +137,6 @@ namespace Zombie_Survival.Sounds
 
         public static class Background
         {
-
             public static SoundEffectInstance audio;
             public static void LoadContent(ContentManager content)
             {
@@ -145,6 +144,17 @@ namespace Zombie_Survival.Sounds
                 audio = sound.CreateInstance();
                 audio.IsLooped = true;
                 audio.Volume = 0.01f;
+            }
+        }
+        public static class Helicopter
+        {
+            public static SoundEffectInstance audio;
+            public static void LoadContent(ContentManager content)
+            {
+                SoundEffect sound = content.Load<SoundEffect>("Sounds/Helicopter Sound");
+                audio = sound.CreateInstance();
+                audio.IsLooped = false;
+                audio.Volume = 1f;
             }
 
         }

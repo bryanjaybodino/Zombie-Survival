@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Zombie_Survival.Characters;
@@ -44,7 +45,7 @@ namespace Zombie_Survival
             base.Initialize();
             _playing = new GameScreen.Playing(GraphicsDevice.Viewport);
             _gameover = new GameScreen.GameOver(GraphicsDevice.Viewport);
-            _menu = new GameScreen.Menu(GraphicsDevice.Viewport); 
+            _menu = new GameScreen.Menu(GraphicsDevice.Viewport);
         }
 
 
@@ -103,6 +104,7 @@ namespace Zombie_Survival
 
             //OTHER UI ELEMENTS
             UI_Elements.Textures.Skull.LoadContent(Content);
+            UI_Elements.Textures.Helicopter.LoadContent(Content);
             UI_Elements.Textures.Clock.LoadContent(Content);
             UI_Elements.Textures.Heart.LoadContent(Content);
             UI_Elements.Textures.Cash.LoadContent(Content);
@@ -115,6 +117,9 @@ namespace Zombie_Survival
             UI_Elements.Textures.Menu.Play.LoadContent(Content);
             UI_Elements.Textures.Menu.ZombieSurvival.LoadContent(Content);
             UI_Elements.Textures.Menu.Screen.LoadContent(Content);
+            Helicopter.Textures.BulletKit.LoadContent(Content);
+            Helicopter.Textures.HealthKit.LoadContent(Content);
+
 
             //GLOBAL
             Globals.FontTexture.LoadContent(Content);
@@ -133,7 +138,7 @@ namespace Zombie_Survival
             Sounds.SoundEffects.Zombie.LoadContent(Content);
             Sounds.SoundEffects.Zombie.Attack.LoadContent(Content);
             Sounds.SoundEffects.Background.LoadContent(Content);
-
+            Sounds.SoundEffects.Helicopter.LoadContent(Content);
 
             Sounds.SoundEffects.Zombie.audio.Play();
             Sounds.SoundEffects.Background.audio.Play();
@@ -147,7 +152,7 @@ namespace Zombie_Survival
             base.Update(gameTime);
 
 
-            if(GameScreen.CurrentState == GameState.Playing)
+            if (GameScreen.CurrentState == GameState.Playing)
             {
                 var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
                 Camera.Update(gameArea, Movements.Position, GraphicsDevice.Viewport);
@@ -156,13 +161,13 @@ namespace Zombie_Survival
             else if (GameScreen.CurrentState == GameState.GameOver)
             {
                 var gameArea = new Rectangle(0, 0, UI_Elements.Textures.GameOver.Screen.frames[0].Width, UI_Elements.Textures.GameOver.Screen.frames[0].Height);
-                Camera.Update(gameArea,new Vector2(0,0), GraphicsDevice.Viewport);
+                Camera.Update(gameArea, new Vector2(0, 0), GraphicsDevice.Viewport);
                 _gameover.Update(gameTime);
             }
             else if (GameScreen.CurrentState == GameState.Menu)
             {
                 var gameArea = new Rectangle(0, 0, UI_Elements.Textures.Menu.Screen.frames[0].Width, UI_Elements.Textures.Menu.Screen.frames[0].Height);
-                Camera.Update(gameArea,new Vector2(0,0), GraphicsDevice.Viewport);
+                Camera.Update(gameArea, new Vector2(0, 0), GraphicsDevice.Viewport);
                 _menu.Update(gameTime);
             }
             else if (GameScreen.CurrentState == GameState.Exit)
@@ -172,7 +177,10 @@ namespace Zombie_Survival
 
 
             // PARA ACCURATE PARIN YUNG MOUSE POSITION
-            Globals.MouseInput.Update(Camera.Transform);
+            Globals.MouseInput.Update();
+
+
+
 
         }
 
@@ -196,6 +204,7 @@ namespace Zombie_Survival
             {
                 _menu.Draw(_spriteBatch);
             }
+
 
             _spriteBatch.End();
 

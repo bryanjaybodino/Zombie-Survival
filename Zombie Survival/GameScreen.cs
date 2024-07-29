@@ -108,6 +108,7 @@ namespace Zombie_Survival
             private Maps.Sprite _maps;
             private List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
             private Crosshairs.Sprite _crosshairs;
+            private Helicopter.Sprite _helicopter;
 
 
             Viewport _viewport;
@@ -117,6 +118,7 @@ namespace Zombie_Survival
                 _characters = new Characters.Sprite(viewport);
                 _maps = new Maps.Sprite(viewport);
                 _crosshairs = new Crosshairs.Sprite(viewport);
+                _helicopter = new Helicopter.Sprite(viewport);
 
                 for (int i = 0; i < 6; i++)
                 {
@@ -130,6 +132,7 @@ namespace Zombie_Survival
                 _characters = new Characters.Sprite(_viewport);
                 _maps = new Maps.Sprite(_viewport);
                 _crosshairs = new Crosshairs.Sprite(_viewport);
+                _helicopter = new Helicopter.Sprite(_viewport);
                 Respawn.Reset(_zombies);
 
             }
@@ -156,6 +159,7 @@ namespace Zombie_Survival
 
                 }
                 _crosshairs.Update(gameTime);
+                _helicopter.Update(gameTime);   
             }
 
             public void Draw(SpriteBatch _spriteBatch)
@@ -174,6 +178,7 @@ namespace Zombie_Survival
                 }
                 //CROSSHAIR
                 _crosshairs.Draw(_spriteBatch);
+                _helicopter.Draw(_spriteBatch);
             }
 
         }

@@ -15,24 +15,33 @@ namespace Zombie_Survival.UI_Elements
         private int TotalHealthBar;
         private Timer _myTimer;
         private double _totalPlayTime;
-        private bool _isGameActive;
+        public static double _dropSupply = 61000;
 
         private string playTimeText;
+        private string dropSupplyText;
         public Sprite(Viewport viewport)
         {
             _viewport = viewport;
             TotalHealthBar = Characters.Movements.HealhtBar;
             _totalPlayTime = 0.0;
-            _isGameActive = true;
             _myTimer = new Timer(1); // Timer for 5 seconds
             _myTimer.Elapsed += _myTimer_Elapsed; ;
             _myTimer.Start();
         }
 
+
         private void _myTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            _dropSupply -= 10;
             _totalPlayTime += 1;
             playTimeText = $"Play Time: {TimeSpan.FromSeconds(_totalPlayTime):hh\\:mm\\:ss}";
+            dropSupplyText = $"Helicopter : {TimeSpan.FromMilliseconds(_dropSupply):mm\\:ss}";
+
+            if (_dropSupply < 0)
+            {
+                Sounds.SoundEffects.Helicopter.audio.Play();
+                _dropSupply = 60000;
+            }
         }
 
         public void Draw(SpriteBatch _spriteBatch, string currentWeapon)
@@ -40,13 +49,14 @@ namespace Zombie_Survival.UI_Elements
             var x = Globals.Camera.cameraPosition.X;
             var y = Globals.Camera.cameraPosition.Y;
 
-            Globals.BoxTexture.Draw(_spriteBatch,_viewport.Width, 85, Color.Black * 0.4f,new Vector2(x,y));
+            Globals.BoxTexture.Draw(_spriteBatch, _viewport.Width, 85, Color.Black * 0.4f, new Vector2(x, y));
 
 
 
             //HEART
             var heartPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Heart.frames, 30f, 30f, 30, 30);
             Globals.FontTexture.Draw(_spriteBatch, "Health : ", new Vector2(heartPosition.X + 35, heartPosition.Y), Color.WhiteSmoke, false, 1.5f);
+
 
 
             ///HEALTH BAR
@@ -74,7 +84,7 @@ namespace Zombie_Survival.UI_Elements
             }
 
             // Draw the health bar
-            Globals.BoxTexture.Draw(_spriteBatch, currentHealth, 15, healthColor, new Vector2(heartPosition.X + 115, heartPosition.Y+5));
+            Globals.BoxTexture.Draw(_spriteBatch, currentHealth, 15, healthColor, new Vector2(heartPosition.X + 115, heartPosition.Y + 5));
 
 
             //BULLETS
@@ -98,7 +108,14 @@ namespace Zombie_Survival.UI_Elements
             {
                 currentBullets = Characters.Sprite.ShotgunMagazine.CurrentBullets + "/" + Characters.Sprite.ShotgunMagazine.TotalBullets;
             }
-            Globals.FontTexture.Draw(_spriteBatch, "Ammo : " + currentBullets, new Vector2(bulletPosition.X + 35, bulletPosition.Y+5), Color.WhiteSmoke, false, 1.5f);
+            Globals.FontTexture.Draw(_spriteBatch, "Ammo : " + currentBullets, new Vector2(bulletPosition.X + 35, bulletPosition.Y + 5), Color.WhiteSmoke, false, 1.5f);
+
+
+
+
+            //MEDIC HELICOPTER
+            var ammoPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Helicopter.frames, 30f, 30f, 530, 30);
+            Globals.FontTexture.Draw(_spriteBatch, dropSupplyText, new Vector2(ammoPosition.X + 45, ammoPosition.Y), Color.WhiteSmoke, false, 1.5f);
 
 
 
@@ -113,7 +130,7 @@ namespace Zombie_Survival.UI_Elements
 
 
             //PLAYTIME
-            Globals.FontTexture.Draw(_spriteBatch, playTimeText, new Vector2(skullPosition.X + 35, skullPosition.Y+35), Color.WhiteSmoke, false, 1.5f);
+            Globals.FontTexture.Draw(_spriteBatch, playTimeText, new Vector2(skullPosition.X + 35, skullPosition.Y + 35), Color.WhiteSmoke, false, 1.5f);
         }
 
     }

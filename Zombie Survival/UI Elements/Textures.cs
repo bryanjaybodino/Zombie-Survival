@@ -29,6 +29,15 @@ namespace Zombie_Survival.UI_Elements
             }
         }
 
+        public static class Helicopter
+        {
+            public static Texture2D[] frames;
+            public static void LoadContent(ContentManager content)
+            {
+                frames = LoadTextures(content, "UI Elements/Helicopter", 1);
+            }
+        }
+
         public static class Clock
         {
             public static Texture2D[] frames;

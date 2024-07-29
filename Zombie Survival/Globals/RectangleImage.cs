@@ -10,11 +10,17 @@ namespace Zombie_Survival.Globals
 {
     public class RectangleImage
     {
-        public static Rectangle Draw(SpriteBatch _spriteBatch, Texture2D[] _frames, float width, float height, float X = 0, float Y = 0)
+        public static Rectangle Draw(SpriteBatch _spriteBatch, Texture2D[] _frames, float width, float height, float X = 0, float Y = 0, bool withCamera=true)
         {
             // Calculate the position of the image
-            var x = Globals.Camera.cameraPosition.X;
-            var y = Globals.Camera.cameraPosition.Y;
+
+            float x = 0;
+            float y = 0;
+            if (withCamera)
+            {
+                x = Globals.Camera.cameraPosition.X;
+                y = Globals.Camera.cameraPosition.Y;
+            }
             Vector2 CurrentPosition = new Vector2(x + X, y + Y);
 
             // Create a destination rectangle using the specified width and height
