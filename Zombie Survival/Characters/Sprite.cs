@@ -18,7 +18,7 @@ namespace Zombie_Survival.Characters
         private double _frameTime;
         private double _elapsedTime;
         private Viewport _viewport;
-        private string currentWeapon = "knife";
+        private string currentWeapon = "rifle";
         private Texture2D _size;
         private bool isMoving = false;
 
@@ -57,13 +57,17 @@ namespace Zombie_Survival.Characters
 
         public Sprite(Viewport viewport)
         {
+            RifleMagazine = new Bullets.Magazines.Rifle();
+            PistolMagazine = new Bullets.Magazines.Pistol();
+            ShotgunMagazine = new Bullets.Magazines.Shotgun();
+            Movements.HealhtBar = 200;
             _weapon = new Weapons.Sprite(viewport);
             _slash = new Knife_Slash.Sprite(viewport);
             _viewport = viewport;
             _currentFrame = 0;
             _frameTime = 50; // Time per frame in milliseconds
-            _frames = Knife.frames;
-            _size = Knife.frames[0];
+            _frames = Rifle.frames;
+            _size = Rifle.frames[0];
 
             // Initialize position to the center of the viewport
             Movements.Position = new Vector2(_viewport.Width / 2, _viewport.Height / 2);

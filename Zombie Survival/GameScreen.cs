@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Zombie_Survival.Globals;
+using Zombie_Survival.Zombies;
+using static Zombie_Survival.GameScreen;
 using static Zombie_Survival.UI_Elements.Textures;
 using static Zombie_Survival.UI_Elements.Textures.GameOver;
 
@@ -20,6 +22,9 @@ namespace Zombie_Survival
             private Rectangle _playAgain;
             private Rectangle _back;
             private Rectangle _mouseCursor;
+
+
+            
 
             public GameOver(Viewport viewport)
             {
@@ -67,7 +72,7 @@ namespace Zombie_Survival
 
                 //MOUSE COURSOR
                 _mouseCursor = new Rectangle((int)Globals.MouseInput.transformedMousePosition.X, (int)Globals.MouseInput.transformedMousePosition.Y, 10, 10);//FOR POINTER
-                Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.MouseCursor.frames, cursorWidth, cursorHeight, Globals.MouseInput.actualMousePosition.X+30, Globals.MouseInput.actualMousePosition.Y+30); //DESIGN ONLY
+                Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.MouseCursor.frames, cursorWidth, cursorHeight, Globals.MouseInput.actualMousePosition.X + 30, Globals.MouseInput.actualMousePosition.Y + 30); //DESIGN ONLY
             }
             public void Update(GameTime gameTime)
             {
@@ -79,15 +84,82 @@ namespace Zombie_Survival
                     if (mouseInput.LeftButton == ButtonState.Pressed)
                     {
                         Characters.Movements.HealhtBar = 200;
+                        GameStartup._playing.Restart();
                     }
 
                 }
                 else if (_mouseCursor.Intersects(_back))
                 {
-
+                   
                 }
 
             }
+        }
+
+        public class Playing
+        {
+            private  Characters.Sprite _characters;
+            private  Maps.Sprite _maps;
+            private  List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
+            private  Crosshairs.Sprite _crosshairs;
+
+
+            Viewport _viewport;
+            public Playing(Viewport viewport)
+            {
+                _viewport = viewport;
+                _characters = new Characters.Sprite(viewport);
+                _maps = new Maps.Sprite(viewport);
+                _crosshairs = new Crosshairs.Sprite(viewport);
+
+                for (int i = 0; i < 6; i++)
+                {
+                    Zombies.Respawn.Start(_zombies);
+                }
+            }
+
+
+            public void Restart()
+            {
+                _characters = new Characters.Sprite(_viewport);
+                _maps = new Maps.Sprite(_viewport);
+                _crosshairs = new Crosshairs.Sprite(_viewport);
+                Respawn.Reset(_zombies);
+
+            }
+
+
+            public void Update(GameTime gameTime)
+            {
+                _maps.Update(gameTime);
+                _characters.Update(gameTime, _zombies);
+
+                for (int i = 0; i < _zombies.Count; i++)
+                {
+                    _zombies[i].Update(gameTime, _zombies);
+
+                }
+                _crosshairs.Update(gameTime);
+            }
+
+            public void Draw(SpriteBatch _spriteBatch)
+            {
+                //MAP
+                _maps.Draw(_spriteBatch);
+
+                //CHARACTER
+                _characters.Draw(_spriteBatch);
+
+                //ZOMBIE
+
+                for (int i = 0; i < _zombies.Count; i++)
+                {
+                    _zombies[i].Draw(_spriteBatch);
+                }
+                //CROSSHAIR
+                _crosshairs.Draw(_spriteBatch);
+            }
+
         }
 
     }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using Zombie_Survival.Globals;
+using static Zombie_Survival.GameScreen;
 
 
 namespace Zombie_Survival
@@ -31,25 +32,17 @@ namespace Zombie_Survival
         }
 
 
-        private GameScreen.GameOver _gameover;
-        private Characters.Sprite _characters;
-        private Maps.Sprite _maps;
-        private List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
-        private Crosshairs.Sprite _crosshairs;
+        public static GameScreen.GameOver _gameover;
+        public static GameScreen.Playing _playing;
+
 
         protected override void Initialize()
         {
             base.Initialize();
-
-            _characters = new Characters.Sprite(GraphicsDevice.Viewport);
-            _maps = new Maps.Sprite(GraphicsDevice.Viewport);
-            _crosshairs = new Crosshairs.Sprite(GraphicsDevice.Viewport);
+            _playing = new GameScreen.Playing(GraphicsDevice.Viewport);
             _gameover = new GameScreen.GameOver(GraphicsDevice.Viewport);
 
-            for (int i = 0; i < 6; i++)
-            {
-                Zombies.Respawn.Start(_zombies);
-            }
+
         }
 
 
@@ -152,27 +145,7 @@ namespace Zombie_Survival
             }
             else
             {
-                _maps.Update(gameTime);
-
-
-                _characters.Update(gameTime, _zombies);
-
-                for (int i = 0; i < _zombies.Count; i++)
-                {
-                    _zombies[i].Update(gameTime, _zombies);
-
-                }
-
-
-                _crosshairs.Update(gameTime);
-
-
-
-
-                if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-                {
-                    Characters.Movements.HealhtBar = 0;
-                }
+               _playing.Update(gameTime);
 
             }            
             
@@ -195,23 +168,8 @@ namespace Zombie_Survival
             }
             else
             {
-                //MAP
-                _maps.Draw(_spriteBatch);
 
-
-
-                //CHARACTER
-                _characters.Draw(_spriteBatch);
-
-                //ZOMBIE
-
-                for (int i = 0; i < _zombies.Count; i++)
-                {
-                    _zombies[i].Draw(_spriteBatch);
-                }
-
-                //CROSSHAIR
-                _crosshairs.Draw(_spriteBatch);
+                _playing.Draw(_spriteBatch);
             }
 
 

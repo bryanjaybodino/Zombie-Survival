@@ -97,7 +97,7 @@ namespace Zombie_Survival.UI_Elements
 
             //SKULLS
             var skullPosition = Globals.RectangleImage.Draw(_spriteBatch, Textures.Skull.frames, 30f, 30f, _viewport.Width - 300, 30);
-            Globals.FontTexture.Draw(_spriteBatch, "Kills : " + Zombies.Respawn.TotalKills().ToString("N0"), new Vector2(skullPosition.X + 35, skullPosition.Y+5), Color.WhiteSmoke, false, 1.5f);
+            Globals.FontTexture.Draw(_spriteBatch, "Kills : " + Zombies.Respawn.TotalKills().ToString("N0"), new Vector2(skullPosition.X + 35, skullPosition.Y), Color.WhiteSmoke, false, 1.5f);
 
             //PLAYTIME
             Globals.FontTexture.Draw(_spriteBatch, playTimeText, new Vector2(skullPosition.X + 35, skullPosition.Y+35), Color.WhiteSmoke, false, 1.5f);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using static Zombie_Survival.Sounds.SoundEffects;
 
 namespace Zombie_Survival.Zombies
 {
@@ -19,6 +20,15 @@ namespace Zombie_Survival.Zombies
         public static double TotalKills()
         {
             return kills;
+        }
+        public static void Reset(List<Zombies.Sprite> zombies)
+        {
+            kills = 0;
+            zombies.Clear();
+            for (int i = 0; i < 6; i++)
+            {
+                Zombies.Respawn.Start(zombies);
+            }
         }
 
         public static void Start(List<Zombies.Sprite> zombies)

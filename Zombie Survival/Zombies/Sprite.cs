@@ -126,59 +126,63 @@ namespace Zombie_Survival.Zombies
         {
             try
             {
-                if (_currentFrame >= _frames.Length)
+                if(_frames != null)
                 {
-                    _currentFrame = 0;
+                    if (_currentFrame >= _frames.Length)
+                    {
+                        _currentFrame = 0;
+                    }
+
+
+                    Vector2 origin = new Vector2(_frames[_currentFrame].Width / 2, _frames[_currentFrame].Height / 2);
+                    _spriteBatch.Draw(
+                        _frames[_currentFrame],
+                        Position,
+                        null,
+                        Color.White,
+                        Rotation,
+                        origin, // Use the center of the frame as the origin
+                        _scale,
+                        SpriteEffects.None,
+                        0f
+                    );
+
+
+
+                    ////
+                    if (isReceivedDamage)
+                    {
+                        Rectangle HealthBar = new Rectangle((int)Position.X, (int)Position.Y, 20, ZombieHealth);
+                        Rectangle MaxHealthBar = new Rectangle((int)Position.X, (int)Position.Y, 20, MaxHealth);
+                        Texture2D whiteTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
+                        whiteTexture.SetData(new[] { Color.White });
+                        origin = new Vector2(HealthBar.Width / 2, HealthBar.Height / 2);
+
+                        Color HealthBarColor = Color.White;
+                        if (ZombieHealth >= 80)
+                        {
+                            HealthBarColor = Color.LimeGreen;
+                        }
+                        else if (ZombieHealth >= 50 && ZombieHealth < 80)
+                        {
+                            HealthBarColor = Color.Orange;
+                        }
+                        else
+                        {
+                            HealthBarColor = Color.Red;
+                        }
+
+                        // Use the center of the frame as the origin
+                        _spriteBatch.Draw(whiteTexture, Position, MaxHealthBar, Color.Black, Rotation, origin, _scale, SpriteEffects.None, 0f);
+                        _spriteBatch.Draw(whiteTexture, Position, HealthBar, HealthBarColor, Rotation, origin, _scale, SpriteEffects.None, 0f);
+
+
+
+
+
+                    }
                 }
-
-
-                Vector2 origin = new Vector2(_frames[_currentFrame].Width / 2, _frames[_currentFrame].Height / 2);
-                _spriteBatch.Draw(
-                    _frames[_currentFrame],
-                    Position,
-                    null,
-                    Color.White,
-                    Rotation,
-                    origin, // Use the center of the frame as the origin
-                    _scale,
-                    SpriteEffects.None,
-                    0f
-                );
-
-
-
-                ////
-                if (isReceivedDamage)
-                {
-                    Rectangle HealthBar = new Rectangle((int)Position.X, (int)Position.Y, 20, ZombieHealth);
-                    Rectangle MaxHealthBar = new Rectangle((int)Position.X, (int)Position.Y, 20, MaxHealth);
-                    Texture2D whiteTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
-                    whiteTexture.SetData(new[] { Color.White });
-                    origin = new Vector2(HealthBar.Width / 2, HealthBar.Height / 2);
-
-                    Color HealthBarColor = Color.White;
-                    if (ZombieHealth >= 80)
-                    {
-                        HealthBarColor = Color.LimeGreen;
-                    }
-                    else if (ZombieHealth >= 50 && ZombieHealth < 80)
-                    {
-                        HealthBarColor = Color.Orange;
-                    }
-                    else
-                    {
-                        HealthBarColor = Color.Red;
-                    }
-
-                    // Use the center of the frame as the origin
-                    _spriteBatch.Draw(whiteTexture, Position, MaxHealthBar, Color.Black, Rotation, origin, _scale, SpriteEffects.None, 0f) ;
-                    _spriteBatch.Draw(whiteTexture,Position,HealthBar, HealthBarColor, Rotation, origin, _scale, SpriteEffects.None, 0f);
-
-
-
-
-
-                }
+               
 
                 // Draw the bounding box for debugging
                 //Globals.Debugger.Draw(_spriteBatch, BoundingBox);
