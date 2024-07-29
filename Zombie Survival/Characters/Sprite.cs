@@ -229,8 +229,6 @@ namespace Zombie_Survival.Characters
             _slash.Update(gameTime, zombies);
             Movements.Update(gameTime, _size, Camera.Transform);
             AvoidOverlapping(zombies);
-            var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
-            Camera.Update(gameArea, Movements.Position, _viewport);
             shoot.Update(gameTime, zombies);
 
             _weapon.Update(gameTime, currentWeapon);

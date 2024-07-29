@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Zombie_Survival.Characters;
 using Zombie_Survival.Globals;
 using static Zombie_Survival.GameScreen;
 
@@ -40,9 +41,7 @@ namespace Zombie_Survival
         {
             base.Initialize();
             _playing = new GameScreen.Playing(GraphicsDevice.Viewport);
-            _gameover = new GameScreen.GameOver(GraphicsDevice.Viewport);
-
-
+            _gameover = new GameScreen.GameOver(GraphicsDevice.Viewport); 
         }
 
 
@@ -138,17 +137,23 @@ namespace Zombie_Survival
             base.Update(gameTime);
 
 
-
-            if (_gameover.status)
+            if(GameScreen.CurrentState == GameState.Playing)
             {
+                var gameArea = new Rectangle(0, 0, Maps.Textures.Covid19.frames[0].Width, Maps.Textures.Covid19.frames[0].Height);
+                Camera.Update(gameArea, Movements.Position, GraphicsDevice.Viewport);
+                _playing.Update(gameTime);
+            }
+            else if (GameScreen.CurrentState == GameState.GameOver)
+            {
+                var gameArea = new Rectangle(0, 0, UI_Elements.Textures.GameOver.Screen.frames[0].Width, UI_Elements.Textures.GameOver.Screen.frames[0].Height);
+                Camera.Update(gameArea, Movements.Position, GraphicsDevice.Viewport);
                 _gameover.Update(gameTime);
             }
-            else
-            {
-               _playing.Update(gameTime);
 
-            }            
-            
+
+        
+
+
             // PARA ACCURATE PARIN YUNG MOUSE POSITION
             Globals.MouseInput.Update(Camera.Transform);
 
@@ -162,16 +167,14 @@ namespace Zombie_Survival
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, Camera.Transform); // para soft lang yung lakad ng character pag sunod sa camera
 
 
-            if (_gameover.status)
+            if (GameScreen.CurrentState == GameState.Playing)
+            {
+                _playing.Draw(_spriteBatch);
+            }
+            else if (GameScreen.CurrentState == GameState.GameOver)
             {
                 _gameover.Draw(_spriteBatch);
             }
-            else
-            {
-
-                _playing.Draw(_spriteBatch);
-            }
-
 
 
             _spriteBatch.End();

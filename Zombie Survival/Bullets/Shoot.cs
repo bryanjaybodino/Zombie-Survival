@@ -20,7 +20,7 @@ namespace Zombie_Survival.Bullets
         private void Pistol(Texture2D frames, int BulletDamage)
         {
 
-            float scale = 0.02f;
+            float scale = 0.03f;
             Vector2 position = Characters.Movements.Position;
             float rotation = Characters.Movements.Rotation;
             Vector2 gunOffset = new Vector2(35, 22);

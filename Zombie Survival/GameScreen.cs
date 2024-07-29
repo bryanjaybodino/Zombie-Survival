@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zombie_Survival.Characters;
 using Zombie_Survival.Globals;
 using Zombie_Survival.Zombies;
 using static Zombie_Survival.GameScreen;
@@ -16,6 +17,14 @@ namespace Zombie_Survival
 {
     public class GameScreen
     {
+        public enum GameState
+        {
+            Menu,
+            Playing,
+            GameOver
+        }
+
+        public static GameState CurrentState { get; set; } = GameState.GameOver;
         public class GameOver
         {
             Viewport _viewport;
@@ -24,25 +33,11 @@ namespace Zombie_Survival
             private Rectangle _mouseCursor;
 
 
-            
+
 
             public GameOver(Viewport viewport)
             {
                 _viewport = viewport;
-            }
-            public bool status
-            {
-                get
-                {
-                    if (Characters.Movements.HealhtBar <= 0)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
             }
 
             public void Draw(SpriteBatch _spriteBatch)
@@ -77,6 +72,7 @@ namespace Zombie_Survival
             public void Update(GameTime gameTime)
             {
 
+    
                 var mouseInput = Mouse.GetState();
                 if (_mouseCursor.Intersects(_playAgain))
                 {
@@ -85,12 +81,16 @@ namespace Zombie_Survival
                     {
                         Characters.Movements.HealhtBar = 200;
                         GameStartup._playing.Restart();
+                        CurrentState = GameState.Playing;
                     }
 
                 }
                 else if (_mouseCursor.Intersects(_back))
                 {
-                   
+                    if (mouseInput.LeftButton == ButtonState.Pressed)
+                    {
+                        GameScreen.CurrentState = GameState.Menu;
+                    } 
                 }
 
             }
@@ -98,10 +98,10 @@ namespace Zombie_Survival
 
         public class Playing
         {
-            private  Characters.Sprite _characters;
-            private  Maps.Sprite _maps;
-            private  List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
-            private  Crosshairs.Sprite _crosshairs;
+            private Characters.Sprite _characters;
+            private Maps.Sprite _maps;
+            private List<Zombies.Sprite> _zombies = new List<Zombies.Sprite>();
+            private Crosshairs.Sprite _crosshairs;
 
 
             Viewport _viewport;
@@ -131,6 +131,16 @@ namespace Zombie_Survival
 
             public void Update(GameTime gameTime)
             {
+
+                //PLAYER GAMEOVER
+                if (GameScreen.CurrentState == GameState.Playing)
+                {
+                    if (Characters.Movements.HealhtBar <= 0)
+                    {
+                        GameScreen.CurrentState = GameState.GameOver;
+                    }
+                }
+
                 _maps.Update(gameTime);
                 _characters.Update(gameTime, _zombies);
 
