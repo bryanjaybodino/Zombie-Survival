@@ -24,6 +24,7 @@ namespace Zombie_Survival
             Menu,
             Playing,
             GameOver,
+            Instruction,
             Exit
         }
 
@@ -77,15 +78,13 @@ namespace Zombie_Survival
             }
             public void Update(GameTime gameTime)
             {
-
-
                 var mouseInput = Mouse.GetState();
                 if (_mouseCursor.Intersects(_playAgain))
                 {
-
                     if (mouseInput.LeftButton == ButtonState.Pressed)
                     {
-                        Characters.Movements.HealhtBar = 200;
+                        UI_Elements.Sprite.Restart();
+                        Characters.Movements.ResetHealth();
                         GameStartup._playing.Restart();
                         CurrentState = GameState.Playing;
                     }
@@ -197,6 +196,7 @@ namespace Zombie_Survival
         {
             Viewport _viewport;
             private Rectangle _play;
+            private Rectangle _instruction;
             private Rectangle _exit;
             private Rectangle _mouseCursor;
 
@@ -213,9 +213,17 @@ namespace Zombie_Survival
 
                     if (mouseInput.LeftButton == ButtonState.Pressed)
                     {
+                        UI_Elements.Sprite.Restart();
                         Characters.Movements.ResetHealth();
                         GameStartup._playing.Restart();
                         CurrentState = GameState.Playing;
+                    }
+                }
+                else if (_mouseCursor.Intersects(_instruction))
+                {
+                    if (mouseInput.LeftButton == ButtonState.Pressed)
+                    {
+                        CurrentState = GameState.Instruction;
                     }
                 }
                 else if (_mouseCursor.Intersects(_exit))
@@ -245,19 +253,12 @@ namespace Zombie_Survival
                 _play = Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu.Play.frames, 300, 50, centerWViewport + 250, centerHViewport);
 
 
-                //EXIT BUTTON
-                _exit = Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu.Exit.frames, 300, 50, centerWViewport + 250, centerHViewport + 80);
-
-
                 ////INSTRUCTION BUTTON
-                //var c = Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu..frames, 300, 50, centerWViewport + 250, centerHViewport + 80);
+                _instruction = Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu.Instruction.frames, 300, 50, centerWViewport + 250, centerHViewport + 80);
 
 
-
-
-
-
-
+                //EXIT BUTTON
+                _exit = Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Menu.Exit.frames, 300, 50, centerWViewport + 250, centerHViewport + 160);
 
 
 
@@ -270,6 +271,66 @@ namespace Zombie_Survival
                 Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.MouseCursor.frames, cursorWidth, cursorHeight, Globals.MouseInput.actualMousePosition.X + 30, Globals.MouseInput.actualMousePosition.Y + 30); //DESIGN ONLY
 
 
+
+
+
+
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+        public class Instruction
+        {
+            Viewport _viewport;
+            private Rectangle _back;
+            private Rectangle _mouseCursor;
+
+            public Instruction(Viewport viewport)
+            {
+                _viewport = viewport;
+
+            }
+            public void Update(GameTime gameTime)
+            {
+                var mouseInput = Mouse.GetState();
+                if (_mouseCursor.Intersects(_back))
+                {
+                    if (mouseInput.LeftButton == ButtonState.Pressed)
+                    {
+                        CurrentState = GameState.Menu;
+                    }
+                }
+            }
+            public void Draw(SpriteBatch _spriteBatch)
+            {
+                var viewPortH = _viewport.Height;
+                var viewPortW = _viewport.Width;
+
+                var centerHViewport = _viewport.Height / 2;
+                var centerWViewport = _viewport.Width / 2;
+
+                //SCREEN
+                Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Instruction.Screen.frames, viewPortW, viewPortH, centerWViewport, centerHViewport);
+
+                //BACK BUTTON
+                _back = Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.Instruction.Back.frames, 300, 50, viewPortW - 120, 45);
+
+
+                var cursorWidth = UI_Elements.Textures.MouseCursor.frames[0].Width;
+                var cursorHeight = UI_Elements.Textures.MouseCursor.frames[0].Height;
+
+                //MOUSE COURSOR
+                _mouseCursor = new Rectangle((int)Globals.MouseInput.transformedMousePosition.X, (int)Globals.MouseInput.transformedMousePosition.Y, 10, 10);//FOR POINTER
+                Globals.RectangleImage.Draw(_spriteBatch, UI_Elements.Textures.MouseCursor.frames, cursorWidth, cursorHeight, Globals.MouseInput.actualMousePosition.X + 30, Globals.MouseInput.actualMousePosition.Y + 30); //DESIGN ONLY
 
 
 

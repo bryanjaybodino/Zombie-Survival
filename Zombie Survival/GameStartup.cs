@@ -38,6 +38,7 @@ namespace Zombie_Survival
         public static GameScreen.GameOver _gameover;
         public static GameScreen.Playing _playing;
         public static GameScreen.Menu _menu;
+        public static GameScreen.Instruction _instruction;
 
 
         protected override void Initialize()
@@ -46,6 +47,7 @@ namespace Zombie_Survival
             _playing = new GameScreen.Playing(GraphicsDevice.Viewport);
             _gameover = new GameScreen.GameOver(GraphicsDevice.Viewport);
             _menu = new GameScreen.Menu(GraphicsDevice.Viewport);
+            _instruction = new GameScreen.Instruction(GraphicsDevice.Viewport);
         }
 
 
@@ -116,7 +118,10 @@ namespace Zombie_Survival
             UI_Elements.Textures.Menu.Exit.LoadContent(Content);
             UI_Elements.Textures.Menu.Play.LoadContent(Content);
             UI_Elements.Textures.Menu.ZombieSurvival.LoadContent(Content);
+            UI_Elements.Textures.Menu.Instruction.LoadContent(Content);
             UI_Elements.Textures.Menu.Screen.LoadContent(Content);
+            UI_Elements.Textures.Instruction.Screen.LoadContent(Content);
+            UI_Elements.Textures.Instruction.Back.LoadContent(Content);
             Helicopter.Textures.BulletKit.LoadContent(Content);
             Helicopter.Textures.HealthKit.LoadContent(Content);
 
@@ -174,6 +179,12 @@ namespace Zombie_Survival
             {
                 Exit();
             }
+            else if (GameScreen.CurrentState == GameState.Instruction)
+            {
+                var gameArea = new Rectangle(0, 0, UI_Elements.Textures.Instruction.Screen.frames[0].Width, UI_Elements.Textures.Instruction.Screen.frames[0].Height);
+                Camera.Update(gameArea, new Vector2(0, 0), GraphicsDevice.Viewport);
+                _instruction.Update(gameTime);
+            }
 
 
             // PARA ACCURATE PARIN YUNG MOUSE POSITION
@@ -203,6 +214,10 @@ namespace Zombie_Survival
             else if (GameScreen.CurrentState == GameState.Menu)
             {
                 _menu.Draw(_spriteBatch);
+            }
+            else if (GameScreen.CurrentState == GameState.Instruction)
+            {
+                _instruction.Draw(_spriteBatch);
             }
 
 

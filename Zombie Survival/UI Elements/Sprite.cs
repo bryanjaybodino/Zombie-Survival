@@ -29,7 +29,7 @@ namespace Zombie_Survival.UI_Elements
         }
 
 
-        public static void SupplyReceived()
+        public static void Restart()
         {
             isSupplyArrive = false;
             _dropSupply = 61000;
@@ -45,8 +45,8 @@ namespace Zombie_Survival.UI_Elements
         public void Update(GameTime gameTime)
         {
             _dropSupply -= 10;
-            _totalPlayTime += 1;
-            playTimeText = $"Play Time: {TimeSpan.FromSeconds(_totalPlayTime):hh\\:mm\\:ss}";
+            _totalPlayTime += 10;
+            playTimeText = $"Play Time: {TimeSpan.FromMilliseconds(_totalPlayTime):hh\\:mm\\:ss}";
 
             if (isSupplyArrive == false)
             {

@@ -48,7 +48,7 @@ namespace Zombie_Survival.Helicopter
                 var CharacterRectangle = Globals.Debugger.BoundingBox(Characters.Textures.Rifle.frames[0], Characters.Movements.Position, new Vector2(0.3f, 0.3f), 0.5f);
                 if (_rectangle.Intersects(CharacterRectangle))
                 {
-                    UI_Elements.Sprite.SupplyReceived();
+                    UI_Elements.Sprite.Restart();
                     if(UI_Elements.Sprite.DropType.Medic == UI_Elements.Sprite.dropType)
                     {
                         Characters.Movements.ResetHealth();
