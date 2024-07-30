@@ -87,6 +87,11 @@ namespace Zombie_Survival.Bullets
                 CurrentBullets = 30;
                 TotalBullets = 120;
             }
+            public void ResetAmmo()
+            {
+                CurrentBullets = MaxBullets;
+                TotalBullets = 120; // Reset to a specific value for Rifle
+            }
         }
 
         public class Pistol : Ammunition
@@ -98,6 +103,11 @@ namespace Zombie_Survival.Bullets
                 CurrentBullets = 15;
                 TotalBullets = 45;
             }
+            public void ResetAmmo()
+            {
+                CurrentBullets = MaxBullets;
+                TotalBullets = 45; // Reset to a specific value for Pistol
+            }
         }
 
         public class Shotgun : Ammunition
@@ -108,6 +118,11 @@ namespace Zombie_Survival.Bullets
                 MaxBullets = 7;
                 CurrentBullets = 7;
                 TotalBullets = 35;
+            }
+            public void ResetAmmo()
+            {
+                CurrentBullets = MaxBullets;
+                TotalBullets = 35; // Reset to a specific value for Shotgun
             }
         }
     }

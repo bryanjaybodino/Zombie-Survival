@@ -61,7 +61,7 @@ namespace Zombie_Survival.Weapons
                 _frames = Textures.Shotgun.frames;
             }
 
-
+            ui_elements.Update(gameTime);
         }
         public void Draw(SpriteBatch _spriteBatch)
         {

@@ -12,7 +12,10 @@ namespace Zombie_Survival.Characters
         public static Vector2 Position;
         public static int HealhtBar = 200;
 
-
+        public static void ResetHealth()
+        {
+            HealhtBar = 200;
+        }
         public static void Update(GameTime gameTime, Texture2D texture, Matrix cameraTransform)
         {
             KeyboardState keyboardState = Keyboard.GetState();

@@ -154,7 +154,7 @@ namespace Zombie_Survival.Sounds
                 SoundEffect sound = content.Load<SoundEffect>("Sounds/Helicopter Sound");
                 audio = sound.CreateInstance();
                 audio.IsLooped = false;
-                audio.Volume = 1f;
+                audio.Volume = .05f;
             }
 
         }

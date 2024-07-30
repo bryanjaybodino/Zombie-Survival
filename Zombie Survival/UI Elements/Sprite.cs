@@ -15,35 +15,68 @@ namespace Zombie_Survival.UI_Elements
         private int TotalHealthBar;
         private Timer _myTimer;
         private double _totalPlayTime;
-        public static double _dropSupply = 61000;
-
         private string playTimeText;
         private string dropSupplyText;
+        private static double _dropSupply { get; set; } = 61000;
+        public static bool isSupplyArrive { get; private set; } = false;
+        public static int supX, supY;
+
+        public static DropType dropType = DropType.Medic;
+        public enum DropType
+        {
+            Medic,
+            Bullet
+        }
+
+
+        public static void SupplyReceived()
+        {
+            isSupplyArrive = false;
+            _dropSupply = 61000;
+        }
+
         public Sprite(Viewport viewport)
         {
             _viewport = viewport;
             TotalHealthBar = Characters.Movements.HealhtBar;
             _totalPlayTime = 0.0;
-            _myTimer = new Timer(1); // Timer for 5 seconds
-            _myTimer.Elapsed += _myTimer_Elapsed; ;
-            _myTimer.Start();
         }
 
-
-        private void _myTimer_Elapsed(object sender, ElapsedEventArgs e)
+        public void Update(GameTime gameTime)
         {
             _dropSupply -= 10;
             _totalPlayTime += 1;
             playTimeText = $"Play Time: {TimeSpan.FromSeconds(_totalPlayTime):hh\\:mm\\:ss}";
-            dropSupplyText = $"Helicopter : {TimeSpan.FromMilliseconds(_dropSupply):mm\\:ss}";
 
-            if (_dropSupply < 0)
+            if (isSupplyArrive == false)
             {
-                Sounds.SoundEffects.Helicopter.audio.Play();
-                _dropSupply = 60000;
+                dropSupplyText = $"Helicopter : {TimeSpan.FromMilliseconds(_dropSupply):mm\\:ss}";
+
+
+                if (_dropSupply < 0)
+                {
+                    isSupplyArrive = true;
+                    Sounds.SoundEffects.Helicopter.audio.Play();
+
+                    Random random = new Random();
+                    supX = random.Next(250, Maps.Textures.Covid19.frames[0].Width - 250);
+                    supY = random.Next(250, Maps.Textures.Covid19.frames[0].Height - 250);
+
+
+                    random = new Random();
+                    int DropItem = random.Next(1, 3);
+
+                    if (1 == DropItem)/// Medic
+                    {
+                        dropType = DropType.Medic;
+                    }
+                    else
+                    {
+                        dropType = DropType.Bullet;
+                    }
+                }
             }
         }
-
         public void Draw(SpriteBatch _spriteBatch, string currentWeapon)
         {
             var x = Globals.Camera.cameraPosition.X;

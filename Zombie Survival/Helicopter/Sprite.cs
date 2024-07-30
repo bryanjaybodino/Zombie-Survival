@@ -17,7 +17,7 @@ namespace Zombie_Survival.Helicopter
         private float _rotation;
         private float _scale;
         private Vector2 _imagePosition;
-
+        private Rectangle _rectangle;
         public Sprite(Viewport viewport)
         {
             _imagePosition = new Vector2(0, 0); // Set initial position of the image
@@ -41,17 +41,42 @@ namespace Zombie_Survival.Helicopter
                     _currentFrame = 0; // Loop back to the first frame
                 }
             }
-            _imagePosition = new Vector2(Globals.MouseInput.transformedMousePosition.X, Globals.MouseInput.transformedMousePosition.Y);
+
+
+            if (UI_Elements.Sprite.isSupplyArrive == true)
+            {
+                var CharacterRectangle = Globals.Debugger.BoundingBox(Characters.Textures.Rifle.frames[0], Characters.Movements.Position, new Vector2(0.3f, 0.3f), 0.5f);
+                if (_rectangle.Intersects(CharacterRectangle))
+                {
+                    UI_Elements.Sprite.SupplyReceived();
+                    if(UI_Elements.Sprite.DropType.Medic == UI_Elements.Sprite.dropType)
+                    {
+                        Characters.Movements.ResetHealth();
+                    }
+                    else
+                    {
+                        Characters.Sprite.RifleMagazine.ResetAmmo();
+                        Characters.Sprite.ShotgunMagazine.ResetAmmo();
+                        Characters.Sprite.PistolMagazine.ResetAmmo();
+                    }
+                }
+
+            }
+
         }
         public void Draw(SpriteBatch _spriteBatch)
         {
-
-            Random random = new Random();
-            int supX = random.Next(250, Maps.Textures.Covid19.frames[0].Width - 250);
-            int supY = random.Next(250, Maps.Textures.Covid19.frames[0].Height - 250);
-
-
-            Globals.RectangleImage.Draw(_spriteBatch, Helicopter.Textures.HealthKit.frames, 50f, 50f, supX, supY, false);
+            if (UI_Elements.Sprite.isSupplyArrive == true)
+            {
+                if (UI_Elements.Sprite.DropType.Medic == UI_Elements.Sprite.dropType)
+                {
+                    _rectangle = Globals.RectangleImage.Draw(_spriteBatch, Helicopter.Textures.HealthKit.frames, 50f, 50f, UI_Elements.Sprite.supX, UI_Elements.Sprite.supY, false);
+                }
+                else
+                {
+                    _rectangle = Globals.RectangleImage.Draw(_spriteBatch, Helicopter.Textures.BulletKit.frames, 50f, 50f, UI_Elements.Sprite.supX, UI_Elements.Sprite.supY, false);
+                }    
+            }
         }
     }
 }

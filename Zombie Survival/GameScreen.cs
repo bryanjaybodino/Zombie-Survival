@@ -111,6 +111,7 @@ namespace Zombie_Survival
             private Helicopter.Sprite _helicopter;
 
 
+
             Viewport _viewport;
             public Playing(Viewport viewport)
             {
@@ -159,13 +160,18 @@ namespace Zombie_Survival
 
                 }
                 _crosshairs.Update(gameTime);
-                _helicopter.Update(gameTime);   
+                _helicopter.Update(gameTime);
+ 
+
+
             }
 
             public void Draw(SpriteBatch _spriteBatch)
             {
                 //MAP
                 _maps.Draw(_spriteBatch);
+
+                _helicopter.Draw(_spriteBatch);
 
                 //CHARACTER
                 _characters.Draw(_spriteBatch);
@@ -178,7 +184,9 @@ namespace Zombie_Survival
                 }
                 //CROSSHAIR
                 _crosshairs.Draw(_spriteBatch);
-                _helicopter.Draw(_spriteBatch);
+
+
+    
             }
 
         }
@@ -205,7 +213,7 @@ namespace Zombie_Survival
 
                     if (mouseInput.LeftButton == ButtonState.Pressed)
                     {
-                        Characters.Movements.HealhtBar = 200;
+                        Characters.Movements.ResetHealth();
                         GameStartup._playing.Restart();
                         CurrentState = GameState.Playing;
                     }
